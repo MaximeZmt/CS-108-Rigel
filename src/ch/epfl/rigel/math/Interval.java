@@ -2,6 +2,9 @@ package ch.epfl.rigel.math;
 
 /**
  * Represents a basic interval
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
  */
 public abstract class Interval {
 

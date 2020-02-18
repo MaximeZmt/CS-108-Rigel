@@ -7,7 +7,7 @@ import java.util.Locale;
  * Represents a closed interval [a,b] where a<b
  *
  * @author Michael Freeman (313215)
- * @author Maxime Zammit (Sciper)
+ * @author Maxime Zammit (310251)
  */
 public final class ClosedInterval extends Interval {
     private ClosedInterval(double a, double b) {

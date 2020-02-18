@@ -7,7 +7,7 @@ import ch.epfl.rigel.Preconditions;
  * An angle is represented by a double
  *
  * @author Michael Freeman (313215)
- * @author Maxime Zammit (Sciper)
+ * @author Maxime Zammit (310251)
  */
 public final class Angle {
     private Angle(){}
