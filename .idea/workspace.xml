@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/ClosedInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/ClosedInterval.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1581956613082</updated>
       <workItem from="1582022587004" duration="191000" />
-      <workItem from="1582022813582" duration="2313000" />
+      <workItem from="1582022813582" duration="2863000" />
     </task>
     <servers />
   </component>
