@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/rigel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rigel.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +51,28 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="AngleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.AngleTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AngleTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -61,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1581956613082</updated>
       <workItem from="1582022587004" duration="191000" />
-      <workItem from="1582022813582" duration="3002000" />
+      <workItem from="1582022813582" duration="3061000" />
     </task>
     <servers />
   </component>

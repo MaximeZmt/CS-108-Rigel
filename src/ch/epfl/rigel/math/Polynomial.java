@@ -26,6 +26,6 @@ public final class Polynomial {
 
     @Override
     public String toString() {
-        return
+        return "";
     }
 }
