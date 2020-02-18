@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +54,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.PolynomialTest">
     <configuration name="AngleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rigel" />
       <extension name="coverage">
@@ -66,8 +70,72 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ClosedIntervalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.ClosedIntervalTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PolynomialTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.PolynomialTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PreconditionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.PreconditionsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RightOpenIntervalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.RightOpenIntervalTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PolynomialTest" />
+        <item itemvalue="JUnit.PreconditionsTest" />
+        <item itemvalue="JUnit.RightOpenIntervalTest" />
+        <item itemvalue="JUnit.ClosedIntervalTest" />
         <item itemvalue="JUnit.AngleTest" />
       </list>
     </recent_temporary>
