@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Interval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Interval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

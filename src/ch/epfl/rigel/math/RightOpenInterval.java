@@ -29,7 +29,7 @@ public final class RightOpenInterval extends Interval{
     }
 
     public double reduce(double v){
-        return low()+ floorMod(v-low(),v-high());
+        return low()+ floorMod(v-low(),high()-low());
     }
 
     private double floorMod(double x, double y){
