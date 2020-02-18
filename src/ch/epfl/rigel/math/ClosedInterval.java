@@ -1,12 +1,15 @@
 package ch.epfl.rigel.math;
 
 import ch.epfl.rigel.Preconditions;
-
 import java.util.Locale;
 
+/**
+ * Represents a closed interval [a,b] where a<b
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (Sciper)
+ */
 public final class ClosedInterval extends Interval {
-
-
     private ClosedInterval(double a, double b) {
         super(a, b);
     }
@@ -16,6 +19,13 @@ public final class ClosedInterval extends Interval {
         return v<=high()&&v>=low();
     }
 
+    /**
+     * Builds a closed interval
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     public static ClosedInterval of(double low, double high) {
         Preconditions.checkArgument(low<high);
         return new ClosedInterval(low, high);

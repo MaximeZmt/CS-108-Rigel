@@ -3,7 +3,8 @@ package ch.epfl.rigel.math;
 import ch.epfl.rigel.Preconditions;
 
 /**
- * Angle transformation. An angle is represented by a double.
+ * Angle transformation
+ * An angle is represented by a double
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (Sciper)
