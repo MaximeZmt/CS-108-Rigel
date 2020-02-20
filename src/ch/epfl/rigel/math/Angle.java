@@ -16,8 +16,8 @@ public final class Angle {
     public final static double RAD_PER_HR = TAU/24.0;
     public final static double HR_PER_RAD = 24.0/TAU;
 
-    public final static RightOpenInterval angleInterval = RightOpenInterval.of(0,TAU);
-    public final static RightOpenInterval basis60 = RightOpenInterval.of(0,60);
+    public final static RightOpenInterval ANGLE_INTERVAL = RightOpenInterval.of(0,TAU);
+    public final static RightOpenInterval BASIS_60 = RightOpenInterval.of(0,60);
 
     /**
      * Reduces an angle to it's equivalent between 0 and 2*PI
@@ -26,7 +26,7 @@ public final class Angle {
      * @return the reduced angle
      */
     public static double normalizePositive(double rad){ //angle from 0 to 2pi
-        return angleInterval.reduce(rad);
+        return ANGLE_INTERVAL.reduce(rad);
     }
 
     /**
@@ -48,8 +48,8 @@ public final class Angle {
      * @return the transformed angle in radians
      */
     public static double ofDMS(int deg, int min, double sec){ //TODO CHECK
-        Preconditions.checkArgument(basis60.contains(min));
-        Preconditions.checkArgument(basis60.contains(sec));
+        Preconditions.checkArgument(BASIS_60.contains(min));
+        Preconditions.checkArgument(BASIS_60.contains(sec));
         sec = sec + min*60 + deg * 3600;
         return ofArcsec(sec);
     }
