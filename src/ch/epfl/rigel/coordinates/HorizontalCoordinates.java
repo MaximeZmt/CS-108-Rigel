@@ -40,7 +40,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
         return lonDeg();
     }
 
-    public static String azOctantName(String n, String e, String s, String w){ //TODO Check with T.A.
+    public String azOctantName(String n, String e, String s, String w){ //TODO Check with T.A.
         int num = ((int) (azDeg()+22.5)/45)%8;
         switch(num){
             case 0:
