@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/SphericalCoordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/Preconditions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/Preconditions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Angle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Angle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/ClosedInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/ClosedInterval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Interval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Interval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/Polynomial.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/math/RightOpenInterval.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +37,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -147,6 +142,7 @@
       <updated>1581956613082</updated>
       <workItem from="1582022587004" duration="191000" />
       <workItem from="1582022813582" duration="3623000" />
+      <workItem from="1582200737893" duration="990000" />
     </task>
     <servers />
   </component>
