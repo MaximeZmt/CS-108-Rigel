@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/SphericalCoordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/Preconditions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/Preconditions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Angle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Angle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/rigel/ch/epfl/rigel/math/PolynomialTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/rigel/ch/epfl/rigel/math/PolynomialTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EquatorialCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EquatorialCoordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/EquatorialCoordinatesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/EquatorialCoordinatesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/GeographicCoordinatesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/GeographicCoordinatesTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +59,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in rigel">
+  <component name="RunManager" selected="JUnit.EquatorialCoordinatesTest.toStringWorksOnRandomCoordinates">
     <configuration name="All in rigel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rigel" />
       <option name="PACKAGE_NAME" value="" />
@@ -60,17 +68,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClosedIntervalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EquatorialCoordinatesTest.toStringWorksOnRandomCoordinates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rigel" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
+          <option name="PATTERN" value="ch.epfl.rigel.coordinates.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
-      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.ClosedIntervalTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.coordinates" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.coordinates.EquatorialCoordinatesTest" />
+      <option name="METHOD_NAME" value="toStringWorksOnRandomCoordinates" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GeographicCoordinatesTest.toStringWorksOnRandomCoordinates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rigel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ch.epfl.rigel.coordinates.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ch.epfl.rigel.coordinates" />
+      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.coordinates.GeographicCoordinatesTest" />
+      <option name="METHOD_NAME" value="toStringWorksOnRandomCoordinates" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -105,28 +130,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RightOpenIntervalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="rigel" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ch.epfl.rigel.math.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ch.epfl.rigel.math" />
-      <option name="MAIN_CLASS_NAME" value="ch.epfl.rigel.math.RightOpenIntervalTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EquatorialCoordinatesTest.toStringWorksOnRandomCoordinates" />
+        <item itemvalue="JUnit.GeographicCoordinatesTest.toStringWorksOnRandomCoordinates" />
         <item itemvalue="JUnit.All in rigel" />
         <item itemvalue="JUnit.PolynomialTest" />
         <item itemvalue="JUnit.PreconditionsTest" />
-        <item itemvalue="JUnit.RightOpenIntervalTest" />
-        <item itemvalue="JUnit.ClosedIntervalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -143,6 +153,7 @@
       <workItem from="1582022587004" duration="191000" />
       <workItem from="1582022813582" duration="3623000" />
       <workItem from="1582200737893" duration="990000" />
+      <workItem from="1582217663453" duration="1378000" />
     </task>
     <servers />
   </component>

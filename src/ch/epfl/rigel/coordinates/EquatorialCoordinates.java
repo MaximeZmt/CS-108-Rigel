@@ -19,8 +19,16 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
     public static EquatorialCoordinates of(double ra, double dec){
         Preconditions.checkInInterval(RA_INTERVAL, ra);
         Preconditions.checkInInterval(DEC_INTERVAL, ra);
-        return new EquatorialCoordinates(Angle.ofHr(ra), Angle.ofDeg(ra));
+        return new EquatorialCoordinates(Angle.ofHr(ra), Angle.ofDeg(dec));
 
+    }
+
+    public static EquatorialCoordinates ofDeg(double raDeg, double decDeg){
+        double ra = Angle.ofDeg(raDeg);
+        double dec = Angle.ofDeg(decDeg);
+        Preconditions.checkInInterval(RA_INTERVAL,ra);
+        Preconditions.checkInInterval(DEC_INTERVAL,dec);
+        return new EquatorialCoordinates(ra,dec);
     }
 
     public static boolean isValidRa(double ra){
@@ -49,6 +57,10 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
         return super.lonDeg();
     }
 
+    public double raHr(){
+        return Angle.toHr(ra());
+    }
+
     public double dec() {
         return super.lat();
     }
@@ -59,6 +71,6 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "(ra=%.4f°, dec=%.4f°)", raDeg(), decDeg());
+        return String.format(Locale.ROOT, "(ra=%.4fh, dec=%.4f°)", raHr(), decDeg());
     }
 }

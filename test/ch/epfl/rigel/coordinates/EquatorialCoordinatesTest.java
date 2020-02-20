@@ -9,8 +9,8 @@ class EquatorialCoordinatesTest{
 
     @Test
     void toStringWorksOnRandomCoordinates(){
-        EquatorialCoordinates gc = EquatorialCoordinates.of(45.34567,27.654);
-        assertEquals("(ra=45.3457°, dec=27.6540°)", gc.toString());
+        EquatorialCoordinates gc = EquatorialCoordinates.of(21.3457,28.654);
+        assertEquals("(ra=21.3457h, dec=28.6540°)", gc.toString());
     }
 
 
