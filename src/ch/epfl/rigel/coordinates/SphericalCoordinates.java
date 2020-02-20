@@ -4,8 +4,8 @@ import ch.epfl.rigel.math.Angle;
 
 abstract class SphericalCoordinates {
 
-    private double longitude;
-    private double latitude;
+    private final double longitude; //TODO ask for final modifiers
+    private final double latitude;
 
     SphericalCoordinates(double longitude, double latitude){
         this.longitude = longitude;
