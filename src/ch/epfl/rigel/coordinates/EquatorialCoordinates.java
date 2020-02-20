@@ -23,14 +23,6 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
 
     }
 
-    public static EquatorialCoordinates ofDeg(double raDeg, double decDeg){
-        double ra = Angle.ofDeg(raDeg);
-        double dec = Angle.ofDeg(decDeg);
-        Preconditions.checkInInterval(RA_INTERVAL,ra);
-        Preconditions.checkInInterval(DEC_INTERVAL,dec);
-        return new EquatorialCoordinates(ra,dec);
-    }
-
     public static boolean isValidRa(double ra){
         try {
             Preconditions.checkInInterval(RA_INTERVAL, ra);
