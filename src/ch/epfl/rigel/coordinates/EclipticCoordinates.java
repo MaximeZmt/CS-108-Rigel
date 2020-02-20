@@ -18,7 +18,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
         super(longitude, latitude);
     }
 
-    public EclipticCoordinates of(double lon, double lat){ //TODO Ask for interval
+    public static EclipticCoordinates of(double lon, double lat){ //TODO Ask for interval
         // lat -90 90
         //long from 0 to 360
         Preconditions.checkInInterval(LONGITUDE_INTERVAL,lon);
