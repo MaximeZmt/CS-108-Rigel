@@ -15,8 +15,8 @@ class HorizontalCoordinatesTest {
         assertEquals(coordRad.azDeg(),coordDeg.azDeg());
         assertEquals(coordRad.alt(),coordDeg.alt());
         assertEquals(coordRad.altDeg(),coordDeg.altDeg());
-        assertEquals(60, coordRad.lonDeg());
-        assertEquals(60, coordRad.latDeg());
+        assertEquals(60, coordRad.lonDeg(),1e-10);
+        assertEquals(60, coordRad.latDeg(),1e-10);
     }
 
     @Test
