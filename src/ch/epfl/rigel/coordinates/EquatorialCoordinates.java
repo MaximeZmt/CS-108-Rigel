@@ -18,12 +18,12 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
 
     public static EquatorialCoordinates of(double ra, double dec){
         Preconditions.checkInInterval(RA_INTERVAL, ra);
-        Preconditions.checkInInterval(DEC_INTERVAL, ra);
+        Preconditions.checkInInterval(DEC_INTERVAL, dec);
         return new EquatorialCoordinates(Angle.ofHr(ra), Angle.ofDeg(dec));
 
     }
 
-    public static boolean isValidRa(double ra){
+   /* public static boolean isValidRa(double ra){
         try {
             Preconditions.checkInInterval(RA_INTERVAL, ra);
         } catch (IllegalArgumentException e){
@@ -39,7 +39,7 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
             return false;
         }
         return true;
-    }
+    }*/
 
     public double ra() {
         return super.lon();
