@@ -20,6 +20,7 @@ class EclipticCoordinatesTest {
     @Test
     void stringOutputTest(){
         assertEquals("(λ=22.5000°, β=18.0000°)",EclipticCoordinates.of(Angle.ofDeg(22.5),Angle.ofDeg(18.0)).toString());
+        assertEquals("(λ=0.0000°, β=0.0000°)",EclipticCoordinates.of(0,0).toString());
     }
 
 
@@ -42,6 +43,9 @@ class EclipticCoordinatesTest {
         });
         assertDoesNotThrow(()->{
             EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(359),Angle.ofDeg(90));
+        });
+        assertDoesNotThrow(()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10.34983749379473728929),Angle.ofDeg(90));
         });
     }
 
