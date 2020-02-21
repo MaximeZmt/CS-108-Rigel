@@ -44,6 +44,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Second Method that allow us to instantiate HorizontalCoordinates. It calls the private constructor above.
+     * <p>
      * (Its arguments are in degrees and converted in radian before calling the private constructor)
      * @param azDeg Azimuth in Degree
      * @param altDeg Altitude in Degree

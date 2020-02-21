@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="12f96acb-252b-4482-9171-0f2cb9b1c7a4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/Preconditions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/Preconditions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Angle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Angle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Interval.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/Polynomial.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/rigel/ch/epfl/rigel/math/RightOpenInterval.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/rigel/ch/epfl/rigel/math/PolynomialTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/rigel/ch/epfl/rigel/math/PolynomialTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EquatorialCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EquatorialCoordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/EquatorialCoordinatesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/EquatorialCoordinatesTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/GeographicCoordinatesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ch/epfl/rigel/coordinates/GeographicCoordinatesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EclipticCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/EclipticCoordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/HorizontalCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/epfl/rigel/coordinates/HorizontalCoordinates.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -154,6 +147,7 @@
       <workItem from="1582022813582" duration="3623000" />
       <workItem from="1582200737893" duration="990000" />
       <workItem from="1582217663453" duration="1378000" />
+      <workItem from="1582283326816" duration="604000" />
     </task>
     <servers />
   </component>

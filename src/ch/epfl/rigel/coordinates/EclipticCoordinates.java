@@ -8,7 +8,7 @@ import ch.epfl.rigel.math.RightOpenInterval;
 import java.util.Locale;
 
 /**
- * Final Class that allow us to create EclipticCoordinates
+ * Represents ecliptic coordinates
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -18,11 +18,6 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     private final static RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
     private final static ClosedInterval LATITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 
-    /** //TODO Comment the private constructor ?
-     * Private Constructor that Call the super constructor that the class extends, SphericalCoordinates
-     * @param longitude Angle in radian
-     * @param latitude Angle in radian
-     */
     private EclipticCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
     }
@@ -46,7 +41,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      * @return longitude in radian
      */
     public double lon(){
-        return lon();
+        return super.lon();
     }
 
     /**
@@ -54,7 +49,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      * @return longitude in degree
      */
     public double lonDeg(){
-        return lonDeg();
+        return super.lonDeg();
     }
 
     /**
@@ -62,7 +57,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      * @return latitude in radian
      */
     public double lat(){
-        return lat();
+        return super.lat();
     }
 
     /**
@@ -70,7 +65,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      * @return latitude in degree
      */
     public double latDeg(){
-        return latDeg();
+        return super.latDeg();
     }
 
     /**
