@@ -22,13 +22,13 @@ class EquatorialCoordinatesTest{
 
     @Test
     void toStringWorksOnRandomCoordinates(){
-        EquatorialCoordinates ec = EquatorialCoordinates.of(21.3457,28.654);
-        assertEquals("(ra=21.3457h, dec=28.6540°)", ec.toString());
+        EquatorialCoordinates ec = EquatorialCoordinates.of(4.65444,0.56);
+        assertEquals("(ra=17.7787h, dec=32.0856°)", ec.toString());
     }
 
     @Test
     void raWorks(){
-        EquatorialCoordinates ec = EquatorialCoordinates.of(21.3457,28.654);
+        EquatorialCoordinates ec = EquatorialCoordinates.of(4.65444,0.56);
         assertEquals(ec.raDeg(), Angle.toDeg(ec.ra()));
     }
 
