@@ -44,7 +44,7 @@ public final class Polynomial {
     }
 
     @Override
-    public String toString() { 
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i=0 ; i<coefficients.length ; ++i){
             if(coefficients[i]!=0){
