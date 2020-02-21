@@ -9,7 +9,22 @@ class GeographicCoordinatesTest {
     @Test
     void ConstructorFailsOnInvalidDec(){
         assertThrows(IllegalArgumentException.class, () -> {
-            GeographicCoordinates.ofDeg(2.3457,-91);
+            GeographicCoordinates.ofDeg(10,-91);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            GeographicCoordinates.ofDeg(10,91);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            GeographicCoordinates.ofDeg(-181,0);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            GeographicCoordinates.ofDeg(180,0);
+        });
+        assertDoesNotThrow(()->{
+            GeographicCoordinates.ofDeg(-180,0);
+        });
+        assertDoesNotThrow(()->{
+            GeographicCoordinates.ofDeg(-90,90);
         });
     }
 
