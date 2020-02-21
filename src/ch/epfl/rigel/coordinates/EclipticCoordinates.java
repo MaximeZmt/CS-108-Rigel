@@ -23,55 +23,43 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     }
 
     /**
-     * Method that allow us to instantiate EclipticCoordinates and to create some. It calls the private constructor above.
-     * @param lon component 1  of an Ecliptic Coordinates, in radian
-     * @param lat component 2 of an Ecliptic Coordinates, in radian also.
-     * @return an object of type EclipticCoordinates that has been built with the two arguments
+     * Generates an ecliptic coordinate with the given longitude and latitude in radians
+     * <p>
+     * The longitude must be between 0 and 2*Pi
+     * <p>
+     * The latitude must be between -Pi/2 and Pi/2
+     *
+     * @param lon longitude in radians
+     * @param lat latitude in radians
+     * @return an ecliptic coordinates (EclipticCoordinates)
+     * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
-    public static EclipticCoordinates of(double lon, double lat){ //TODO Ask for interval
-        // lat -90 90
-        //long from 0 to 360
+    public static EclipticCoordinates of(double lon, double lat){
         Preconditions.checkInInterval(LONGITUDE_INTERVAL,lon);
         Preconditions.checkInInterval(LATITUDE_INTERVAL,lat);
         return new EclipticCoordinates(lon, lat);
     }
 
-    /**
-     * Get the longitude of some EclipticCoordinates
-     * @return longitude in radian
-     */
+    @Override
     public double lon(){
         return super.lon();
     }
 
-    /**
-     * Get the longitude of some EclipticCoordinates
-     * @return longitude in degree
-     */
+    @Override
     public double lonDeg(){
         return super.lonDeg();
     }
 
-    /**
-     * Get the latitude of some EclipticCoordinates
-     * @return latitude in radian
-     */
+    @Override
     public double lat(){
         return super.lat();
     }
 
-    /**
-     * Get the latitude of some EclipticCoordinates
-     * @return latitude in degree
-     */
+    @Override
     public double latDeg(){
         return super.latDeg();
     }
 
-    /**
-     * Get a String representation of the coordinates in degrees
-     * @return a String containing the EclipticCoordinates
-     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "(λ=%.4f°, β=%.4f°)", lonDeg(), latDeg());

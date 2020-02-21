@@ -15,54 +15,35 @@ import java.util.Locale;
  */
 public final class EquatorialCoordinates extends SphericalCoordinates {
 
-    private final static RightOpenInterval RA_INTERVAL = RightOpenInterval.of(0, 24);
-    private final static ClosedInterval DEC_INTERVAL = ClosedInterval.of(-90,90);
+    private final static RightOpenInterval RA_INTERVAL = RightOpenInterval.of(Angle.ofHr(0), Angle.ofHr(24));
+    private final static ClosedInterval DEC_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 
     private EquatorialCoordinates(double rightAscension, double declination) {
         super(rightAscension, declination);
     }
 
     /**
-     * Generates an equatorial coordinate with the given right ascension in hours and declination in degrees
+     * Generates an equatorial coordinate with the given right ascension and declination in radians
      * <p>
-     * the right ascension must be between 0h and 24h
+     * The right ascension must be between 0 and 2*Pi
      * <p>
-     * the declination must be between -90° and 90°
+     * The declination must be between -Pi/2 and Pi/2
      *
-     * @param ra  right ascension in hours
-     * @param dec  declination in degrees
-     * @return an equatorial coordinate
+     * @param ra right ascension in radians
+     * @param dec declination in radians
+     * @return an equatorial coordinate (EquatorialCoordinates)
      * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
     public static EquatorialCoordinates of(double ra, double dec){
         Preconditions.checkInInterval(RA_INTERVAL, ra);
         Preconditions.checkInInterval(DEC_INTERVAL, dec);
-        return new EquatorialCoordinates(Angle.ofHr(ra), Angle.ofDeg(dec));
-
+        return new EquatorialCoordinates(ra, dec);
     }
-
-   /* public static boolean isValidRa(double ra){
-        try {
-            Preconditions.checkInInterval(RA_INTERVAL, ra);
-        } catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean isValidDec(double dec){
-        try {
-            Preconditions.checkInInterval(DEC_INTERVAL, dec);
-        } catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
-    }*/
 
     /**
      * Getter for the right ascension in radians
      *
-     * @return the right ascension in radians
+     * @return the right ascension in radians (double)
      */
     public double ra() {
         return super.lon();
@@ -71,7 +52,7 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
     /**
      * Getter for the right ascension in degrees
      *
-     * @return the right ascension in degrees
+     * @return the right ascension in degrees (double)
      */
     public double raDeg() {
         return super.lonDeg();
@@ -80,7 +61,7 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
     /**
      * Getter for the right ascension in hours
      *
-     * @return the right ascension in hours
+     * @return the right ascension in hours (double)
      */
     public double raHr(){
         return Angle.toHr(ra());
@@ -89,7 +70,7 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
     /**
      * Getter for the declination in radians
      *
-     * @return the declination in radians
+     * @return the declination in radians (double)
      */
     public double dec() {
         return super.lat();
@@ -98,7 +79,7 @@ public final class EquatorialCoordinates extends SphericalCoordinates {
     /**
      * Getter for the declination in degrees
      *
-     * @return the declination in degrees
+     * @return the declination in degrees (double)
      */
     public double decDeg() {
         return super.latDeg();

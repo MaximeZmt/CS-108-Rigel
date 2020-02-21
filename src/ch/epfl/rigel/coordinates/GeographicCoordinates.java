@@ -16,8 +16,8 @@ import java.util.Locale;
 
 public final class GeographicCoordinates extends SphericalCoordinates {
 
-    private final static RightOpenInterval LON_INTERVAL = RightOpenInterval.of(-180, 180);
-    private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(-90,90);
+    private final static RightOpenInterval LON_INTERVAL = RightOpenInterval.of(Angle.ofDeg(-180), Angle.ofDeg(180));
+    private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 
     private GeographicCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
@@ -26,31 +26,30 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     /**
      * Generates a geographical coordinate with the given longitude and latitude in degrees.
      * <p>
-     * the longitude must be between -180° and 180°
+     * The longitude must be between -180° and 180°
      * <p>
-     * the latitude must be between -90° and 90°
+     * The latitude must be between -90° and 90°
      *
-     *
-     * @param lonDeg  longitude in degrees
-     * @param latDeg  latitude in degrees
-     * @return a geographic coordinate
+     * @param lonDeg longitude in degrees
+     * @param latDeg latitude in degrees
+     * @return a geographic coordinate (GeographicCoordinates)
      * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
     public static GeographicCoordinates ofDeg(double lonDeg, double latDeg){
-        Preconditions.checkInInterval(LON_INTERVAL, lonDeg);
-        Preconditions.checkInInterval(LAT_INTERVAL, latDeg);
+        Preconditions.checkInInterval(LON_INTERVAL, Angle.ofDeg(lonDeg));
+        Preconditions.checkInInterval(LAT_INTERVAL, Angle.ofDeg(latDeg));
         return new GeographicCoordinates(Angle.ofDeg(lonDeg), Angle.ofDeg(latDeg));
     }
 
     /**
-     * Checks if the given longitude in degrees is in the interval -180° and 180°
+     * Checks if the given longitude in degrees is in the interval -180° and 180° (-Pi and Pi)
      *
-     * @param lonDeg  the longitude to be checked
-     * @return a boolean
+     * @param lonDeg the longitude to be checked
+     * @return (boolean)
      */
     public static boolean isValidLonDeg(double lonDeg){
         try {
-            Preconditions.checkInInterval(LON_INTERVAL, lonDeg);
+            Preconditions.checkInInterval(LON_INTERVAL, Angle.ofDeg(lonDeg));
         } catch (IllegalArgumentException e){
             return false;
         }
@@ -58,14 +57,14 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     }
 
     /**
-     * Checks if the given latitude in degrees is in the interval -90° and 90°
+     * Checks if the given latitude in degrees is in the interval -90° and 90° (-Pi/2 and Pi/2)
      *
-     * @param latDeg  the latitude to be checked
-     * @return a boolean
+     * @param latDeg the latitude to be checked
+     * @return (boolean)
      */
     public static boolean isValidLatDeg(double latDeg){
         try {
-            Preconditions.checkInInterval(LAT_INTERVAL, latDeg);
+            Preconditions.checkInInterval(LAT_INTERVAL, Angle.ofDeg(latDeg));
         } catch (IllegalArgumentException e){
             return false;
         }

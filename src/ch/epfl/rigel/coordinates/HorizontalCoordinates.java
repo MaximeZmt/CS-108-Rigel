@@ -5,11 +5,12 @@ import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 
+import java.rmi.UnexpectedException;
 import java.util.Locale;
 
 
 /**
- * Final Class that allow us to create HorizontalCoordinates
+ * Represents horizontal coordinates
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -19,36 +20,39 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     private final static RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
     private final static ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 
-    //TODO ask if has to be registered in radian (knowing the theory and the precision in deg in the part two for the interval)
-
-    /**
-     * Private Constructor that Call the super constructor that the class extends, SphericalCoordinates
-     * @param azimuth Angle in radian (longitude equivalent)
-     * @param altitude Angle in radian (latitude equivalent)
-     */
     private HorizontalCoordinates(double azimuth, double altitude) {
         super(azimuth, altitude);
     }
 
     /**
-     * Method that allow us to instantiate HorizontalCoordinates. It calls the private constructor above.
-     * @param az Azimuth in radian
-     * @param alt Altitude in radian
-     * @return an Object of type HorizontalCoordinates that has been built with the two arguments above.
+     * Generates a horizontal coordinate with the given azimuth and altitude in radians
+     * <p>
+     * The azimuth must be between 0 and 2*Pi
+     * <p>
+     * The altitude must be between -Pi/2 and Pi/2
+     *
+     * @param az azimuth in radians
+     * @param alt altitude in radians
+     * @return a horizontal coordinate (HorizontalCoordinates)
+     * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
-    public static HorizontalCoordinates of(double az, double alt){ // with radian
+    public static HorizontalCoordinates of(double az, double alt){
         Preconditions.checkInInterval(AZIMUTH_INTERVAL,az);
         Preconditions.checkInInterval(ALTITUDE_INTERVAL,alt);
         return new HorizontalCoordinates(az, alt);
     }
 
     /**
-     * Second Method that allow us to instantiate HorizontalCoordinates. It calls the private constructor above.
+     * Generates a horizontal coordinate with the given azimuth and altitude in degrees
      * <p>
-     * (Its arguments are in degrees and converted in radian before calling the private constructor)
-     * @param azDeg Azimuth in Degree
-     * @param altDeg Altitude in Degree
-     * @return an Object of type HorizontalCoordinates that has been built with the two arguments above.
+     * The azimuth must be between 0° and 360°
+     * <p>
+     * The altitude must be between -90° and 90°
+     *
+     * @param azDeg azimuth in radians
+     * @param altDeg altitude in radians
+     * @return a horizontal coordinate (HorizontalCoordinates)
+     * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
     public static HorizontalCoordinates ofDeg(double azDeg, double altDeg){ //with deg
         double az = Angle.ofDeg(azDeg);
@@ -59,16 +63,18 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     }
 
     /**
-     * Get the Azimuth of some HorizontalCoordinates
-     * @return Azimuth in radian
+     * Getter for the azimuth in radians
+     *
+     * @return azimuth in radian (double)
      */
     public double az(){
         return lon();
     }
 
     /**
-     * Get the Azimuth of some HorizontalCoordinates
-     * @return Azimuth in degree
+     * Getter for the azimuth in degrees
+     *
+     * @return azimuth in degrees (double)
      */
     public double azDeg(){
         return lonDeg();
@@ -76,11 +82,13 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
 
     /**
      * Compute the octant related to the azimuth angle
+     *
      * @param n North string representation (E.g. "N")
      * @param e East string representation (E.g. "E")
      * @param s South string representation (E.g. "S")
      * @param w West string representation (E.g. "W")
-     * @return return a String giving the Octant(for an angle of 135 degrees and s="S", e="E" it return "SE")
+     * @return return a string giving the Octant (E.g. for an angle of 135 degrees and s="S", e="E" it return "SE") (String)
+     * @throws IllegalStateException if fails
      */
     public String azOctantName(String n, String e, String s, String w){ //TODO Check with T.A.
         int num = ((int) (azDeg()+22.5)/45)%8;
@@ -101,40 +109,39 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
                 return w;
             case 7:
                 return n+w;
+            default:
+                throw new IllegalStateException("azOctantName switch has failed");
         }
-        return null; //TODO fill it
     }
 
     /**
-     * Get the Altitude of some HorizontalCoordinates
-     * @return Altitude in radian
+     * Getter for the altitude in radians
+     *
+     * @return altitude in radians (double)
      */
     public double alt(){
         return lat();
     }
 
     /**
-     * Get the Altitude of some HorizontalCoordinates
-     * @return Altitude in degree
+     * Getter for the altitude in degrees
+     *
+     * @return altitude in degrees (double)
      */
     public double altDeg(){
         return latDeg();
     }
 
     /**
-     * Compute the distance between two Horizontal coordinates (one from argument and this)
-     * @param that an HorizontalCoordinates object (given from argument)
-     * @return distance between that and this (two Horizontal coordinates)
+     * Compute the distance between two Horizontal coordinates (this.angularDistanceTo(that))
+     *
+     * @param that an HorizontalCoordinates object
+     * @return distance between that and this in radians (two Horizontal coordinates) (double)
      */
     public double angularDistanceTo(HorizontalCoordinates that){
         return Math.acos( Math.sin(this.alt()) * Math.sin(that.alt()) + Math.cos(this.alt()) * Math.cos(that.alt() * Math.cos(this.az()-that.az()))   );
-    } // longitude/azimuth lambda et latitude/ altitude phi
-    // 1 -> this et 2 -> that
+    }
 
-    /**
-     * Get a String representation of the coordinates in degrees
-     * @return a String containing the HorizontalCoordinates
-     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "(az=%.4f°, alt=%.4f°)", azDeg(), altDeg());

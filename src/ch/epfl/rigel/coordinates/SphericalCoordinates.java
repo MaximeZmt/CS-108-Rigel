@@ -10,14 +10,14 @@ import ch.epfl.rigel.math.Angle;
  */
 abstract class SphericalCoordinates {
 
-    private final double longitude; //TODO ask for final modifiers
+    private final double longitude;
     private final double latitude;
 
     /**
      * Constructor for a spherical coordinate. Takes in argument a longitude and a latitude in radians.
      *
-     * @param longitude  longitude in radians
-     * @param latitude  latitude in radians
+     * @param longitude longitude in radians
+     * @param latitude latitude in radians
      */
     SphericalCoordinates(double longitude, double latitude){
         this.longitude = longitude;
