@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GeographicCoordinatesTest {
 
     @Test
-    void ConstructorFailsOnInvalidDec(){
+    void constructorFailsOnInvalidDec(){
         assertThrows(IllegalArgumentException.class, () -> {
             GeographicCoordinates.ofDeg(10,-91);
         });
@@ -29,7 +29,7 @@ class GeographicCoordinatesTest {
     }
 
     @Test
-    void ConstructorWorksOnTrivialCoordinates(){
+    void constructorWorksOnTrivialCoordinates(){
         assertDoesNotThrow(()->GeographicCoordinates.ofDeg(0,0));
     }
 

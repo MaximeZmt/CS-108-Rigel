@@ -9,14 +9,14 @@ class EquatorialCoordinatesTest{
 
     //constructor
     @Test
-    void ConstructorFailsOnInvalidDec(){
+    void constructorFailsOnInvalidDec(){
         assertThrows(IllegalArgumentException.class, () -> {
             EquatorialCoordinates.of(2.3457,-91);
         });
     }
 
     @Test
-    void ConstructorWorksOnTrivialCoordinates(){
+    void constructorWorksOnTrivialCoordinates(){
         assertDoesNotThrow(()->EquatorialCoordinates.of(0,0));
     }
 
