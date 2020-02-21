@@ -19,7 +19,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     private final static ClosedInterval LATITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 
     /** //TODO Comment the private constructor ?
-     * Private Constructor that Call the super constructor that the class extends
+     * Private Constructor that Call the super constructor that the class extends, SphericalCoordinates
      * @param longitude Angle in radian
      * @param latitude Angle in radian
      */
@@ -74,7 +74,7 @@ public final class EclipticCoordinates extends SphericalCoordinates {
     }
 
     /**
-     * Get a String representation of the coordinates
+     * Get a String representation of the coordinates in degrees
      * @return a String containing the EclipticCoordinates
      */
     @Override
