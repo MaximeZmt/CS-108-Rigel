@@ -13,6 +13,9 @@ class EquatorialCoordinatesTest{
         assertThrows(IllegalArgumentException.class, () -> {
             EquatorialCoordinates.of(2.3457,-91);
         });
+        assertThrows(IllegalArgumentException.class, () -> {
+            EquatorialCoordinates.of(Angle.ofDeg(360),Angle.ofDeg(10));
+        });
     }
 
     @Test
