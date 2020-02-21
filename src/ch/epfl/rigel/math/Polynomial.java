@@ -44,28 +44,27 @@ public final class Polynomial {
     }
 
     @Override
-    public String toString() { //TODO use stringBuilder
-        String s = "";
+    public String toString() { 
+        StringBuilder sb = new StringBuilder();
         for (int i=0 ; i<coefficients.length ; ++i){
             if(coefficients[i]!=0){
                if(i>0 && coefficients[i]>0){
-                    s = s + "+";
+                    sb.append("+");
                }
                if (Math.abs(coefficients[i])!=1){
-                   s=s+coefficients[i];
+                   sb.append(coefficients[i]);
                }else if (coefficients[i]==-1){
-                   s = s + "-";
+                   sb.append("-");
                }
-
                if (i<(coefficients.length-1)){
-                   s = s + "x";
+                   sb.append("x");
                    if (i<(coefficients.length-2)){
-                       s = s + "^" + (coefficients.length-1-i);
+                       sb.append("^" + (coefficients.length-1-i));
                    }
                }
             }
         }
-        return s;
+        return sb.toString();
     }
 
     @Override
