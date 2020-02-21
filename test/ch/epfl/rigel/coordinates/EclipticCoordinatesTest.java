@@ -9,17 +9,42 @@ class EclipticCoordinatesTest {
 
     @Test
     void trivialTestEclipticCoordinatesMethodGen(){
-        EclipticCoordinates coord1 = EclipticCoordinates.of()
-
-
-        HorizontalCoordinates coordRad = HorizontalCoordinates.of(Angle.ofDeg(60), Angle.ofDeg(60));// create coord tuple with rad coord
-        HorizontalCoordinates coordDeg = HorizontalCoordinates.ofDeg(60,60);// create coord tuple with deg coord
-        assertEquals(coordRad.az(),coordDeg.az());
-        assertEquals(coordRad.azDeg(),coordDeg.azDeg());
-        assertEquals(coordRad.alt(),coordDeg.alt());
-        assertEquals(coordRad.altDeg(),coordDeg.altDeg());
-        assertEquals(60, coordRad.lonDeg(),1e-10);
-        assertEquals(60, coordRad.latDeg(),1e-10);
+        EclipticCoordinates coord1 = EclipticCoordinates.of(Angle.ofDeg(180),Angle.ofDeg(-89));
+        assertEquals(coord1.latDeg(),Angle.toDeg(coord1.lat()));
+        assertEquals(coord1.lonDeg(),Angle.toDeg(coord1.lon()));
+        assertEquals(180,coord1.lonDeg(),1e-10);
+        assertEquals(-89,coord1.latDeg(),1e-10);
     }
+
+
+    @Test
+    void stringOutputTest(){
+        assertEquals("(λ=22.5000°, β=18.0000°)",EclipticCoordinates.of(Angle.ofDeg(22.5),Angle.ofDeg(18.0)).toString());
+    }
+
+
+    @Test
+    void throwAnErrorWithLimitValue(){
+        assertThrows(IllegalArgumentException.class,()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(360),Angle.ofDeg(0));
+        });
+        assertThrows(IllegalArgumentException.class,()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(-1),Angle.ofDeg(0));
+        });
+        assertThrows(IllegalArgumentException.class,()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10),Angle.ofDeg(91));
+        });
+        assertThrows(IllegalArgumentException.class,()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10),Angle.ofDeg(-91));
+        });
+        assertDoesNotThrow(()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(0),Angle.ofDeg(-90));
+        });
+        assertDoesNotThrow(()->{
+            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(359),Angle.ofDeg(90));
+        });
+    }
+
+
 
 }
