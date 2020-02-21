@@ -14,7 +14,7 @@ public final class Preconditions {
     /**
      * Checks if the given argument is correct in it's context
      *
-     * @param isTrue  the argument to be checked
+     * @param isTrue the argument to be checked
      * @throws IllegalArgumentException if the argument is not correct
      */
     public static void checkArgument(boolean isTrue) {
@@ -26,9 +26,9 @@ public final class Preconditions {
     /**
      * Checks if the given value is inside the given interval
      *
-     * @param interval  the given interval
-     * @param value  the given value
-     * @return a boolean
+     * @param interval the given interval
+     * @param value the given value
+     * @return the checked value (double)
      */
     public static double checkInInterval(Interval interval, double value) {
         if (!interval.contains(value))

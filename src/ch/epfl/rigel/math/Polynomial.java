@@ -17,11 +17,12 @@ public final class Polynomial {
     /**
      * Creates a polynomial with the given coefficients
      *
-     * @param coefficientN  coefficient of the biggest power
-     * @param coefficients  coefficients
-     * @return a polynomial
+     * @param coefficientN coefficient of the biggest power
+     * @param coefficients coefficients
+     * @return a polynomial (Polynomial)
+     * @throws IllegalArgumentException if coefficientN equals to 0
      */
-    public static Polynomial of(double coefficientN, double... coefficients){ //TODO check
+    public static Polynomial of(double coefficientN, double... coefficients){
         Preconditions.checkArgument(coefficientN!=0);
         double[] newArray = new double[coefficients.length+1];
         newArray[0] = coefficientN;
@@ -32,8 +33,8 @@ public final class Polynomial {
     /**
      * Compute the value of the polynomial with the given variable
      *
-     * @param x  the variable of the polynomial
-     * @return the value of the polynomial
+     * @param x the variable of the polynomial
+     * @return the value of the polynomial (double)
      */
     public double at(double x){
         double returnValue = coefficients[0];

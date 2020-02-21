@@ -23,9 +23,10 @@ public final class RightOpenInterval extends Interval{
     /**
      * Creates a right-open interval with the given bounds
      *
-     * @param low  the lower bound
-     * @param high  the upper bound
-     * @return a right-open interval
+     * @param low the lower bound
+     * @param high the upper bound
+     * @return a right-open interval (RightOpenInterval)
+     * @throws IllegalArgumentException if low is bigger or equal to high
      */
     public static RightOpenInterval of(double low, double high) {//TODO CHECK
         Preconditions.checkArgument(low<high);
@@ -35,8 +36,9 @@ public final class RightOpenInterval extends Interval{
     /**
      * Creates a symmetric right-open interval centered in 0
      *
-     * @param size  the size of the interval
-     * @return a symmetric right-open interval
+     * @param size the size of the interval
+     * @return a symmetric right-open interval (RightOpenInterval)
+     * @throws IllegalArgumentException if size is smaller or equal to 0
      */
     public static RightOpenInterval symmetric(double size) {
         Preconditions.checkArgument(size>0);
@@ -45,20 +47,21 @@ public final class RightOpenInterval extends Interval{
 
     /**
      * Reduces a value in the interval
-     * @param v  the value to be reduced
-     * @return the reduced value
+     *
+     * @param v the value to be reduced
+     * @return the reduced value (double)
      */
     public double reduce(double v){
         return low()+ floorMod(v-low(),high()-low());
     }
 
     private double floorMod(double x, double y){
-        return x- (y * Math.floor(x/y)); //TODO check if can use Math.Floor
+        return x- (y * Math.floor(x/y));
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "[%.2f,%.2[", low(), high()); //TODO CHECK
+        return String.format(Locale.ROOT, "[%.2f,%.2[", low(), high());
     }
 
 

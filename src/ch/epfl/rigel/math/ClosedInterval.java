@@ -10,6 +10,7 @@ import java.util.Locale;
  * @author Maxime Zammit (310251)
  */
 public final class ClosedInterval extends Interval {
+
     private ClosedInterval(double a, double b) {
         super(a, b);
     }
@@ -20,12 +21,14 @@ public final class ClosedInterval extends Interval {
     }
 
     /**
-     * Builds a closed interval
-     * checks if low<high
+     * Generates a closed interval
+     * <p>
+     * Checks if low<high
      *
-     * @param low  lowest number
-     * @param high  highest number
-     * @return a closed interval
+     * @param low lowest number
+     * @param high highest number
+     * @return a closed interval (ClosedInterval)
+     * @throws IllegalArgumentException if low is bigger or equal to high
      */
     public static ClosedInterval of(double low, double high) {
         Preconditions.checkArgument(low<high);
@@ -35,8 +38,9 @@ public final class ClosedInterval extends Interval {
     /**
      * Builds a symmetric closed interval centered in 0
      *
-     * @param size  size of the interval
-     * @return a closed interval
+     * @param size size of the interval
+     * @return a closed interval (ClosedInterval)
+     * @throws IllegalArgumentException if size is smaller or equal to 0
      */
     public static ClosedInterval symmetric(double size) {
         Preconditions.checkArgument(size>0);
@@ -46,10 +50,10 @@ public final class ClosedInterval extends Interval {
     /**
      * Clips a value into the interval
      *
-     * @param v  value to be clipped
-     * @return the clipped value
+     * @param v value to be clipped
+     * @return the clipped value (double)
      */
-    public double clip(double v) { //TODO check access right and done: Ecretage
+    public double clip(double v) {
         if(v<= low()) {
             return low();
         }
@@ -63,7 +67,7 @@ public final class ClosedInterval extends Interval {
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "[%.2f,%.2f]", low(), high()); //TODO CHECK
+        return String.format(Locale.ROOT, "[%.2f,%.2f]", low(), high());
     }
 
 }

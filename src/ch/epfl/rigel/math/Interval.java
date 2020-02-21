@@ -14,8 +14,8 @@ public abstract class Interval {
     /**
      * Builds a basic interval
      *
-     * @param a  the lower bound
-     * @param b  the upper bound
+     * @param a the lower bound
+     * @param b the upper bound
      */
     protected Interval(double a, double b) {
         this.a = a;
@@ -25,7 +25,7 @@ public abstract class Interval {
     /**
      * Getter for the lower bound
      *
-     * @return the lowest number
+     * @return the lowest number (double)
      */
     public double low() {
         return a;
@@ -34,7 +34,7 @@ public abstract class Interval {
     /**
      * Getter for the upper bound
      *
-     * @return the highest number
+     * @return the highest number (double)
      */
     public double high() {
         return b;
@@ -43,7 +43,7 @@ public abstract class Interval {
     /**
      * Getter for the size of the interval
      *
-     * @return the size of the interval
+     * @return the size of the interval (double)
      */
     public double size() {
         return b-a;
@@ -52,8 +52,8 @@ public abstract class Interval {
     /**
      * Checks if a value is contained in the interval
      *
-     * @param v  the value to be checked
-     * @return a boolean
+     * @param v the value to be checked
+     * @return (boolean)
      */
     public abstract boolean contains (double v);
 
