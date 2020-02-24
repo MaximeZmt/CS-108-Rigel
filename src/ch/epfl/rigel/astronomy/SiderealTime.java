@@ -25,14 +25,14 @@ public final class SiderealTime {
      */
     public static double greenwich(ZonedDateTime when){
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
-        ZonedDateTime trucatedDays = when.truncatedTo(ChronoUnit.DAYS);
-        double daysUtil = Epoch.J2000.julianCenturiesUntil(trucatedDays);
-        System.out.println(daysUtil); // correct
-        double deltaHours = trucatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
+        ZonedDateTime truncatedDays = when.truncatedTo(ChronoUnit.DAYS);
+        double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
+        System.out.println(centuriesUntil); // correct
+        double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
         System.out.println(deltaHours); // more or less correct
         Polynomial s0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
         Polynomial s1 = Polynomial.of(1.002737909,0);
-        double s0V = s0.at(daysUtil);
+        double s0V = s0.at(centuriesUntil);
         System.out.println(s0V); //check
         double s1V = s1.at(deltaHours);
         System.out.println(s1V);
