@@ -8,20 +8,29 @@ import java.util.function.Function;
 // représente un changement de systèmes de coordonnées
 // depuis les coordonnées équatoriales vers les coordonnées Horizontal, à un instant et pour un lieu donnés.
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
+    private final double cosH;
+    private final double H;
+    // is phi lat ?
+
+
+
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        double H =
+        H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
+        cosH = Math.cos(H);
+
+
     }
 
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
         double phi = 0;
-        double delta = 0;
-        double alpha = 0;
+        double delta = 0; // declinaison
+        double alpha = 0; // right asciension
         double H = 0;
 
         //TODO ask for atan2 remark about loosing point for that part and missing acos2 in library
         double A = Math.acos((Math.sin(delta)-Math.sin(phi)*Math.sin(alpha))/(Math.cos(phi)*Math.cos(alpha)));
-        double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*Math.cos(H));
+        double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*cosH);
 
         return HorizontalCoordinates.of(A,h);
     }
