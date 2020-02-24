@@ -23,7 +23,7 @@ public final class SiderealTime {
      * @param when
      * @return SiderealTime in radian in [0;pi[
      */
-    static double greenwich(ZonedDateTime when){
+    public static double greenwich(ZonedDateTime when){
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
         ZonedDateTime trucatedDays = when.truncatedTo(ChronoUnit.DAYS);
         double daysUtil = Epoch.J2000.julianCenturiesUntil(trucatedDays);
@@ -47,7 +47,7 @@ public final class SiderealTime {
      * @param where
      * @return SiderealTime in radian in [0;pi[
      */
-    static double local(ZonedDateTime when, GeographicCoordinates where){
+    public static double local(ZonedDateTime when, GeographicCoordinates where){
         return greenwich(when)+where.lon();
     }
 
