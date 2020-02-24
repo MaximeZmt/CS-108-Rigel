@@ -4,6 +4,7 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.math.Polynomial;
 import ch.epfl.rigel.math.RightOpenInterval;
 
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -24,12 +25,18 @@ public final class SiderealTime {
     static double greenwich(ZonedDateTime when){
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
         ZonedDateTime trucatedDays = when.truncatedTo(ChronoUnit.DAYS);
-        int daysUtil = (int) Epoch.J2000.daysUntil(trucatedDays)/36525;
-        double deltaHours = trucatedDays.until(when, ChronoUnit.MILLIS)/3600000;
+        double daysUtil = Epoch.J2000.julianCenturiesUntil(trucatedDays);
+        System.out.println(daysUtil); // correct
+        double deltaHours = trucatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
+        System.out.println(deltaHours); // more or less correct
         Polynomial s0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
-        Polynomial s1 = Polynomial.of(1.002737909);
+        Polynomial s1 = Polynomial.of(1.002737909,0);
+        double s0V = s0.at(daysUtil);
+        System.out.println(s0V); //check
+        double s1V = s1.at(deltaHours);
+        System.out.println(s1V);
         RightOpenInterval i0to24h = RightOpenInterval.of(0,24);
-        double reducedS0 = i0to24h.reduce(s0.at(daysUtil)+s1.at(deltaHours));
+        double reducedS0 = i0to24h.reduce(s0V+s1V);
         return reducedS0; // miss radian conversion
     }
 
