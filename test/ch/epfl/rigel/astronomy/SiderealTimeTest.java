@@ -11,7 +11,7 @@ class SiderealTimeTest {
     @Test
     void dataTest(){
         ZonedDateTime tps = ZonedDateTime.of(1980,04,22,14,36,51,67,ZoneId.of("UTC"));
-        assertEquals(Angle.ofHr(4.668120),Angle.ofHr(SiderealTime.greenwich(tps)),1e-4); //TODO check if precise enough
+        assertEquals(Angle.ofHr(4.668120),SiderealTime.greenwich(tps),1e-4); //TODO check if precise enough
 
 
     }

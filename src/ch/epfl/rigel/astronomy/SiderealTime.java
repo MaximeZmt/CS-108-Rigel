@@ -38,7 +38,7 @@ public final class SiderealTime {
         System.out.println(s1V);
         RightOpenInterval i0to24h = RightOpenInterval.of(0,24);
         double reducedS0 = i0to24h.reduce(s0V+s1V);
-        return reducedS0; // miss radian conversion
+        return Angle.ofHr(reducedS0); // miss radian conversion
     }
 
     /**
@@ -48,7 +48,7 @@ public final class SiderealTime {
      * @return SiderealTime in radian in [0;pi[
      */
     static double local(ZonedDateTime when, GeographicCoordinates where){
-        return Angle.ofHr(greenwich(when))+where.lon();
+        return greenwich(when)+where.lon();
     }
 
 }
