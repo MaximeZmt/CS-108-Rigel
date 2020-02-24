@@ -30,9 +30,15 @@ class EquatorialCoordinatesTest{
     }
 
     @Test
-    void raWorks(){
+    void raAndHrWorks(){
         EquatorialCoordinates ec = EquatorialCoordinates.of(4.65444,0.56);
         assertEquals(ec.raDeg(), Angle.toDeg(ec.ra()));
+        EquatorialCoordinates ec2 = EquatorialCoordinates.of(Angle.ofDeg(244.059),Angle.ofDeg(27.1606));
+        assertEquals(16.2706,ec2.raHr(),1e-10);
+        assertEquals(244.059,ec2.raDeg());
+        assertEquals(Angle.ofDeg(244.059),ec2.ra());
+        assertEquals(27.1606,ec2.decDeg());
+        assertEquals(Angle.ofDeg(27.1606),ec2.dec());
     }
 
 
