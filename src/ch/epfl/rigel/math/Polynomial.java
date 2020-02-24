@@ -24,7 +24,7 @@ public final class Polynomial {
      */
     public static Polynomial of(double coefficientN, double... coefficients){
         Preconditions.checkArgument(coefficientN!=0);
-        double[] newArray = new double[coefficients.length+1];
+        double[] newArray = new double[coefficients.length+1]; //TODO maybe copyOf for immuability
         newArray[0] = coefficientN;
         System.arraycopy(coefficients,0,newArray,1,coefficients.length);
         return new Polynomial(newArray);
