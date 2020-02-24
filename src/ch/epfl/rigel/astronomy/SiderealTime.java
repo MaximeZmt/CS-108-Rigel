@@ -1,6 +1,7 @@
 package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
+import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.Polynomial;
 import ch.epfl.rigel.math.RightOpenInterval;
 
@@ -47,7 +48,7 @@ public final class SiderealTime {
      * @return SiderealTime in radian in [0;pi[
      */
     static double local(ZonedDateTime when, GeographicCoordinates where){
-        return 0;
+        return Angle.ofHr(greenwich(when))+where.lon();
     }
 
 }
