@@ -9,7 +9,7 @@ import java.util.function.Function;
 // depuis les coordonnées équatoriales vers les coordonnées Horizontal, à un instant et pour un lieu donnés.
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        //double H =
+        double H =
     }
 
     @Override
