@@ -45,3 +45,5 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         throw new UnsupportedOperationException("called equals from EquatorialToHorizontalConversion");
     }
 }
+
+

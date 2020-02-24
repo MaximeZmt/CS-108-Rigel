@@ -25,3 +25,4 @@ class EquatorialToHorizontalConversionTest {
         assertEquals(0, coord.alt());
     }
 }
+
