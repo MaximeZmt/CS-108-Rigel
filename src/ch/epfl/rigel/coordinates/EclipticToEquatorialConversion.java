@@ -9,11 +9,24 @@ import java.util.function.Function;
 
 //représente un changement de système de coordonnées depuis les coordonnées
 // écliptiques vers les coordonnées équatoriales, à un instant donné.
+
+/**
+ * Represents a coordinate system transformation from ecliptic to equatorial at a given moment
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
 
     private final double cosEpsilon;
     private final double sinEpsilon;
 
+    /**
+     * Builds a coordinate system transformation between ecliptic and
+     * equatorial coordinates for the given date, time and zone
+     *
+     * @param when date, time and zone
+     */
     public EclipticToEquatorialConversion(ZonedDateTime when){
         double epsilon = Polynomial.of(
                 Angle.ofDMS(0,0,0.00181),
