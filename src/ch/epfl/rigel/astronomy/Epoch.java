@@ -29,15 +29,21 @@ public enum Epoch {
     }
 
     /**
-     * Calculates the days seperating the epoch and the given date and time
+     * Calculates the days separating the epoch and the given date and time
      *
-     * @param when
-     * @return
+     * @param when date, time and zone
+     * @return number of days (can be decimal) (double)
      */
     public double daysUntil(ZonedDateTime when){
         return date.until(when, ChronoUnit.MILLIS)/86400000.;
     }
 
+    /**
+     * Calculates the julian centuries separating the epoch and the given date and time
+     *
+     * @param when date, time and zone
+     * @return number of julian centuries (can be decimal) (double)
+     */
     public double julianCenturiesUntil(ZonedDateTime when){
         return date.until(when, ChronoUnit.MILLIS)/(86400000.*36525);
     }
