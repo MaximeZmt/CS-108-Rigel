@@ -3,6 +3,12 @@ package ch.epfl.rigel.astronomy;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Represents an astronomic epoch
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public enum Epoch {
     J2000(ZonedDateTime.of(
             LocalDateTime.of(
@@ -17,10 +23,17 @@ public enum Epoch {
 
     private ZonedDateTime date;
 
+    //TODO ask if javadoc
     Epoch(ZonedDateTime date){
         this.date = date;
     }
 
+    /**
+     * Calculates the days seperating the epoch and the given date and time
+     *
+     * @param when
+     * @return
+     */
     public double daysUntil(ZonedDateTime when){
         return date.until(when, ChronoUnit.MILLIS)/86400000.;
     }
