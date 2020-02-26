@@ -13,11 +13,6 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
     private final double cosPhi;
     private final double sinPhi;
 
-    //private final double H;
-    //private final double phi;
-
-
-
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
         double H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
         double phi = where.lat(); //-> finish implementation
@@ -26,26 +21,12 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         cosPhi = Math.cos(phi);
         sinPhi = Math.sin(phi);
 
-
     }
 
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
         double delta = equatorialCoordinates.dec(); // declinaison
-        //double alpha = equatorialCoordinates.ra(); // right asciension
-        //double sinDelta = Math.sin(delta);
-        //double sinPhi = Math.sin(phi);
-        //double sinAlpha = Math.sin(alpha);
-        //double cosPhi = Math.cos(phi);
-        //double cosAlpha = Math.cos(alpha);
-        //double cosDelta = Math.cos(delta);
-        //double sinH = Math.sin(H);
-
         double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosH);
-
-        //double sinh = Math.sin(h);
-
-        //TODO ask for atan2 remark about loosing point for that part and missing acos2 in library
         double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
 
         System.out.println("A: "+A);
