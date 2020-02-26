@@ -31,10 +31,16 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         double sinAlpha = Math.sin(alpha);
         double cosPhi = Math.cos(phi);
         double cosAlpha = Math.cos(alpha);
+        double cosDelta = Math.cos(delta);
+        double sinH = Math.sin(H);
+
+        double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*cosH);
+
+        double sinh = Math.sin(h);
 
         //TODO ask for atan2 remark about loosing point for that part and missing acos2 in library
-        double A = Math.acos((sinDelta-(sinPhi*sinAlpha))/(cosPhi*cosAlpha));
-        double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*cosH);
+        double A = Math.atan2((-cosDelta*cosPhi*sinH),(sinDelta-(sinPhi*sinh)));
+
         System.out.println("A: "+A);
         System.out.println("h: "+h);
         return HorizontalCoordinates.of(A,h);
