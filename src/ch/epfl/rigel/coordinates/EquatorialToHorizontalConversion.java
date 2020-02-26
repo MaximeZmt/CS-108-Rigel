@@ -10,13 +10,13 @@ import java.util.function.Function;
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
     private final double cosH;
     private final double H;
-    // is phi lat ?
 
 
 
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
         H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
         cosH = Math.cos(H);
+        //phi = where.lat() -> finish implementation
 
 
     }
