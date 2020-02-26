@@ -1,6 +1,9 @@
 package ch.epfl.rigel.coordinates;
 
 import ch.epfl.rigel.astronomy.SiderealTime;
+import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.ClosedInterval;
+import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.time.*; //TODO ask if import * or just what we need
 import java.util.function.Function;
@@ -14,7 +17,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
     private final double sinPhi;
 
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        double H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
+        double H = 1.534726189;//SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
         double phi = where.lat(); //-> finish implementation
         cosH = Math.cos(H);
         sinH = Math.sin(H);
@@ -30,8 +33,16 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
 
         System.out.println("A: "+A);
-        //System.out.println("h: "+h);
-        return HorizontalCoordinates.of(A,h);
+        System.out.println("h: "+h);
+
+        //TODO Check ce bordel avec value Cambridge, attention val H, dep temps sideral et time zone, modif main
+        RightOpenInterval ROI = RightOpenInterval.of(0,360);
+        double r = ROI.reduce(Angle.toDeg(A));
+        ClosedInterval CI = ClosedInterval.of(-90,90);
+        double rp = CI.clip(Angle.toDeg(h));
+
+
+        return HorizontalCoordinates.ofDeg(r,rp);
     }
 
     @Override
