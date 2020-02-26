@@ -10,13 +10,27 @@ import java.util.function.Function;
 
 // représente un changement de systèmes de coordonnées
 // depuis les coordonnées équatoriales vers les coordonnées Horizontal, à un instant et pour un lieu donnés.
+
+/**
+ * Represents a coordinate system transformation from ecliptic to equatorial at a given moment and location
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
     private final double cosH;
     private final double sinH;
     private final double cosPhi;
     private final double sinPhi;
 
-    public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
+    /**
+     * Builds a coordinate system transformation between equatorial and
+     * horizontal coordinates for the given date, time, zone and location
+     *
+     * @param when date, time and zone
+     * @param where geographic location
+     */
+    public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){ //TODO put back to normal
         double H = 1.534726189;//SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
         double phi = where.lat(); //-> finish implementation
         cosH = Math.cos(H);

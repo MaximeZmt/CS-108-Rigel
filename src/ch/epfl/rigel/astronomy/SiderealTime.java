@@ -19,9 +19,10 @@ public final class SiderealTime {
 
 
     /**
-     * compute the siderealTime (all related to Greenwich even timezone) knowing when in greenwich
-     * @param when
-     * @return SiderealTime in radian in [0;pi[
+     * Computes the siderealTime (all related to Greenwich even timezone) knowing when in greenwich
+     *
+     * @param when date, time and zone
+     * @return SiderealTime in radian in [0;pi[ (double)
      */
     public static double greenwich(ZonedDateTime when){
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
@@ -42,10 +43,11 @@ public final class SiderealTime {
     }
 
     /**
-     * compute the local sidereal time in radian in interval [0,PI[ for date/hour and position
-     * @param when
-     * @param where
-     * @return SiderealTime in radian in [0;pi[
+     * Computes the local sidereal time in radian in interval [0,PI[ for date/hour and position
+     *
+     * @param when date, time and zone
+     * @param where geographic location
+     * @return SiderealTime in radian in [0;pi[ (double)
      */
     public static double local(ZonedDateTime when, GeographicCoordinates where){
         return greenwich(when)+where.lon();
