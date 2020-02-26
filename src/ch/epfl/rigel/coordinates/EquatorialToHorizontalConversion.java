@@ -10,28 +10,33 @@ import java.util.function.Function;
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
     private final double cosH;
     private final double H;
+    private final double phi;
 
 
 
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
         H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
         cosH = Math.cos(H);
-        //phi = where.lat() -> finish implementation
+        phi = where.lat(); //-> finish implementation
 
 
     }
 
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
-        double phi = 0;
-        double delta = 0; // declinaison
-        double alpha = 0; // right asciension
-        double H = 0;
+        double delta = equatorialCoordinates.dec(); // declinaison
+        double alpha = equatorialCoordinates.ra(); // right asciension
+        double sinDelta = Math.sin(delta);
+        double sinPhi = Math.sin(phi);
+        double sinAlpha = Math.sin(alpha);
+        double cosPhi = Math.cos(phi);
+        double cosAlpha = Math.cos(alpha);
 
         //TODO ask for atan2 remark about loosing point for that part and missing acos2 in library
-        double A = Math.acos((Math.sin(delta)-Math.sin(phi)*Math.sin(alpha))/(Math.cos(phi)*Math.cos(alpha)));
+        double A = Math.acos((sinDelta-(sinPhi*sinAlpha))/(cosPhi*cosAlpha));
         double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*cosH);
-
+        System.out.println("A: "+A);
+        System.out.println("h: "+h);
         return HorizontalCoordinates.of(A,h);
     }
 
