@@ -9,15 +9,22 @@ import java.util.function.Function;
 // depuis les coordonnées équatoriales vers les coordonnées Horizontal, à un instant et pour un lieu donnés.
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
     private final double cosH;
-    private final double H;
-    private final double phi;
+    private final double sinH;
+    private final double cosPhi;
+    private final double sinPhi;
+
+    //private final double H;
+    //private final double phi;
 
 
 
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
+        double H = SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
+        double phi = where.lat(); //-> finish implementation
         cosH = Math.cos(H);
-        phi = where.lat(); //-> finish implementation
+        sinH = Math.sin(H);
+        cosPhi = Math.cos(phi);
+        sinPhi = Math.sin(phi);
 
 
     }
@@ -25,24 +32,24 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
         double delta = equatorialCoordinates.dec(); // declinaison
-        double alpha = equatorialCoordinates.ra(); // right asciension
-        double sinDelta = Math.sin(delta);
-        double sinPhi = Math.sin(phi);
-        double sinAlpha = Math.sin(alpha);
-        double cosPhi = Math.cos(phi);
-        double cosAlpha = Math.cos(alpha);
-        double cosDelta = Math.cos(delta);
-        double sinH = Math.sin(H);
+        //double alpha = equatorialCoordinates.ra(); // right asciension
+        //double sinDelta = Math.sin(delta);
+        //double sinPhi = Math.sin(phi);
+        //double sinAlpha = Math.sin(alpha);
+        //double cosPhi = Math.cos(phi);
+        //double cosAlpha = Math.cos(alpha);
+        //double cosDelta = Math.cos(delta);
+        //double sinH = Math.sin(H);
 
-        double h = Math.asin(Math.sin(delta)*Math.sin(phi)+Math.cos(delta)*Math.cos(phi)*cosH);
+        double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosH);
 
-        double sinh = Math.sin(h);
+        //double sinh = Math.sin(h);
 
         //TODO ask for atan2 remark about loosing point for that part and missing acos2 in library
-        double A = Math.atan2((-cosDelta*cosPhi*sinH),(sinDelta-(sinPhi*sinh)));
+        double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
 
         System.out.println("A: "+A);
-        System.out.println("h: "+h);
+        //System.out.println("h: "+h);
         return HorizontalCoordinates.of(A,h);
     }
 
