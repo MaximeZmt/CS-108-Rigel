@@ -3,6 +3,7 @@ package ch.epfl.rigel.coordinates;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +20,22 @@ class EclipticToEquatorialConversionTest {
 
     @Test
     void applyWorks() { //TODO ask for precisions/accuracy
-        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
-        EquatorialCoordinates conv = etec.apply(EclipticCoordinates.of(Angle.ofDeg(139.6861111), Angle.ofDeg(4.875277778)));
-        assertEquals(143.7225092, Angle.toDeg(conv.ra()), 1e-3);
-        assertEquals(19.53569924, Angle.toDeg(conv.dec()), 1e-2);
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.of(
+                2009,
+                7,
+                6,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC"))
+
+        );
+
+        EquatorialCoordinates conv = etec.apply(
+                EclipticCoordinates.of(Angle.ofDMS(139,41,10), Angle.ofDMS(4,52,31)));
+        assertEquals(9.581478170200256, conv.raHr());
+        assertEquals(0.34095012064184566, conv.dec());
     }
 
 

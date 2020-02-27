@@ -62,7 +62,7 @@ class HorizontalCoordinatesTest {
     void angularDistanceCheck(){
         HorizontalCoordinates coord1 = HorizontalCoordinates.ofDeg(6.5682,46.5183);
         HorizontalCoordinates coord2 = HorizontalCoordinates.ofDeg(8.5476,47.3763);
-        assertEquals(0.0279,coord1.angularDistanceTo(coord2),1e-4);
+        assertEquals(0.0279,coord1.angularDistanceTo(coord2),1e-4); //TODO check precision
     }
 
 }
