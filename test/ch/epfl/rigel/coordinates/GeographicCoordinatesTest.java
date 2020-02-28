@@ -39,4 +39,23 @@ class GeographicCoordinatesTest {
         assertEquals("(lon=45.3457°, lat=27.6540°)", gc.toString());
     }
 
+    @Test
+    void isValidLongDeg(){
+        assertEquals(true, GeographicCoordinates.isValidLonDeg(-180));
+        assertEquals(false, GeographicCoordinates.isValidLonDeg(-181));
+        assertEquals(false, GeographicCoordinates.isValidLonDeg(180));
+        assertEquals(true, GeographicCoordinates.isValidLonDeg(179));
+        assertEquals(true, GeographicCoordinates.isValidLonDeg(0));
+
+    }
+
+    @Test
+    void isValidLatDeg() {
+        assertEquals(true, GeographicCoordinates.isValidLatDeg(-90));
+        assertEquals(true, GeographicCoordinates.isValidLatDeg(90));
+        assertEquals(false, GeographicCoordinates.isValidLatDeg(91));
+        assertEquals(false, GeographicCoordinates.isValidLatDeg(-91));
+        assertEquals(true, GeographicCoordinates.isValidLatDeg(0));
+    }
+
 }
