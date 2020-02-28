@@ -25,7 +25,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      * @param when date, time and zone
      * @param where geographic location
      */
-    public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){ //TODO put back to normal
+    public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
         double H = SiderealTime.local(when,where)- where.lon(); // 1.534726189
         double phi = where.lat();
         cosH = Math.cos(H);
