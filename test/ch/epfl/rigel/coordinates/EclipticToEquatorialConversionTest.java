@@ -19,7 +19,7 @@ class EclipticToEquatorialConversionTest {
     }
 
     @Test
-    void applyWorks() { //TODO ask for precisions/accuracy
+    void applyWorks() {
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.of(
                 2009,
                 7,

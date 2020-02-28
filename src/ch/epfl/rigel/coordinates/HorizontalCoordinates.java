@@ -90,7 +90,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @return return a string giving the Octant (E.g. for an angle of 135 degrees and s="S", e="E" it return "SE") (String)
      * @throws IllegalStateException if fails
      */
-    public String azOctantName(String n, String e, String s, String w){ //TODO Check with T.A.
+    public String azOctantName(String n, String e, String s, String w){
         int num = ((int) (azDeg()+22.5)/45)%8;
         switch(num){
             case 0:

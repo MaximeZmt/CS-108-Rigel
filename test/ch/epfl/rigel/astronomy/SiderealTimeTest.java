@@ -20,7 +20,7 @@ class SiderealTimeTest {
                 51,
                 67,
                 ZoneId.of("UTC"));
-        assertEquals(1.2220619247737088,SiderealTime.greenwich(tps)); //TODO check if precise enough
+        assertEquals(1.2220619247737088,SiderealTime.greenwich(tps));
 
         tps = ZonedDateTime.of(
                 2001,
@@ -44,6 +44,6 @@ class SiderealTimeTest {
                 ZoneId.of("UTC"));
 
         GeographicCoordinates gc = GeographicCoordinates.ofDeg(30,45);
-        assertEquals(1.74570958832716,SiderealTime.local(tps, gc), 1e-4);
+        assertEquals(1.74570958832716,SiderealTime.local(tps, gc), 1e-4);//TODO check if precise enough¬
     }
 }

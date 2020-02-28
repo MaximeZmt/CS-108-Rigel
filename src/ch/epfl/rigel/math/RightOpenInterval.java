@@ -28,7 +28,7 @@ public final class RightOpenInterval extends Interval{
      * @return a right-open interval (RightOpenInterval)
      * @throws IllegalArgumentException if low is bigger or equal to high
      */
-    public static RightOpenInterval of(double low, double high) {//TODO CHECK
+    public static RightOpenInterval of(double low, double high) {
         Preconditions.checkArgument(low<high);
         return new RightOpenInterval (low, high);
     }

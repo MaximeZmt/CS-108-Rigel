@@ -19,7 +19,7 @@ public final class Preconditions {
      */
     public static void checkArgument(boolean isTrue) {
         if(!isTrue) {
-            throw new IllegalArgumentException("checkArgumentE - InvalidArgument"); //TODO checkMessage
+            throw new IllegalArgumentException("checkArgumentE - InvalidArgument");
         }
     }
 

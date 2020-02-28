@@ -5,7 +5,7 @@ import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 
-import java.time.*; //TODO ask if import * or just what we need
+import java.time.*; //TODO ask if import * or just what we need 2nd
 import java.util.function.Function;
 
 // représente un changement de systèmes de coordonnées
@@ -49,7 +49,8 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         System.out.println("A: "+A);
         System.out.println("h: "+h);
 
-        //TODO Check ce bordel avec value Cambridge, attention val H, dep temps sideral et time zone, modif main
+        //TODO Check ce bordel avec value Cambridge, attention val H, dep temps sideral et time zone, modif main (clip)
+        //should we clip
         RightOpenInterval ROI = RightOpenInterval.of(0,360);
         double r = ROI.reduce(Angle.toDeg(A));
         ClosedInterval CI = ClosedInterval.of(-90,90);

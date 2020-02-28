@@ -23,7 +23,7 @@ public enum Epoch {
 
     private ZonedDateTime date;
 
-    //TODO ask if javadoc
+    //TODO ask if javadoc yes
     Epoch(ZonedDateTime date){
         this.date = date;
     }
