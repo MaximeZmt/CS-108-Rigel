@@ -95,6 +95,6 @@ class SiderealTimeTest {
                 ZoneId.of("UTC+1"));
         Double st = Angle.toDeg(SiderealTime.local(tps1,gcEPFL));
         System.out.println("SiderealTime: "+st);
-    assertEquals(SiderealTime.local(tps1,gcEPFL), SiderealTime.local(tps2,gcEPFL));
+    assertEquals(SiderealTime.local(tps1,gcEPFL), SiderealTime.local(tps2,gcEPFL),1e-5);
     }
 }
