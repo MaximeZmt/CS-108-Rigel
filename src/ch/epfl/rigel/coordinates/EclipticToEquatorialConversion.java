@@ -4,11 +4,8 @@ import ch.epfl.rigel.astronomy.Epoch;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.Polynomial;
 
-import java.time.*;
+import java.time.ZonedDateTime;
 import java.util.function.Function;
-
-//représente un changement de système de coordonnées depuis les coordonnées
-// écliptiques vers les coordonnées équatoriales, à un instant donné.
 
 /**
  * Represents a coordinate system transformation from ecliptic to equatorial at a given moment

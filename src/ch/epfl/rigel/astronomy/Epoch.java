@@ -1,5 +1,6 @@
 package ch.epfl.rigel.astronomy;
 
+
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
@@ -23,7 +24,11 @@ public enum Epoch {
 
     private ZonedDateTime date;
 
-    //TODO ask if javadoc yes
+    /**
+     * Basic constructor for Epoch
+     *
+     * @param date zone, date and time
+     */
     Epoch(ZonedDateTime date){
         this.date = date;
     }

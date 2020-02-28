@@ -5,7 +5,6 @@ import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 
-import java.rmi.UnexpectedException;
 import java.util.Locale;
 
 

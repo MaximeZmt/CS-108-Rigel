@@ -2,14 +2,9 @@ package ch.epfl.rigel.coordinates;
 
 import ch.epfl.rigel.astronomy.SiderealTime;
 import ch.epfl.rigel.math.Angle;
-import ch.epfl.rigel.math.ClosedInterval;
-import ch.epfl.rigel.math.RightOpenInterval;
 
-import java.time.*; //TODO ask if import * or just what we need 2nd
+import java.time.ZonedDateTime;
 import java.util.function.Function;
-
-// représente un changement de systèmes de coordonnées
-// depuis les coordonnées équatoriales vers les coordonnées Horizontal, à un instant et pour un lieu donnés.
 
 /**
  * Represents a coordinate system transformation from ecliptic to equatorial at a given moment and location
