@@ -31,8 +31,8 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      * @param where geographic location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){ //TODO put back to normal
-        double H = 1.534726189;//SiderealTime.local(when,where)- where.lon(); // where.lon should be right ascencion
-        double phi = where.lat(); //-> finish implementation
+        double H = SiderealTime.local(when,where)- where.lon(); // 1.534726189
+        double phi = where.lat();
         cosH = Math.cos(H);
         sinH = Math.sin(H);
         cosPhi = Math.cos(phi);
@@ -49,15 +49,8 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         System.out.println("A: "+A);
         System.out.println("h: "+h);
 
-        //TODO Check ce bordel avec value Cambridge, attention val H, dep temps sideral et time zone, modif main (clip)
-        //should we clip
-        RightOpenInterval ROI = RightOpenInterval.of(0,360);
-        double r = ROI.reduce(Angle.toDeg(A));
-        ClosedInterval CI = ClosedInterval.of(-90,90);
-        double rp = CI.clip(Angle.toDeg(h));
 
-
-        return HorizontalCoordinates.ofDeg(r,rp);
+        return HorizontalCoordinates.ofDeg(Angle.normalizePositive(A),Angle.normalizePositive(h));
     }
 
     @Override

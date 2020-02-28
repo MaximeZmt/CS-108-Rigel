@@ -14,8 +14,8 @@ class EquatorialToHorizontalConversionTest {
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(ZonedDateTime.now(),
                 GeographicCoordinates.ofDeg(0,52));
         HorizontalCoordinates coord = ethc.apply(EquatorialCoordinates.of(Angle.ofDeg(87.93333),Angle.ofDeg(23.21944)));
-        assertEquals(Angle.ofDeg(283), coord.az(),1e-2);
-        assertEquals(Angle.ofDeg(19), coord.alt(),1e-2);
+        assertEquals(Angle.ofDeg(283), Angle.toDeg(coord.az()),10e-3);
+        assertEquals(Angle.ofDeg(19), Angle.toDeg(coord.alt()),10e-3);
     }
 }
 
