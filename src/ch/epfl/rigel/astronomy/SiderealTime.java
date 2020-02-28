@@ -44,7 +44,7 @@ public final class SiderealTime {
      * @return SiderealTime in radian in [0;2Pi[ (double)
      */
     public static double local(ZonedDateTime when, GeographicCoordinates where){
-        return greenwich(when)+where.lon();
+        return Angle.normalizePositive(greenwich(when)+where.lon());
     }
 
 }

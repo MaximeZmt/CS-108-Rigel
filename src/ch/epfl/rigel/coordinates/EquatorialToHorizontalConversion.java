@@ -13,10 +13,9 @@ import java.util.function.Function;
  * @author Maxime Zammit (310251)
  */
 public final class EquatorialToHorizontalConversion implements Function<EquatorialCoordinates, HorizontalCoordinates> {
-    private final double cosH;
-    private final double sinH;
     private final double cosPhi;
     private final double sinPhi;
+    private final double siderealTimeResult;
 
     /**
      * Builds a coordinate system transformation between equatorial and
@@ -26,10 +25,9 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      * @param where geographic location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        double H = SiderealTime.local(when,where)- where.lon();
+        siderealTimeResult = SiderealTime.local(when,where);
         double phi = where.lat();
-        cosH = Math.cos(H);
-        sinH = Math.sin(H);
+
         cosPhi = Math.cos(phi);
         sinPhi = Math.sin(phi);
 
@@ -37,9 +35,15 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
 
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
+        double H =  siderealTimeResult - equatorialCoordinates.ra(); //1.534726189;
+        double cosH = Math.cos(H);
+        double sinH = Math.sin(H);
         double delta = equatorialCoordinates.dec(); // declinaison
         double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosH);
         double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
+
+
+
 
         System.out.println("A: "+A);
         System.out.println("h: "+h);
