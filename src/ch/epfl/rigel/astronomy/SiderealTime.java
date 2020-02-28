@@ -40,6 +40,7 @@ public final class SiderealTime {
         RightOpenInterval i0to24h = RightOpenInterval.of(0,24);
         double reducedS0 = i0to24h.reduce(s0V+s1V);
         return Angle.ofHr(reducedS0); // miss radian conversion
+
     }
 
     /**

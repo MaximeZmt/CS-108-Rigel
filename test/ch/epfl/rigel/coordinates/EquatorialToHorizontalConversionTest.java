@@ -15,7 +15,7 @@ class EquatorialToHorizontalConversionTest {
                 ZonedDateTime tps = ZonedDateTime.of(
 
         );
-        
+
          */
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(ZonedDateTime.now(),
                 GeographicCoordinates.ofDeg(0,52));
