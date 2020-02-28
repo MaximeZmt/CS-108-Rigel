@@ -11,6 +11,12 @@ class EquatorialToHorizontalConversionTest {
 
     @Test
     void applyWorks(){
+        /*
+                ZonedDateTime tps = ZonedDateTime.of(
+
+        );
+        
+         */
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(ZonedDateTime.now(),
                 GeographicCoordinates.ofDeg(0,52));
         HorizontalCoordinates coord = ethc.apply(EquatorialCoordinates.of(Angle.ofDeg(87.93333),Angle.ofDeg(23.21944)));
