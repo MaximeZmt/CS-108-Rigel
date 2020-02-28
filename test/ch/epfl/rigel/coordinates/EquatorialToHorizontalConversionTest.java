@@ -49,6 +49,9 @@ class EquatorialToHorizontalConversionTest {
         GeographicCoordinates gcEPFL = GeographicCoordinates.ofDeg(6.5682,46.5183);
         EquatorialToHorizontalConversion ethc2 = new EquatorialToHorizontalConversion(tps1, gcEPFL);
         EquatorialToHorizontalConversion ethc3 = new EquatorialToHorizontalConversion(tps2,gcEPFL);
+        System.out.println("KDO : "+ethc2.apply(ecRigel).altDeg());
+        System.out.println("KDO : "+ethc2.apply(ecRigel).azDeg());
+        assertEquals(ethc2.apply(ecRigel).azDeg(),ethc3.apply(ecRigel).azDeg());
         assertEquals(ethc2.apply(ecRigel).altDeg(),ethc3.apply(ecRigel).altDeg());
     }
 }

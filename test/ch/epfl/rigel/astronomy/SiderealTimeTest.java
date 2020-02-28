@@ -20,7 +20,7 @@ class SiderealTimeTest {
                 51,
                 67,
                 ZoneId.of("UTC"));
-        assertEquals(1.2220619247737088,SiderealTime.greenwich(tps));
+        assertEquals(1.2220619247737088,SiderealTime.greenwich(tps),1e-10);
 
         tps = ZonedDateTime.of(
                 2001,
@@ -31,7 +31,7 @@ class SiderealTimeTest {
                 0,
                 0,
                 ZoneId.of("UTC"));
-        assertEquals(5.355270290366605,SiderealTime.greenwich(tps));
+        assertEquals(5.355270290366605,SiderealTime.greenwich(tps),1e-10);
 
         tps = ZonedDateTime.of(
                 2004,
@@ -42,7 +42,7 @@ class SiderealTimeTest {
                 0,
                 0,
                 ZoneId.of("UTC"));
-        assertEquals(2.9257399567031235,SiderealTime.greenwich(tps));
+        assertEquals(2.9257399567031235,SiderealTime.greenwich(tps),1e-10);
 
         tps = ZonedDateTime.of(
                 2001,
