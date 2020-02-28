@@ -30,7 +30,7 @@ public final class SiderealTime {
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
         ZonedDateTime truncatedDays = when.truncatedTo(ChronoUnit.DAYS);
         double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
-        System.out.println("centuriesUntil :" + centuriesUntil);
+        //System.out.println("centuriesUntil :" + centuriesUntil);
 
         double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
         //System.out.println("deltaHours :" + deltaHours);
@@ -42,7 +42,7 @@ public final class SiderealTime {
         //System.out.println("s1 :" + s1.at(deltaHours));
 
 
-        System.out.println("s :" + s);
+        //System.out.println("s :" + s);
 
         return Angle.ofHr(s);
 

@@ -52,10 +52,10 @@ class EquatorialToHorizontalConversionTest {
         GeographicCoordinates gcEPFL = GeographicCoordinates.ofDeg(6.5682,46.5183);
         EquatorialToHorizontalConversion ethc2 = new EquatorialToHorizontalConversion(tps1, gcEPFL);
         EquatorialToHorizontalConversion ethc3 = new EquatorialToHorizontalConversion(tps2,gcEPFL);
-        System.out.println("KDO : "+ethc2.apply(ecRigel).altDeg());
-        System.out.println("KDO : "+ethc2.apply(ecRigel).azDeg());
-        assertEquals(ethc2.apply(ecRigel).azDeg(),ethc3.apply(ecRigel).azDeg());
-        assertEquals(ethc2.apply(ecRigel).altDeg(),ethc3.apply(ecRigel).altDeg());
+        //System.out.println("Altitude : "+ethc2.apply(ecRigel).altDeg());
+        //System.out.println("Azimuth : "+ethc2.apply(ecRigel).azDeg());
+        assertEquals(ethc2.apply(ecRigel).azDeg(),ethc3.apply(ecRigel).azDeg(), 1e-1);
+        assertEquals(ethc2.apply(ecRigel).altDeg(),ethc3.apply(ecRigel).altDeg(), 1e-1);
 
 
 
