@@ -41,8 +41,6 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         double delta = equatorialCoordinates.dec(); // declinaison
         double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosH);
         double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
-        //System.out.println("A: "+A);
-        //System.out.println("h: "+h);
         return HorizontalCoordinates.of(Angle.normalizePositive(A),h);
     }
 

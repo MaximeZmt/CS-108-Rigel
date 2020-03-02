@@ -3,13 +3,19 @@ package ch.epfl.rigel.coordinates;
 import java.util.Locale;
 import java.util.function.Function;
 
+/**
+ * Represents a stereographic projection of horizontal coordinates
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public final class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
 
     private final HorizontalCoordinates center;
     private final double cosPhi1;
     private final double sinPhi1;
     private double lambda0;
-
+    
     public StereographicProjection(HorizontalCoordinates center){
         this.center = center;
         double phi = center.alt();

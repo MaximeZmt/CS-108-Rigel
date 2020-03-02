@@ -17,14 +17,31 @@ public final class CartesianCoordinates {
         this.y = y;
     }
 
+    /**
+     * Creates a cartesian coordinate of abscissa x and ordinate y
+     *
+     * @param x abscissa
+     * @param y ordinate
+     * @return a cartesian coordinate with the given x and y (CartesianCoordinates)
+     */
     public static CartesianCoordinates of(double x, double y){
         return new CartesianCoordinates(x,y);
     }
 
+    /**
+     * Getter for the x coordinate
+     *
+     * @return x (double)
+     */
     public double x(){
         return x;
     }
 
+    /**
+     * Getter for the y coordinate
+     *
+     * @return y (double)
+     */
     public double y(){
         return y;
     }
