@@ -60,4 +60,5 @@ public final class CartesianCoordinates {
     public String toString() {
         return String.format(Locale.ROOT,"(x=%.4f ; y=%.4f)",x,y);
     }
+    //TODO Check if in String %.4f is enough-> if yes, correct the test
 }
