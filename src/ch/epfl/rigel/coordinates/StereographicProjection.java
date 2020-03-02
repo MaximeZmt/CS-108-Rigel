@@ -26,7 +26,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
     HorizontalCoordinates inverseApply(CartesianCoordinates xy){
         return null;
     }
-    
+
     @Override
     public CartesianCoordinates apply(HorizontalCoordinates horizontalCoordinates) {
         return null;
