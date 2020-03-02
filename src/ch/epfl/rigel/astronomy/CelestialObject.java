@@ -5,6 +5,13 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
 import java.util.Objects;
 
+/**
+ * Represents a Celestial Object
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
+
 public abstract class CelestialObject {
     private final String name;
     private final EquatorialCoordinates equatorialPos;
@@ -38,9 +45,8 @@ public abstract class CelestialObject {
         return equatorialPos;
     }
 
-
-    //TODO check if enough as info (first seen in corr yes but is needed "info: %name%")
-    public String info(){ //until now we use the name as an information
+    
+    public String info(){ //TODO check if enough as info (first seen in corr yes but is needed "info: %name%")
         return name;
     }
 

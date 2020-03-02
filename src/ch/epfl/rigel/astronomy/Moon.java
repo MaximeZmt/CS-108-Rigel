@@ -6,6 +6,14 @@ import ch.epfl.rigel.math.ClosedInterval;
 
 import java.util.Locale;
 
+/**
+ * Represents The Moon at a certain moment
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
+
+
 public final class Moon extends CelestialObject {
 
     private final double phase;
