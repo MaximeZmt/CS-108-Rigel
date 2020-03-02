@@ -15,7 +15,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
     private final double cosPhi1;
     private final double sinPhi1;
     private double lambda0;
-    
+
     public StereographicProjection(HorizontalCoordinates center){
         this.center = center;
         double phi = center.alt();
