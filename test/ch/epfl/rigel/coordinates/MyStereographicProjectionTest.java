@@ -22,8 +22,8 @@ class MyStereographicProjectionTest {
         HorizontalCoordinates hc = HorizontalCoordinates.ofDeg(10,-10);
         CartesianCoordinates cc = sp.apply(hc);
         HorizontalCoordinates nhc = sp.inverseApply(cc);
-        assertEquals(hc.azDeg(),nhc.azDeg());
-        assertEquals(hc.altDeg(),nhc.altDeg());
+        assertEquals(hc.azDeg(),nhc.azDeg(), 1e-8);
+        assertEquals(hc.altDeg(),nhc.altDeg(), 1e-8);
 
     }
 
