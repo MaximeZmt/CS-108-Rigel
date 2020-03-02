@@ -30,9 +30,9 @@ class MyCartesianCoordinatesTest {
 
     @Test
     void toStringWorks(){
-        double x = 10987.99987;
-        double y = -9999999.99999;
+        double x = 234.563;
+        double y = -234444.552;
         CartesianCoordinates cc = CartesianCoordinates.of(x,y);
-        assertEquals(String.format(Locale.ROOT,"(x=%.5f ; y=%.5f)",x,y),cc.toString());
+        assertEquals(String.format(Locale.ROOT,"(x=%.4f ; y=%.4f)",x,y),cc.toString());
     }
 }
