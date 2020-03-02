@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EquatorialToHorizontalConversionTest {
+class MyEquatorialToHorizontalConversionTest {
 
     @Test
     void applyWorks(){

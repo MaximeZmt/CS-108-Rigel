@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HorizontalCoordinatesTest {
+class MyHorizontalCoordinatesTest {
 
     @Test
     void trivialHorizontalCoordinatesInRadDegCreations(){
