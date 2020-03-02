@@ -19,7 +19,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
     /**
      * Builds a stereographic projection centered in the given center
      *
-     * @param center center
+     * @param center horizontal position of the center
      */
     public StereographicProjection(HorizontalCoordinates center){
         this.center = center;
@@ -41,17 +41,36 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         double y = cosPhi1/(Math.sin(phi)+sinPhi1);
         return CartesianCoordinates.of(0,y);
     }
-    
+
+    /**
+     * Computes the radius of the circle corresponding to the projection of the parallel
+     *
+     * @param parallel horizontal coordinate of the parallel
+     * @return radius of the circle (double)
+     */
     public double circleRadiusForParallel(HorizontalCoordinates parallel){
         double phi = parallel.alt();
         double rho = Math.cos(phi)/(Math.sin(phi)+sinPhi1);
         return rho;
     }
 
+    /**
+     * Computes the projected diameter of a sphere with the given angular size
+     * centered on the center of projection, supposing that it is on the horizon
+     *
+     * @param rad angular size
+     * @return the projected diameter (double)
+     */
     public double applyToAngle(double rad){
         return 2*Math.tan(rad/4);
     }
 
+    /**
+     * Computes the horizontal coordinates of a point that has for projection the given cartesian coordinate
+     *
+     * @param xy cartesian coordinate
+     * @return inverse of the projection (HorizontalCoordinates)
+     */
     public HorizontalCoordinates inverseApply(CartesianCoordinates xy){
         double x = xy.x();
         double y = xy.y();

@@ -61,7 +61,14 @@ class MyStereographicProjectionTest {
         CartesianCoordinates ncc = sp.apply(hc);
         assertEquals(cc.x(),ncc.x(), 1e-8);
         assertEquals(cc.y(),ncc.y(), 1e-8);
+    }
 
+    @Test
+    void applyIs0OnSameCoordinateAsCenter(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(3.6,1.2));
+        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.of(3.6,1.2));
+        assertEquals(0, cc.x());
+        assertEquals(0,cc.y());
     }
 
 
