@@ -41,4 +41,28 @@ class MyStereographicProjectionTest {
         assertEquals(Double.POSITIVE_INFINITY,sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(23,0)).y());
     }
 
+    @Test
+    void circleRadiusForParallelIsInfinity(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,0));
+        assertEquals(Double.POSITIVE_INFINITY, sp.circleRadiusForParallel(HorizontalCoordinates.ofDeg(23,0)));
+    }
+
+    @Test
+    void applyToAngleIs0OnNullAngularDistance(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,0));
+        assertEquals(0,sp.applyToAngle(0));
+    }
+
+    @Test
+    void applyInverseApplyBoomerang2(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0,0));
+        CartesianCoordinates cc = CartesianCoordinates.of(25,26);
+        HorizontalCoordinates hc = sp.inverseApply(cc);
+        CartesianCoordinates ncc = sp.apply(hc);
+        assertEquals(cc.x(),ncc.x(), 1e-8);
+        assertEquals(cc.y(),ncc.y(), 1e-8);
+
+    }
+
+
 }
