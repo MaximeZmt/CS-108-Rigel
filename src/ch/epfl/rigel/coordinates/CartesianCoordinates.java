@@ -34,11 +34,11 @@ public final class CartesianCoordinates {
 
     @Override
     public boolean equals(Object obj) {
-        throw new UnsupportedOperationException("Called equals from CarftesianCoordinates");
+        throw new UnsupportedOperationException("Called equals from CartesianCoordinates");
     }
 
     @Override
     public String toString() {
-        return String.format("(%.4f ; %.4f)",x,y);
+        return String.format("(x=%.4f ; y=%.4f)",x,y);
     }
 }
