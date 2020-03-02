@@ -12,12 +12,19 @@ import java.util.Locale;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-
-
 public final class Moon extends CelestialObject {
 
     private final double phase;
 
+    /**
+     * Builds an object representing the moon with the given equatorial position, angular size, magnitude and phase
+     *
+     * @param equatorialPos equatorial Position
+     * @param angularSize angular Size
+     * @param magnitude magnitude
+     * @param phase phase
+     * @throws IllegalArgumentException if the phase is not in the interval [0,1]
+     */
     public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
         super("Lune", equatorialPos, angularSize, magnitude);
         ClosedInterval phaseInterval = ClosedInterval.of(0,1);

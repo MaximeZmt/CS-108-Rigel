@@ -16,6 +16,11 @@ public final class StereographicProjection implements Function<HorizontalCoordin
     private final double sinPhi1;
     private double lambda0;
 
+    /**
+     * Builds a stereographic projection centered in the given center
+     *
+     * @param center center
+     */
     public StereographicProjection(HorizontalCoordinates center){
         this.center = center;
         double phi = center.alt();
@@ -24,12 +29,19 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         lambda0 = center.az();
     }
 
+    /**
+     * Computes the coordinates of the center of the circle corresponding to the parallel
+     * going through the given horizontal coordinate
+     *
+     * @param hor horizontal coordinate
+     * @return coordinates of the center of the circle (CartesianCoordinates)
+     */
     public CartesianCoordinates circleCenterForParallel(HorizontalCoordinates hor){
         double phi = hor.alt();
         double y = cosPhi1/(Math.sin(phi)+sinPhi1);
         return CartesianCoordinates.of(0,y);
     }
-
+    
     public double circleRadiusForParallel(HorizontalCoordinates parallel){
         double phi = parallel.alt();
         double rho = Math.cos(phi)/(Math.sin(phi)+sinPhi1);
