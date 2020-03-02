@@ -35,4 +35,10 @@ class MyStereographicProjectionTest {
         System.out.println(sp);
     }
 
+    @Test
+    void circleCenterForParallelIsInfinity(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,0));
+        assertEquals(Double.POSITIVE_INFINITY,sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(23,0)).y());
+    }
+
 }
