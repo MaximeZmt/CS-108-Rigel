@@ -45,7 +45,7 @@ public abstract class CelestialObject {
         return equatorialPos;
     }
 
-    
+
     public String info(){ //TODO check if enough as info (first seen in corr yes but is needed "info: %name%")
         return name;
     }
