@@ -5,7 +5,7 @@ import ch.epfl.rigel.coordinates.*;
 
 import java.time.ZonedDateTime;
 import java.util.function.Function;
-
+/*
 final class SignatureChecks_4 {
     void checkCartesianCoordinates() {
         double d = 0;
@@ -71,3 +71,6 @@ final class SignatureChecks_4 {
         c = m;
     }
 }
+
+
+ */
