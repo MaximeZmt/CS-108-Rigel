@@ -39,6 +39,6 @@ public final class CartesianCoordinates {
 
     @Override
     public String toString() {
-        return String.format("(%,%)",x,y);
+        return String.format("(%.4f ; %.4f)",x,y);
     }
 }
