@@ -1,54 +1,65 @@
 package ch.epfl.rigel.coordinates;
 
-import ch.epfl.rigel.math.Angle;
+import ch.epfl.test.TestRandomizer;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static java.lang.Math.PI;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EclipticCoordinatesTest {
-
     @Test
-    void trivialTestEclipticCoordinatesMethodGen(){
-        EclipticCoordinates coord1 = EclipticCoordinates.of(Angle.ofDeg(180),Angle.ofDeg(-89));
-        assertEquals(coord1.latDeg(),Angle.toDeg(coord1.lat()));
-        assertEquals(coord1.lonDeg(),Angle.toDeg(coord1.lon()));
-        assertEquals(180,coord1.lonDeg(),1e-10);
-        assertEquals(-89,coord1.latDeg(),1e-10);
+    void eclOfWorksWithValidCoordinates() {
+        var rng = TestRandomizer.newRandom();
+        for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
+            var lon = rng.nextDouble(0, 2d * PI);
+            var lat = rng.nextDouble(-PI / 2d, PI / 2d);
+            var c = EclipticCoordinates.of(lon, lat);
+            assertEquals(lon, c.lon(), 1e-8);
+            assertEquals(lat, c.lat(), 1e-8);
+        }
     }
 
-
     @Test
-    void stringOutputTest(){
-        assertEquals("(λ=22.5000°, β=18.0000°)",EclipticCoordinates.of(Angle.ofDeg(22.5),Angle.ofDeg(18.0)).toString());
-        assertEquals("(λ=0.0000°, β=0.0000°)",EclipticCoordinates.of(0,0).toString());
-    }
-
-
-    @Test
-    void throwAnErrorWithLimitValue(){
-        assertThrows(IllegalArgumentException.class,()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(360),Angle.ofDeg(0));
+    void eclOfFailsWithInvalidCoordinates() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            EclipticCoordinates.of(2d * PI + 1e-8, 0);
         });
-        assertThrows(IllegalArgumentException.class,()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(-1),Angle.ofDeg(0));
+        assertThrows(IllegalArgumentException.class, () -> {
+            EclipticCoordinates.of(-1e-8, 0);
         });
-        assertThrows(IllegalArgumentException.class,()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10),Angle.ofDeg(91));
+        assertThrows(IllegalArgumentException.class, () -> {
+            EclipticCoordinates.of(0, PI + 1e-8);
         });
-        assertThrows(IllegalArgumentException.class,()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10),Angle.ofDeg(-91));
-        });
-        assertDoesNotThrow(()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(0),Angle.ofDeg(-90));
-        });
-        assertDoesNotThrow(()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(359),Angle.ofDeg(90));
-        });
-        assertDoesNotThrow(()->{
-            EclipticCoordinates coordDeg = EclipticCoordinates.of(Angle.ofDeg(10.34983749379473728929),Angle.ofDeg(90));
+        assertThrows(IllegalArgumentException.class, () -> {
+            EclipticCoordinates.of(0, -(PI + 1e-8));
         });
     }
 
+    @Test
+    void lonDegAndLatDegReturnCoordinatesInDegrees() {
+        var rng = TestRandomizer.newRandom();
+        for (int i = 0; i < TestRandomizer.RANDOM_ITERATIONS; i++) {
+            var lon = rng.nextDouble(0, 2d * PI);
+            var lat = rng.nextDouble(-PI / 2d, PI / 2d);
+            var c = EclipticCoordinates.of(lon, lat);
+            assertEquals(Math.toDegrees(lon), c.lonDeg(), 1e-8);
+            assertEquals(Math.toDegrees(lat), c.latDeg(), 1e-8);
+        }
+    }
 
+    @Test
+    void ecEqualsThrowsUOE() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            var c = EclipticCoordinates.of(0, 0);
+            c.equals(c);
+        });
+    }
 
+    @Test
+    void ecHashCodeThrowsUOE() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            EclipticCoordinates.of(0, 0).hashCode();
+        });
+    }
 }
