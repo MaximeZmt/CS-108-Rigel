@@ -19,7 +19,6 @@ public final class SiderealTime {
      Use two method withZoneSameInstant and truncatedTo
      */
 
-
     /**
      * Computes the siderealTime (all related to Greenwich even timezone) knowing when in greenwich
      *
@@ -30,20 +29,10 @@ public final class SiderealTime {
         when = when.withZoneSameInstant(ZoneId.of("UTC"));
         ZonedDateTime truncatedDays = when.truncatedTo(ChronoUnit.DAYS);
         double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
-        //System.out.println("centuriesUntil :" + centuriesUntil);
-
         double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
-        //System.out.println("deltaHours :" + deltaHours);
-
         Polynomial s0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
         Polynomial s1 = Polynomial.of(1.002737909,0);
         double s = HR_INTERVAL.reduce(HR_INTERVAL.reduce(s0.at(centuriesUntil))+s1.at(deltaHours));
-        //System.out.println("s0 :" + HR_INTERVAL.reduce(s0.at(centuriesUntil)));
-        //System.out.println("s1 :" + s1.at(deltaHours));
-
-
-        //System.out.println("s :" + s);
-
         return Angle.ofHr(s);
 
     }
