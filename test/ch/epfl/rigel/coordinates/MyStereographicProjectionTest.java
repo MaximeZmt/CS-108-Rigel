@@ -78,5 +78,15 @@ class MyStereographicProjectionTest {
         System.out.println(cc.toString());
     }
 
+     @Test
+    void test2(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(0 ,0));
+        CartesianCoordinates cc = sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(0,0));
+        assertEquals(Double.POSITIVE_INFINITY, cc.y());
+        double cc2 = sp.circleRadiusForParallel(HorizontalCoordinates.ofDeg(0,0));
+        assertEquals(Double.POSITIVE_INFINITY, cc2);
+
+     }
+
 
 }
