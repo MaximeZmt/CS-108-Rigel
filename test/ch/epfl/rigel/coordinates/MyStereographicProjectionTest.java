@@ -74,7 +74,7 @@ class MyStereographicProjectionTest {
     @Test
     void test(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(0 ,0 ));
-        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.ofDeg(50 ,40 ));
+        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.ofDeg(50 ,50 ));
         System.out.println(cc.toString());
     }
 
