@@ -98,5 +98,9 @@ class MyStereographicProjectionTest {
 
      }
 
+     /*
+     source data from 
+     Snyder, J. P. Map Projections--A Working Manual. U. S. Geological Survey Professional Paper 1395. Washington, DC: U. S. Government Printing Office, pp. 154-163, 1987.
+      */
 
 }
