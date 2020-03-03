@@ -72,14 +72,24 @@ class MyStereographicProjectionTest {
     }
 
     @Test
-    void test(){
+    void ApplyTest(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(0 ,0 ));
-        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.ofDeg(50 ,50 ));
-        System.out.println(cc.toString());
+
+        CartesianCoordinates cc = sp.apply(HorizontalCoordinates.ofDeg(40 ,90 ));
+        assertEquals(0.00000,cc.x()*2,1e-5);
+        assertEquals(2.00000,cc.y()*2,1e-5);
+
+        cc = sp.apply(HorizontalCoordinates.ofDeg(10 ,70 ));
+        assertEquals(0.08885,cc.x()*2,1e-5);
+        assertEquals(1.40586,cc.y()*2,1e-5);
+
+         cc = sp.apply(HorizontalCoordinates.ofDeg(60 ,80 ));
+        assertEquals(0.27674,cc.x()*2,1e-5);
+        assertEquals(1.81227,cc.y()*2,1e-5);
     }
 
      @Test
-    void test2(){
+    void ParallelTest(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(0 ,0));
         CartesianCoordinates cc = sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(0,0));
         assertEquals(Double.POSITIVE_INFINITY, cc.y());
