@@ -48,4 +48,14 @@ class EpochTest {
         assertEquals(-20,Epoch.J2000.julianCenturiesUntil(d), 1e-3);
     }
 
+    @Test
+    void centuriesUntilWorksOnMinusCenturies(){
+        ZonedDateTime d = ZonedDateTime.of(
+                LocalDate.of(-1, Month.DECEMBER, 17),
+                LocalTime.of(12, 00),
+                ZoneOffset.UTC);
+        assertEquals(-20, Epoch.J2000.julianCenturiesUntil(d));
+
+    }
+
 }
