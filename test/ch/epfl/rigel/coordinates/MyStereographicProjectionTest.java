@@ -32,7 +32,7 @@ class MyStereographicProjectionTest {
     @Test
     void ToStringTest(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,1.4444));
-        System.out.println(sp);
+        //System.out.println(sp);
     }
 
     @Test

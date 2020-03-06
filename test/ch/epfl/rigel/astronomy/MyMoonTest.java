@@ -10,7 +10,7 @@ class MyMoonTest {
     @Test
     void testOnPrint(){
         Moon m = new Moon(EquatorialCoordinates.of(0,0),0,0,0.3752f);
-        System.out.println(m.toString());
+        //System.out.println(m.toString());
     }
 
     @Test

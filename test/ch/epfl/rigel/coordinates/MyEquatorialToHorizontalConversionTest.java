@@ -28,8 +28,8 @@ class MyEquatorialToHorizontalConversionTest {
         HorizontalCoordinates hc = ethc.apply(
                 EquatorialCoordinates.of(Angle.ofHr(21.5),Angle.ofDMS(21,44,45.3255)));
 
-        assertEquals(Angle.ofDMS(208,46,43.57), hc.az());
-        assertEquals(Angle.ofDMS(57,46,02.06), hc.alt());
+        assertEquals(Angle.ofDMS(208,46,43.57), hc.az(), 1e-2);
+        assertEquals(Angle.ofDMS(57,46,02.06), hc.alt(), 1e-3);
 
     }
 
