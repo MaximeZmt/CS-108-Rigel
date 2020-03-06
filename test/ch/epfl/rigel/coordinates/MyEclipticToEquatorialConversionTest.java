@@ -39,5 +39,58 @@ class MyEclipticToEquatorialConversionTest {
         assertEquals(Angle.ofHr(9.581452778), conv.ra(),1e-6);
     }
 
+    @Test
+    void applyWorks2WCamb(){
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.of(
+                2009,
+                7,
+                6,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC"))
+        );
+
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDMS(139,41,10),Angle.ofDMS(4,52,31)));
+        assertEquals(143.722173,ec.raDeg(),1e-6);
+        assertEquals(19.535003,ec.decDeg(),1e-6);
+
+
+    }
+    @Test
+    void ecEqualsThrowsUOE() {
+        ZonedDateTime tps = ZonedDateTime.of(
+                1980,
+                04,
+                22,
+                14,
+                36,
+                51,
+                67,
+                ZoneId.of("UTC"));
+        assertThrows(UnsupportedOperationException.class, () -> {
+            EclipticToEquatorialConversion etc = new EclipticToEquatorialConversion(tps);
+            etc.equals(null);
+        });
+    }
+
+    @Test
+    void ecHashCodeThrowsUOE() {
+        ZonedDateTime tps = ZonedDateTime.of(
+                1980,
+                04,
+                22,
+                14,
+                36,
+                51,
+                67,
+                ZoneId.of("UTC"));
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            EclipticToEquatorialConversion etc = new EclipticToEquatorialConversion(tps);
+            etc.hashCode();
+        });
+    }
 
 }

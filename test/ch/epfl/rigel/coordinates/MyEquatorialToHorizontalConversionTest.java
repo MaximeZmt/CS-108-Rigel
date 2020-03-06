@@ -81,9 +81,44 @@ class MyEquatorialToHorizontalConversionTest {
         assertEquals(ethc2.apply(ecRigel).azDeg(),ethc3.apply(ecRigel).azDeg(), 1e-1);
         assertEquals(ethc2.apply(ecRigel).altDeg(),ethc3.apply(ecRigel).altDeg(), 1e-1);
 
-
-
-
     }
+
+
+    @Test
+    void ecEqualsThrowsUOE() {
+        ZonedDateTime tps = ZonedDateTime.of(
+                1980,
+                04,
+                22,
+                14,
+                36,
+                51,
+                67,
+                ZoneId.of("UTC"));
+        assertThrows(UnsupportedOperationException.class, () -> {
+            EquatorialToHorizontalConversion etc = new EquatorialToHorizontalConversion(tps,GeographicCoordinates.ofDeg(0,52));
+            etc.equals(null);
+        });
+    }
+
+    @Test
+    void ecHashCodeThrowsUOE() {
+        ZonedDateTime tps = ZonedDateTime.of(
+                1980,
+                04,
+                22,
+                14,
+                36,
+                51,
+                67,
+                ZoneId.of("UTC"));
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            EquatorialToHorizontalConversion etc = new EquatorialToHorizontalConversion(tps,GeographicCoordinates.ofDeg(0,52));
+            etc.hashCode();
+        });
+    }
+
+
 }
 
