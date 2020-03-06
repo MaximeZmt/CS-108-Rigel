@@ -9,6 +9,29 @@ import java.time.ZonedDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyEquatorialToHorizontalConversionTest {
+    @Test
+    void applyWorksWithKStarsValues(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2020,
+                03,
+                6,
+                11,
+                35,
+                00,
+                00,
+                ZoneId.of("UTC")
+        );
+
+        EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(
+                zdt, GeographicCoordinates.ofDeg(0,Angle.toDeg(Angle.ofDMS(51,28,06))));
+
+        HorizontalCoordinates hc = ethc.apply(
+                EquatorialCoordinates.of(Angle.ofHr(21.5),Angle.ofDMS(21,44,45.3255)));
+
+        assertEquals(Angle.ofDMS(208,46,43.57), hc.az());
+        assertEquals(Angle.ofDMS(57,46,02.06), hc.alt());
+
+    }
 
     @Test
     void applyWorks(){

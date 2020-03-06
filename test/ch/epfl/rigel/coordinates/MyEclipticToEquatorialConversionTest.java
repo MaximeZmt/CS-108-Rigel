@@ -34,8 +34,9 @@ class MyEclipticToEquatorialConversionTest {
 
         EquatorialCoordinates conv = etec.apply(
                 EclipticCoordinates.of(Angle.ofDMS(139,41,10), Angle.ofDMS(4,52,31)));
-        assertEquals(9.581478170200256, conv.raHr());
-        assertEquals(0.34095012064184566, conv.dec());
+
+        assertEquals(Angle.ofDMS(19,32,3.5),conv.dec(), 1e-5);
+        assertEquals(Angle.ofHr(9.581452778), conv.ra(),1e-6);
     }
 
 
