@@ -78,7 +78,7 @@ public abstract class CelestialObject {
      *
      * @return an explanation (String)
      */
-    public String info(){ //TODO check if enough as info (first seen in corr yes but is needed "info: %name%")
+    public String info(){
         return name();
     }
 
