@@ -35,7 +35,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
 
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
-        double H =  1.53472618892;//siderealTimeResult - equatorialCoordinates.ra(); //1.534726189;
+        double H =  siderealTimeResult - equatorialCoordinates.ra(); //1.53472618892;
         double cosH = Math.cos(H);
         double sinH = Math.sin(H);
         double delta = equatorialCoordinates.dec(); // declinaison
