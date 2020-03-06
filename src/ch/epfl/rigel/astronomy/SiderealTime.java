@@ -37,9 +37,8 @@ public final class SiderealTime {
         double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
         Polynomial s0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
         Polynomial s1 = Polynomial.of(1.002737909,0);
-        
+
         double s = HR_INTERVAL.reduce(s0.at(centuriesUntil)+s1.at(deltaHours));
-        System.out.println(s);
         return Angle.ofHr(s);
 
     }
