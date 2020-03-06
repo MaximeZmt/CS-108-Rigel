@@ -21,11 +21,11 @@ class MyEclipticToEquatorialConversionTest {
     @Test
     void applyWorks() {
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.of(
-                2009,
-                7,
+                2020,
+                3,
                 6,
-                0,
-                0,
+                11,
+                35,
                 0,
                 0,
                 ZoneId.of("UTC"))
