@@ -18,6 +18,8 @@ import java.time.temporal.ChronoUnit;
 public final class SiderealTime {
 
 
+    private SiderealTime(){};
+
     private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
     /*
     Class Formula are in Hr -> want to work with radian

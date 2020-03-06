@@ -10,6 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MySiderealTimeTest {
     @Test
+    void lambda(){
+        SiderealTime st = new SiderealTime();
+    }
+
+
+    @Test
     void dataTest(){
         ZonedDateTime tps = ZonedDateTime.of(
                 1980,
