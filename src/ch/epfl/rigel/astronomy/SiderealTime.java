@@ -5,11 +5,16 @@ import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.Polynomial;
 import ch.epfl.rigel.math.RightOpenInterval;
 
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Represents a sidereal time
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public final class SiderealTime {
 
 
