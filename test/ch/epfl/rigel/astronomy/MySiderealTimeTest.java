@@ -9,10 +9,6 @@ import java.time.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MySiderealTimeTest {
-    @Test
-    void lambda(){
-        SiderealTime st = new SiderealTime();
-    }
 
 
     @Test
