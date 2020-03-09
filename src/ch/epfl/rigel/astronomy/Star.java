@@ -21,7 +21,7 @@ public final class Star extends CelestialObject {
         colorTemperature = (int)(4600*Math.floor((1/(0.92*colorIndex+1.7))+(1/(0.92*colorIndex+0.62)))); //is a floor and better in constructor. Cast is also better in that case, avoid heavy transtype
     }
 
-    public int hipparcodID(){
+    public int hipparcosId(){
         return hipparcosId;
     }
 
