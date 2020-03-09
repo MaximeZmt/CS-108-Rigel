@@ -4,18 +4,19 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 
 /**
- * Generical interface Represent a model of celestial object
+ * Represents a model of a Celestial Object (generic Interface)
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
  */
 
 public interface CelestialObjectModel<O> {
     /**
-     * javadoc is here but redefined after for sun and planet model
-     * @param daysSinceJ2010
-     * @param eclipticToEquatorialConversion
-     * @return
+     * Abstract public method
+     * @param daysSinceJ2010 The number of days between the date of the modeling and J2010
+     * @param eclipticToEquatorialConversion The Converter for the coordinates in order
+     *                                       to get EquatorialCoordinates with the Ecliptic one.
+     * @return the modeled object (O) by the modeler after a number of days until J2010 (could be negative as positive)
      */
     O at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion);
-    //is public and abstract
-    //return object modelise by model for number (pos or negative) of days after j2010
-    //by using conversion of data to get it's equatorial coodinates with ecliptic coordinates
 }

@@ -6,7 +6,10 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 
 /**
- * represent model of sun
+ * Represents the model of the Sun.
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
  */
 public enum SunModel implements CelestialObjectModel<Sun> {
     SUN();
