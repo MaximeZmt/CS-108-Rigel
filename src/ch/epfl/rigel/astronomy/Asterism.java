@@ -1,5 +1,7 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.Preconditions;
+
 import java.util.List;
 
 
@@ -18,9 +20,7 @@ public final class Asterism { //immuable: liste étoile
      * @throws IllegalArgumentException Throw an error if there is no star in the object
      */
     public Asterism(List<Star> stars){
-        if(stars.isEmpty()){
-            throw new IllegalArgumentException();
-        }
+        Preconditions.checkArgument(!stars.isEmpty());
         starList = stars;
     }
 
