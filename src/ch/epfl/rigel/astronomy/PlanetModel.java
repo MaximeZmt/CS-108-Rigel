@@ -97,7 +97,9 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 radiusProjection*Math.tan(latEclipticHeliocentric)*Math.sin(lonEcliptic-lonProjection),
                 rSinLProjectionMinusLEarth);
 
-        EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(lonEcliptic,latEcliptic);
+        //TODO check if normalize is correct
+        EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
+                Angle.normalizePositive(lonEcliptic),latEcliptic);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
 
         //TODO check if cast is correct
