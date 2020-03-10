@@ -63,43 +63,43 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     //TODO check if have to use getter or attribute (or smthg else)
     //TODO check if this.attribute is necessary (or only write attribute)
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
-        double meanAnomaly = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
-        double trueAnomaly = meanAnomaly+2*orbitalEccentricity*Math.sin(meanAnomaly);
-        double radiusPlanet = (semiMajorAxis*(1-orbitalEccentricity*orbitalEccentricity))/
-                1+orbitalEccentricity*Math.cos(trueAnomaly);
-        double lonPlanet = trueAnomaly+lonPerigee;
-        double latEclipticHeliocentric = Math.asin(Math.sin(lonPlanet-lonAscendingNode)*Math.sin(orbitalInclination));
-        double radiusProjection = radiusPlanet*Math.cos(latEclipticHeliocentric);
-        double lonProjection = Math.atan2(Math.sin(lonPlanet-lonAscendingNode)*Math.cos(orbitalInclination),
-                Math.cos(lonPlanet-lonAscendingNode))+lonAscendingNode;
+        double m = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
+        double v = m+2*orbitalEccentricity*Math.sin(m);
+        double r = (semiMajorAxis*(1-orbitalEccentricity*orbitalEccentricity))/
+                (1+orbitalEccentricity*Math.cos(v));
+        double l = v+lonPerigee;
+        double psi = Math.asin(Math.sin(l-lonAscendingNode)*Math.sin(orbitalInclination));
+        double rPrime = r*Math.cos(psi);
+        double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*Math.cos(orbitalInclination),
+                Math.cos(l-lonAscendingNode))+lonAscendingNode;
 
-        double meanAnomalyEarth = (Angle.TAU/365.242191)*(daysSinceJ2010/EARTH.tropicalYear)
+        double mEarth = (Angle.TAU/365.242191)*(daysSinceJ2010/EARTH.tropicalYear)
                 +EARTH.lonJ2010-EARTH.lonPerigee;
-        double trueAnomalyEarth = meanAnomalyEarth+2*EARTH.orbitalEccentricity*Math.sin(meanAnomalyEarth);
-        double radiusEarth = (EARTH.semiMajorAxis*(1-EARTH.orbitalEccentricity*EARTH.orbitalEccentricity))/
-                1+EARTH.orbitalEccentricity*Math.cos(trueAnomalyEarth);
-        double lonEarth = trueAnomalyEarth+EARTH.lonPerigee;
+        double vEarth = mEarth+2*EARTH.orbitalEccentricity*Math.sin(mEarth);
+        double rEarth = (EARTH.semiMajorAxis*(1-EARTH.orbitalEccentricity*EARTH.orbitalEccentricity))/
+                (1+EARTH.orbitalEccentricity*Math.cos(vEarth));
+        double lEarth = vEarth+EARTH.lonPerigee;
 
-        double lonEcliptic;
-        double rSinLProjectionMinusLEarth = radiusEarth*Math.sin(lonProjection-lonEarth);
+        double lambda;
+        double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
         //TODO check if 'if' is correct (Also check for calculation of earth values)
         if (this.equals(MERCURY) || this.equals(VENUS)){
-            lonEcliptic = Math.PI+lonEarth+Math.atan2(
-                    radiusProjection*Math.sin(lonEarth-lonProjection),
-                    radiusEarth-radiusProjection*Math.cos(lonEarth-lonProjection));
+            lambda = Math.PI+lEarth+Math.atan2(
+                    rPrime*Math.sin(lEarth-lPrime),
+                    rEarth-rPrime*Math.cos(lEarth-lPrime));
         } else {
-            lonEcliptic = lonProjection+Math.atan2(rSinLProjectionMinusLEarth,
-                    radiusProjection-radiusEarth*Math.cos(lonProjection-lonEarth));
+            lambda = lPrime+Math.atan2(rEarthSinLPrimeMinusLEarth,
+                    rPrime-rEarth*Math.cos(lPrime-lEarth));
         }
 
-        double latEcliptic = Math.atan2(
-                radiusProjection*Math.tan(latEclipticHeliocentric)*Math.sin(lonEcliptic-lonProjection),
-                rSinLProjectionMinusLEarth);
+        double beta = Math.atan2(
+                rPrime*Math.tan(psi)*Math.sin(lambda-lPrime),
+                rEarthSinLPrimeMinusLEarth);
 
         //TODO check if normalize is correct
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
-                Angle.normalizePositive(lonEcliptic),latEcliptic);
+                Angle.normalizePositive(lambda),beta);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
 
         //TODO check if cast is correct

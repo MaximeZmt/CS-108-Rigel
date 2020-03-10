@@ -101,7 +101,6 @@ class MyPlanetModelTest {
     }
 
     @Test
-    //TODO value not in interval
     void atWorksOnUranusSuperiorPlanet(){
         Planet uranus = PlanetModel.URANUS.at(
                 10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
