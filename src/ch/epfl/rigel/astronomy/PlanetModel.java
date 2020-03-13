@@ -107,8 +107,14 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 Angle.normalizePositive(lambda),beta);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
 
+        double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
+        double theta = angularSize/rho;
+
+        double phase = (1+Math.cos(lambda-l))/2;
+        double magn = magnitude+5*Math.log10((r*rho)/Math.sqrt(phase));
+
         //TODO check if cast is correct
-        return new Planet(nameFr, equatorialCoordinates, (float)angularSize, (float)magnitude);
+        return new Planet(nameFr, equatorialCoordinates, (float)theta, (float)magn);
 
     }
 }
