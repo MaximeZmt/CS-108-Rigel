@@ -29,7 +29,7 @@ public final class Star extends CelestialObject {
      * or if the color is not in the given interval
      */
     public Star(int hipparcosId, String name, EquatorialCoordinates equatorialPos, float magnitude, float colorIndex) {
-        super(name, equatorialPos, 0, magnitude); //TODO check angular size: p4 say planet and stars are null and p 5 planet are defined, weird
+        super(name, equatorialPos, 0, magnitude);
 
         Preconditions.checkArgument(hipparcosId>=0 && colorI.contains(colorIndex));
 
