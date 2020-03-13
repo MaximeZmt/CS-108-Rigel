@@ -110,8 +110,8 @@ class MyPlanetModelTest {
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(166.310510),Angle.ofDeg(1.036466)));
         assertEquals(ec.ra(), jupiter.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), jupiter.equatorialPos().dec(),1e-8);
-        //assertEquals(12, jupiter.angularSize()); // not checked
-        assertEquals(12, jupiter.magnitude());
+        assertEquals(Angle.ofDMS(0,0,35.1), jupiter.angularSize(),1e-7); //TODO check for precision data from cambridge
+        assertEquals(-1.986222784, jupiter.magnitude(),1e-2); //TODO ask on Piazza for precision
     }
 
     @Test
