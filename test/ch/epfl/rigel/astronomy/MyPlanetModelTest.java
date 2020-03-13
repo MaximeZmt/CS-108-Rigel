@@ -1,9 +1,12 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
+import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,16 +20,28 @@ class MyPlanetModelTest {
 
     @Test
     void atWorksOnMercuryInferiorPlanet(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2003,
+                11,
+                22,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet mercury = PlanetModel.MERCURY.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Mercure", mercury.name());
         assertEquals("Mercure", mercury.info());
         //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), mercury.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), mercury.equatorialPos().dec());
-        assertEquals(12, mercury.angularSize());
-        assertEquals(12, mercury.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(253.929758),Angle.ofDeg((-2.044057))));
+        assertEquals(ec.ra(), mercury.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), mercury.equatorialPos().dec(),1e-8);
+        //assertEquals(12, mercury.angularSize());
+        //assertEquals(12, mercury.magnitude());
     }
 
     @Test
@@ -73,16 +88,29 @@ class MyPlanetModelTest {
 
     @Test
     //TODO value not in interval
-    void atWorksOnJupiterSuperiorPlanet(){
+    void atWorksOnJupiterSuperiorPlanet(){ // partially done
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2003,
+                11,
+                22,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet jupiter = PlanetModel.JUPITER.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Jupiter", jupiter.name());
         assertEquals("Jupiter", jupiter.info());
         //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), jupiter.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), jupiter.equatorialPos().dec());
-        assertEquals(12, jupiter.angularSize());
+
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(166.310510),Angle.ofDeg(1.036466)));
+        assertEquals(ec.ra(), jupiter.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), jupiter.equatorialPos().dec(),1e-8);
+        //assertEquals(12, jupiter.angularSize()); // not checked
         assertEquals(12, jupiter.magnitude());
     }
 

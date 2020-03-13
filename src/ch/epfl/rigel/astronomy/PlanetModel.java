@@ -4,6 +4,8 @@ import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.ClosedInterval;
+import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.util.List;
 
@@ -93,11 +95,14 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                     rPrime-rEarth*Math.cos(lPrime-lEarth));
         }
 
-        double beta = Math.atan2(
-                rPrime*Math.tan(psi)*Math.sin(lambda-lPrime),
-                rEarthSinLPrimeMinusLEarth);
+        double beta = Math.atan(
+                (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
+                (rEarthSinLPrimeMinusLEarth));
 
         //TODO check if normalize is correct
+        RightOpenInterval ci = RightOpenInterval.of((-Math.PI/2),(Math.PI/2));
+        System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
+        System.out.println("beta: "+Angle.toDeg(beta));
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
                 Angle.normalizePositive(lambda),beta);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
