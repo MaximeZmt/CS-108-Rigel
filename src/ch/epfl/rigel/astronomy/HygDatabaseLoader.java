@@ -49,7 +49,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
         }
 
 
-        Star star = new Star(Integer.valueOf(sarray[1]),sName, EquatorialCoordinates.of(Double.valueOf(sarray[23]),Double.valueOf(sarray[24])),,);
+        Star star = new Star(Integer.valueOf(sarray[1]),sName, EquatorialCoordinates.of(Double.valueOf(sarray[23]),Double.valueOf(sarray[24])),magnitude,colorIndex);
         builder.addStar(star);
         //StarCatalogue sc = new StarCatalogue();
     }
