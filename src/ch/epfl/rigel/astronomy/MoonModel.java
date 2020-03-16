@@ -4,8 +4,9 @@ import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
 
+public enum MoonModel implements CelestialObjectModel<Moon> { // public et immuable
+    MOON();
 
-public class MoonModel implements CelestialObjectModel<Moon> {
     private final static double LONGITUDE_MOYENNE = Angle.ofDeg(91.929336);
     private final static double LONGITUDE_MOYENE_PERIGEE = Angle.ofDeg(130.143076);
     private final static double LONGITUDE_NOEUD_ASCENDANT = Angle.ofDeg(291.682547);
@@ -46,4 +47,7 @@ public class MoonModel implements CelestialObjectModel<Moon> {
         float angularSize = (float)(Angle.ofDeg(0.5181)/pho);
         return new Moon( eclipticToEquatorialConversion.apply(EclipticCoordinates.of(lambda,beta)), angularSize, magnitude, phase);
     }
+
+
+
 }
