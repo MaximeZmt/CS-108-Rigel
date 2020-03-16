@@ -41,8 +41,8 @@ public final class StarCatalogue {
 
     public Set<Asterism> asterisms(){
         //TODO check if correct way of doing
-
-        return Collections.unmodifiableSet(Set.copyOf(asterisms));
+        Set<Asterism> ll = map.keySet();
+        return Collections.unmodifiableSet(ll);
     }
 
     public List<Integer> asterismIndices(Asterism asterism){
