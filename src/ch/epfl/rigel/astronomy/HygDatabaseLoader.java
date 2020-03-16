@@ -36,8 +36,6 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
                 hipId = Integer.valueOf(starArray[1]);
             }
 
-
-
             String sName = starArray[6];
             if (sName.equals("")){
                 sName = starArray[27]+"? "+starArray[29];
