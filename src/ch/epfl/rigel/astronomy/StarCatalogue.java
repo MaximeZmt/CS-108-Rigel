@@ -47,15 +47,54 @@ public final class StarCatalogue {
 
     public List<Integer> asterismIndices(Asterism asterism){
         Preconditions.checkArgument(this.asterisms.contains(asterism));
-        //TODO check if correct
-        List<Integer> list = new ArrayList<>();
-        for (Star s : asterism.stars()){
-            list.add(stars.indexOf(s));
-        }
-        return list;
+        return map.get(asterism);
     }
 
     public interface Loader{
         public abstract void load(InputStream inputStream, Builder builder) throws IOException;
+    }
+
+    public final static class Builder{
+
+        //StarCatalogue starCatalogue;
+        private final List<Star> starList;
+        private final List<Asterism> asterismList;
+
+        //TODO check if we have to make a constructor or not
+        Builder(){
+            starList = new ArrayList<>();
+            asterismList = new ArrayList<>();
+            //starCatalogue = new StarCatalogue(starList,asterismList);
+        }
+
+        public Builder addStar(Star star){
+            starList.add(star);
+            return this;
+        }
+
+        public List<Star> stars(){
+            //TODO check if really immuable and unmodifiable
+            return Collections.unmodifiableList(starList);
+        }
+
+        public Builder addAsterism(Asterism asterism){
+            asterismList.add(asterism);
+            return this;
+        }
+
+        public List<Asterism> asterisms(){
+            return Collections.unmodifiableList(asterismList);
+        }
+
+        public Builder loadFrom(InputStream inputStream, Loader loader) throws IOException{
+            //TODO check if correct
+            loader.load(inputStream, this);
+            return this;
+        }
+
+        public StarCatalogue build(){
+            return new StarCatalogue(starList, asterismList);
+        }
+
     }
 }
