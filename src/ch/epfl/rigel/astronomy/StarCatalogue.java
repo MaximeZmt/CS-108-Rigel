@@ -42,7 +42,7 @@ public final class StarCatalogue {
     public Set<Asterism> asterisms(){
         //TODO check if correct way of doing
 
-        return null;
+        return Collections.unmodifiableSet(Set.copyOf(asterisms));
     }
 
     public List<Integer> asterismIndices(Asterism asterism){
