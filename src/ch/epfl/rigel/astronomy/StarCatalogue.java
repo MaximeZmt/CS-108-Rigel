@@ -5,15 +5,13 @@ import javafx.util.Builder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public final class StarCatalogue {
 
     private final List<Star> stars;
     private final List<Asterism> asterisms;
+    private final Map<Asterism, List<Integer>> map;
 
     StarCatalogue(List<Star> stars, List<Asterism> asterisms){
         //TODO check if double for is good
@@ -22,8 +20,19 @@ public final class StarCatalogue {
                 Preconditions.checkArgument(stars.contains(s));
             }
         }
+
         this.stars = stars;
         this.asterisms = asterisms;
+
+        //TODO check
+        map = new HashMap<>();
+        for (Asterism a : asterisms){
+            List<Integer> indexList = new ArrayList<>();
+            for (Star s : a.stars()){
+                indexList.add(stars.indexOf(s));
+            }
+            map.put(a, indexList);
+        }
     }
 
     public List<Star> stars(){
@@ -32,12 +41,18 @@ public final class StarCatalogue {
 
     public Set<Asterism> asterisms(){
         //TODO check if correct way of doing
-        return Set.copyOf(asterisms);
+
+        return null;
     }
 
     public List<Integer> asterismIndices(Asterism asterism){
         Preconditions.checkArgument(this.asterisms.contains(asterism));
-        return null;
+        //TODO check if correct
+        List<Integer> list = new ArrayList<>();
+        for (Star s : asterism.stars()){
+            list.add(stars.indexOf(s));
+        }
+        return list;
     }
 
     public interface Loader{
