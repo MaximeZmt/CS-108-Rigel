@@ -20,18 +20,8 @@ class MyHygDatabaseLoaderTest {
         }
     }
 
-    @Test
-    void inputTest(){
-        HygDatabaseLoader hygDatabaseLoader = HygDatabaseLoader.INSTANCE;
-        InputStream hygStream = getClass().getResourceAsStream(HYG_CATALOGUE_NAME);
-        try{
-            hygDatabaseLoader.load(hygStream,null);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
 
-    /*
+
     @Test
     void hygDatabaseContainsRigel() throws IOException {
         try (InputStream hygStream = getClass()
@@ -48,6 +38,6 @@ class MyHygDatabaseLoaderTest {
         }
     }
 
-     */
+
 
 }
