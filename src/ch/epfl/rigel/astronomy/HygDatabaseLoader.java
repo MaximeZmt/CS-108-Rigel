@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.stream.Stream;
 
 
 public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et immuable
@@ -18,11 +20,13 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr); //TODO Check if this is the correct syntax
-        long numberOfStar = 5068;//br.lines().count();
-        System.out.println(numberOfStar);
-        String s = br.readLine(); // remove first line
-        for (long i = 1; i<numberOfStar;i++){
-            String line = br.readLine();
+        Stream<String> lineOfStar = br.lines();
+        Iterator i = lineOfStar.iterator();
+        i.next(); // remove first one
+        int c = 0;
+        while (i.hasNext()){
+            c++;
+            String line = i.next().toString();
             String[] starArray = line.split(",");
 
             int hipId;
@@ -54,8 +58,10 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
             }
 
             Star star = new Star(hipId,sName, EquatorialCoordinates.of(Double.valueOf(starArray[23]),Double.valueOf(starArray[24])),magnitude,colorIndex);
+            //System.out.println(star.toString());
             builder.addStar(star);
         }
+        System.out.println(c);
 
     }
 }
