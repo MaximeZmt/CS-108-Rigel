@@ -18,13 +18,24 @@ public enum AsterismLoader implements StarCatalogue.Loader{
         BufferedReader br = new BufferedReader(isr); //TODO Check if this is the correct syntax
 
         long numberOfAsterism = br.lines().count();
-        for (long i=0 ; i<numberOfAsterism ; ++i){
+        List<Star> starList = builder.stars();
+        for (long n=0 ; n<numberOfAsterism ; ++n){
+            List<Star> starListAsterism = new ArrayList<>();
             String[] hipparcosIdListString = br.readLine().split(",");
             List<Integer> hipparcosIdListInt = new ArrayList<>();
+
             for (String s : hipparcosIdListString){
                 hipparcosIdListInt.add(Integer.valueOf(s));
             }
+
+            for (int hipparcosId : hipparcosIdListInt){
+                for (Star star : starList){
+                    if (star.hipparcosId()==hipparcosId){
+                        starListAsterism.add(star);
+                    }
+                }
+            }
+            builder.addAsterism(new Asterism(starListAsterism));
         }
-        builder.addAsterism();
     }
 }
