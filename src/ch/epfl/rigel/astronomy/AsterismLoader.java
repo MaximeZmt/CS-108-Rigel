@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public enum AsterismLoader implements StarCatalogue.Loader{
 
@@ -17,11 +19,18 @@ public enum AsterismLoader implements StarCatalogue.Loader{
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr); //TODO Check if this is the correct syntax
 
-        long numberOfAsterism = br.lines().count();
+        Stream<String> lineOfAsterism = br.lines();
+        Iterator i = lineOfAsterism.iterator();
+
+        //long numberOfAsterism = br.lines().count();
         List<Star> starList = builder.stars();
-        for (long n=0 ; n<numberOfAsterism ; ++n){
+        //for (long n=0 ; n<numberOfAsterism ; ++n){
+        while (i.hasNext()){
+            String line = i.next().toString();
+            String[] hipparcosIdListString = line.split(",");
+
             List<Star> starListAsterism = new ArrayList<>();
-            String[] hipparcosIdListString = br.readLine().split(",");
+            //String[] hipparcosIdListString = br.readLine().split(",");
             List<Integer> hipparcosIdListInt = new ArrayList<>();
 
             for (String s : hipparcosIdListString){
