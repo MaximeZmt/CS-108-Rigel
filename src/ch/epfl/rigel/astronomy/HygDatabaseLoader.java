@@ -1,5 +1,6 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import javafx.util.Builder;
 
 import java.io.BufferedReader;
@@ -19,5 +20,10 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
         BufferedReader br = new BufferedReader(isr); //TODO Check if this is the correct syntax
         String s = br.readLine();
         System.out.println(s);
+        s = br.readLine();
+        String[] sarray = s.split(",");
+        System.out.println(s);
+        Star s = new Star(sarray[1],sarray[6], EquatorialCoordinates.of(Double.valueOf(sarray[23]),Double.valueOf(sarray[24])),Float.valueOf(sarray[13]),Float.valueOf(sarray[16]));
+        //StarCatalogue sc = new StarCatalogue();
     }
 }
