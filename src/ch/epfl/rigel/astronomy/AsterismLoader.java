@@ -47,5 +47,6 @@ public enum AsterismLoader implements StarCatalogue.Loader{
             //System.out.println(starListAsterism.toString());
             builder.addAsterism(new Asterism(starListAsterism));
         }
+        isr.close();
     }
 }

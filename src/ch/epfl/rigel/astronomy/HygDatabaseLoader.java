@@ -60,6 +60,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
             builder.addStar(star);
         }
         System.out.println(c);
+        isr.close();
 
     }
 }
