@@ -48,6 +48,12 @@ class MyStereographicProjectionTest {
     }
 
     @Test
+    void circleRadiusWorksOnRandomValue(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(45,45));
+        assertEquals(0.7673831804, sp.circleRadiusForParallel(HorizontalCoordinates.ofDeg(0,27)), 1e-9);
+    }
+
+    @Test
     void applyToAngleIs0OnNullAngularDistance(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,0));
         assertEquals(0,sp.applyToAngle(0));
