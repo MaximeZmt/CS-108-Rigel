@@ -26,7 +26,6 @@ class MyAsterismLoaderTest {
                 List<Star> st = a.stars();
                 Iterator ii = st.iterator();
                 Set<Integer> sss = new HashSet<>(List.of(24436,27366,26727,27989,28614,29426,28716));
-                //System.out.println(sss.toString());
 
                 while(ii.hasNext()){
                    Star star = (Star) ii.next();
