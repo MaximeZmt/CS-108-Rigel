@@ -127,6 +127,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
         double thetaArcSec = angularSize/rho;
         System.out.println("thetaArcSec: "+ thetaArcSec);
+        System.out.println("Rho: "+rho);
         double theta = Angle.ofDMS(0,0,thetaArcSec);
         System.out.println("Theta (rad):"+theta);
         double phase = (1+Math.cos(lambda-l))/2;
