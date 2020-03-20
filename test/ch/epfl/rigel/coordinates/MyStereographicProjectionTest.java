@@ -32,8 +32,8 @@ class MyStereographicProjectionTest {
 
     @Test
     void ToStringTest(){
-        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,1.4444));
-        //System.out.println(sp);
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.3,1.4454));
+        assertEquals("StereographicProjection, center : (az=0.3000 ; alt=1.4454)",sp.toString());
     }
 
     @Test
@@ -134,8 +134,9 @@ class MyStereographicProjectionTest {
     }
 
      /*
-     source data from 
-     Snyder, J. P. Map Projections--A Working Manual. U. S. Geological Survey Professional Paper 1395. Washington, DC: U. S. Government Printing Office, pp. 154-163, 1987.
+     source: some test data from
+     Snyder, J. P. Map Projections--A Working Manual. U. S. Geological Survey Professional Paper 1395. Washington,
+     DC: U. S. Government Printing Office, pp. 154-163, 1987.
       */
 
 }
