@@ -1,5 +1,6 @@
 package ch.epfl.rigel.coordinates;
 
+import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +40,12 @@ class MyStereographicProjectionTest {
     void circleCenterForParallelIsInfinity(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.2,0));
         assertEquals(Double.POSITIVE_INFINITY,sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(23,0)).y());
+    }
+
+    @Test
+    void circleCenterWorksOnRandomValues(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(45,45));
+        assertEquals(0.6089987401, sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(0,27)).y(),1e-9);
     }
 
     @Test
@@ -94,7 +101,7 @@ class MyStereographicProjectionTest {
         assertEquals(1.81227,cc.y()*2,1e-5);
     }
 
-     @Test
+    @Test
     void ParallelTest(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(0 ,0));
         CartesianCoordinates cc = sp.circleCenterForParallel(HorizontalCoordinates.ofDeg(0,0));
@@ -102,7 +109,29 @@ class MyStereographicProjectionTest {
         double cc2 = sp.circleRadiusForParallel(HorizontalCoordinates.ofDeg(0,0));
         assertEquals(Double.POSITIVE_INFINITY, cc2);
 
-     }
+    }
+
+    @Test
+    void applyToAngleWorksOnRandomValues(){
+        StereographicProjection sp = new StereographicProjection (HorizontalCoordinates.ofDeg(23, 45));
+        assertEquals(4.363330053e-3, sp.applyToAngle(Angle.ofDeg(1/2.0)), 1e-11);
+    }
+
+    @Test
+    void inverseApplyWorksOnRandomValues(){
+        StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.ofDeg(45,20));
+        assertEquals(-0.2691084761522857, sp.inverseApply(CartesianCoordinates.of(0,25)).alt());
+        assertEquals(3.9269908169872414, sp.inverseApply(CartesianCoordinates.of(0,25)).az());
+
+        StereographicProjection sp2 = new StereographicProjection(HorizontalCoordinates.ofDeg(45,45));
+        assertEquals(3.648704525474978, sp2.inverseApply(CartesianCoordinates.of(10,0)).az(),1e-6);
+    }
+
+    @Test
+    void applyWorksOnRandomValues(){
+        StereographicProjection sp = new StereographicProjection (HorizontalCoordinates.ofDeg(45,45));
+        assertEquals(-0.1316524976, sp.apply(HorizontalCoordinates.ofDeg(45,30)).y(),1e-9);
+    }
 
      /*
      source data from 
