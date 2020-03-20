@@ -14,7 +14,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
     private final HorizontalCoordinates center;
     private final double cosPhi1;
     private final double sinPhi1;
-    private double lambda0;
+    private final double lambda0;
 
     /**
      * Builds a stereographic projection centered in the given center
