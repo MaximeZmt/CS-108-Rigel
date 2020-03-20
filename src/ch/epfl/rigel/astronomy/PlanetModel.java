@@ -4,14 +4,17 @@ import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
-import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.util.List;
 
+/**
+ * Represents models of different planets of the solar system
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public enum PlanetModel implements CelestialObjectModel<Planet> {
-
-
 
     MERCURY("Mercure", 0.24085, 75.5671, 77.612, 0.205627,
             0.387098, 7.0051, 48.449, 6.74, -0.42),
@@ -40,6 +43,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     private final double lonAscendingNode;
     private final double angularSize;
     private final double magnitude;
+
 
     //TODO check if correct way for immuable list
     public static final List<PlanetModel> ALL = List.of(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE);
