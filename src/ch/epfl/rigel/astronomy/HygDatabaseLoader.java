@@ -2,7 +2,6 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,10 +10,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-
+/**
+ * Represents a HYG catalogue loader
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et immuable
-    INSTANCE();
 
+    INSTANCE();
 
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {

@@ -4,7 +4,14 @@ import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
 
+/**
+ * Represents moon model
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public enum MoonModel implements CelestialObjectModel<Moon> { // public et immuable
+
     MOON();
 
     private final static double LONGITUDE_MOYENNE = Angle.ofDeg(91.929336);
@@ -20,7 +27,6 @@ public enum MoonModel implements CelestialObjectModel<Moon> { // public et immua
         Sun sun = SunModel.SUN.at(daysSinceJ2010, eclipticToEquatorialConversion);
         //--
         double l = Angle.ofDeg(13.1763966)*daysSinceJ2010 + LONGITUDE_MOYENNE;
-
 
         double anomalie = l - (Angle.ofDeg(0.1114041) * daysSinceJ2010) - LONGITUDE_MOYENE_PERIGEE;
 
@@ -47,7 +53,4 @@ public enum MoonModel implements CelestialObjectModel<Moon> { // public et immua
         float angularSize = (float)(Angle.ofDeg(0.5181)/pho);
         return new Moon( eclipticToEquatorialConversion.apply(EclipticCoordinates.of(lambda,beta)), angularSize, magnitude, phase);
     }
-
-
-
 }

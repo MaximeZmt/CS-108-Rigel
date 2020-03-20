@@ -10,6 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Represents an asterism catalogue loader
+ *
+ * @author Michael Freeman (313215)
+ * @author Maxime Zammit (310251)
+ */
 public enum AsterismLoader implements StarCatalogue.Loader{
 
     INSTANCE();
