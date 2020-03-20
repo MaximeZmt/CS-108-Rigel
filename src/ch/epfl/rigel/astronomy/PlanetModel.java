@@ -44,10 +44,23 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     private final double angularSize;
     private final double magnitude;
 
-
-    //TODO check if correct way for immuable list
+    //immuability checked with assistant
     public static final List<PlanetModel> ALL = List.of(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE);
 
+    /**
+     * Constructor for a planet model
+     *
+     * @param nameFr french name
+     * @param tropicalYear tropical year
+     * @param lonJ2010 longitude at J2010 epoch
+     * @param lonPerigee longitude at perigee
+     * @param orbitalEccentricity orbital eccentricity
+     * @param semiMajorAxis semi major axis
+     * @param orbitalInclination orbital inclination
+     * @param lonAscendingNode longitude of the ascending node
+     * @param angularSize angular size
+     * @param magnitude magnitude
+     */
     //TODO check if private or package-private
     //TODO check if have to create attributes
     private PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
