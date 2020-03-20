@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
-/*
+
 final class SignatureChecks_6 {
     void checkMoonModel() {
         Enum<MoonModel> m1 = MoonModel.MOON;
@@ -49,4 +49,4 @@ final class SignatureChecks_6 {
     }
 }
 
- */
+

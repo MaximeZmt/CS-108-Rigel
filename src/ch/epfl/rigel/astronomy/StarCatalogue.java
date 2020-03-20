@@ -12,7 +12,7 @@ public final class StarCatalogue {
     private final List<Asterism> asterisms;
     private final Map<Asterism, List<Integer>> map;
 
-    StarCatalogue(List<Star> stars, List<Asterism> asterisms){
+    public StarCatalogue(List<Star> stars, List<Asterism> asterisms){
         //TODO check if double for is good
         for (Asterism a : asterisms){
             for (Star s : a.stars()){
@@ -59,8 +59,8 @@ public final class StarCatalogue {
         private final List<Star> starList;
         private final List<Asterism> asterismList;
 
-        //TODO check if we have to make a constructor or not
-        Builder(){
+        //TODO check if we have to make a constructor or not -> has been asked and yes: by default constructor mean without argument
+        public Builder(){
             starList = new ArrayList<>();
             asterismList = new ArrayList<>();
             //starCatalogue = new StarCatalogue(starList,asterismList);
