@@ -19,6 +19,7 @@ public final class StarCatalogue {
     private final Map<Asterism, List<Integer>> map;
 
     /**
+     * Builds a catalogue of stars and asterisms
      *
      * @param stars given stars
      * @param asterisms given asterisms
