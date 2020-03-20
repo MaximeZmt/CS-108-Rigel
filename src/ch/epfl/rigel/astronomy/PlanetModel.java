@@ -118,25 +118,25 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
 
         //TODO check if normalize is correct
         RightOpenInterval ci = RightOpenInterval.of((-Math.PI/2),(Math.PI/2));
-        System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
-        System.out.println("beta: "+Angle.toDeg(beta));
+        //System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
+        //System.out.println("beta: "+Angle.toDeg(beta));
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
                 Angle.normalizePositive(lambda),beta);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
 
         double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
         double thetaArcSec = angularSize/rho;
-        System.out.println("thetaArcSec: "+ thetaArcSec);
-        System.out.println("Rho: "+rho);
+        //System.out.println("thetaArcSec: "+ thetaArcSec);
+        //System.out.println("Rho: "+rho);
         double theta = Angle.ofDMS(0,0,thetaArcSec);
-        System.out.println("Theta (rad):"+theta);
+        //System.out.println("Theta (rad):"+theta);
         double phase = (1+Math.cos(lambda-l))/2;
         double magn = magnitude+5*Math.log10((r*rho)/Math.sqrt(phase));
-        System.out.println("MagnO: "+magn);
-        System.out.println("Magnitude: "+magnitude);
-        System.out.println("phase: "+phase);
-        System.out.println("r: "+r);
-        System.out.println("rho: "+rho);
+        //System.out.println("MagnO: "+magn);
+        //System.out.println("Magnitude: "+magnitude);
+        //System.out.println("phase: "+phase);
+        //System.out.println("r: "+r);
+        //System.out.println("rho: "+rho);
 
         //TODO check if cast is correct
         return new Planet(nameFr, equatorialCoordinates, (float)theta, (float)magn);
