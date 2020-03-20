@@ -3,7 +3,7 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
 /**
- * Represents The Earth at a certain moment
+ * Represents a planet at a certain moment
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
