@@ -36,54 +36,78 @@ class MyPlanetModelTest {
 
         assertEquals("Mercure", mercury.name());
         assertEquals("Mercure", mercury.info());
-        //TODO implement with real values
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(253.929758),Angle.ofDeg((-2.044057))));
         assertEquals(ec.ra(), mercury.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), mercury.equatorialPos().dec(),1e-8);
-        //assertEquals(12, mercury.angularSize());
-        //assertEquals(12, mercury.magnitude());
     }
 
     @Test
     void atWorksOnVenusInferiorPlanet(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2025,
+                6,
+                27,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet venus = PlanetModel.VENUS.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Vénus", venus.name());
         assertEquals("Vénus", venus.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), venus.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), venus.equatorialPos().dec());
-        assertEquals(12, venus.angularSize());
-        assertEquals(12, venus.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(51.64269074),Angle.ofDeg((-2.679955299))));
+        assertEquals(ec.ra(), venus.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), venus.equatorialPos().dec(),1e-8);
     }
 
     @Test
-    void atWorksOnEarthSuperiorPlanet(){
+    void atWorksOnEarthSuperiorPlanet(){ //TODO check with earth
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2000,
+                6,
+                16,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet earth = PlanetModel.EARTH.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Terre", earth.name());
         assertEquals("Terre", earth.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), earth.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), earth.equatorialPos().dec());
-        assertEquals(12, earth.angularSize());
-        assertEquals(12, earth.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(175.1726954),Angle.ofDeg((0))));
+        assertEquals(ec.ra(), earth.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), earth.equatorialPos().dec(),1e-8);
     }
 
     @Test
     void atWorksOnMarsSuperiorPlanet(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2000,
+                6,
+                16,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet mars = PlanetModel.MARS.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Mars", mars.name());
         assertEquals("Mars", mars.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), mars.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), mars.equatorialPos().dec());
-        assertEquals(12, mars.angularSize());
-        assertEquals(12, mars.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(89.91150061),Angle.ofDeg((0.773800175))));
+        assertEquals(ec.ra(), mars.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), mars.equatorialPos().dec(),1e-8);
     }
 
     @Test
@@ -116,45 +140,72 @@ class MyPlanetModelTest {
 
     @Test
     void atWorksOnSaturnSuperiorPlanet(){
-        Planet Saturn = PlanetModel.SATURN.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2025,
+                6,
+                27,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
+        Planet saturn = PlanetModel.SATURN.at(
+                Epoch.J2010.daysUntil(zdt), etec);
 
-        assertEquals("Saturne", Saturn.name());
-        assertEquals("Saturne", Saturn.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), Saturn.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), Saturn.equatorialPos().dec());
-        assertEquals(12, Saturn.angularSize());
-        assertEquals(12, Saturn.magnitude());
+        assertEquals("Saturne", saturn.name());
+        assertEquals("Saturne", saturn.info());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(2.576691546),Angle.ofDeg((-2.235996483))));
+        assertEquals(ec.ra(), saturn.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), saturn.equatorialPos().dec(),1e-8);
     }
 
     @Test
     void atWorksOnUranusSuperiorPlanet(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2030,
+                6,
+                27,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet uranus = PlanetModel.URANUS.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Uranus", uranus.name());
         assertEquals("Uranus", uranus.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), uranus.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), uranus.equatorialPos().dec());
-        assertEquals(12, uranus.angularSize());
-        assertEquals(12, uranus.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(1.168783179),Angle.ofDeg((-0.752737291))));
+        assertEquals(ec.ra(), uranus.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), uranus.equatorialPos().dec(),1e-8);
     }
 
     @Test
     //TODO value not in interval
     void atWorksOnNeptuneSuperiorPlanet(){
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2030,
+                6,
+                27,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
         Planet neptune = PlanetModel.NEPTUNE.at(
-                10, new EclipticToEquatorialConversion(ZonedDateTime.now()));
+                Epoch.J2010.daysUntil(zdt), etec);
 
         assertEquals("Neptune", neptune.name());
         assertEquals("Neptune", neptune.info());
-        //TODO implement with real values
-        assertEquals(EquatorialCoordinates.of(1,1).ra(), neptune.equatorialPos().ra());
-        assertEquals(EquatorialCoordinates.of(1,1).dec(), neptune.equatorialPos().dec());
-        assertEquals(12, neptune.angularSize());
-        assertEquals(12, neptune.magnitude());
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(13.04480375),Angle.ofDeg((-1.512753498))));
+        assertEquals(ec.ra(), neptune.equatorialPos().ra(),1e-8);
+        assertEquals(ec.dec(), neptune.equatorialPos().dec(),1e-8);
     }
 
 
