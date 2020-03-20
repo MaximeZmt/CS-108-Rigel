@@ -23,14 +23,12 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
-        BufferedReader br = new BufferedReader(isr); //TODO Check if this is the correct syntax
-        Stream<String> lineOfStar = br.lines();
-        Iterator i = lineOfStar.iterator();
-        i.next(); // remove first one
+        BufferedReader br = new BufferedReader(isr);
+        br.readLine(); // remove first one
+        String line = "";
         int c = 0;
-        while (i.hasNext()){
+        while ((line = br.readLine())!=null){
             c++;
-            String line = i.next().toString();
             String[] starArray = line.split(",");
 
             int hipId;
@@ -41,8 +39,11 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
             }
 
             String sName = starArray[6];
-            if (sName.equals("")){
-                sName = starArray[27]+"? "+starArray[29];
+            if (sName.equals("")){ //TODO Verify if Correct
+                if (starArray[27].equals("")){
+                    sName = "?";
+                }
+                sName = sName+starArray[27]+" "+starArray[29];
             }
 
             float magnitude;
@@ -60,10 +61,10 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
             }
 
             Star star = new Star(hipId,sName, EquatorialCoordinates.of(Double.valueOf(starArray[23]),Double.valueOf(starArray[24])),magnitude,colorIndex);
-            //System.out.println(star.toString());
+            System.out.println(star.toString());
             builder.addStar(star);
         }
-        System.out.println(c);
+        //System.out.println(c);
         isr.close();
 
     }

@@ -35,8 +35,8 @@ class MyAsterismLoaderTest {
                     }
                 }
                 if (sss.isEmpty()){
-                    System.out.println("Has been empty");
                     System.out.println(st.toString());
+                    assertEquals(List.of("Rigel","Saiph","Alnitak","Betelgeuse","Mu Ori","Xi Ori", "Chi-2 Ori").toString(), st.toString());
                 }
 
 
