@@ -109,7 +109,6 @@ public final class StarCatalogue {
         public Builder(){
             starList = new ArrayList<>();
             asterismList = new ArrayList<>();
-            //starCatalogue = new StarCatalogue(starList,asterismList);
         }
 
         /**
