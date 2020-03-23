@@ -1,6 +1,8 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
+import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
@@ -77,7 +79,31 @@ class MySunModelTest {
         );
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         Sun s = sunO.at(Epoch.J2010.daysUntil(zdt),etec);
-       assertEquals(Angle.ofDMS(0,31,30),s.angularSize(),10e-7);
+        assertEquals(Angle.ofDMS(0,31,30),s.angularSize(),10e-7);
     }
+
+
+    @Test
+    void sunValueTestedWithCambridgeSpreadsheet(){
+        CelestialObjectModel<Sun> sunO = SunModel.SUN;
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2000,
+                06,
+                16,
+                0,
+                0,
+                0,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
+        Sun s = sunO.at(Epoch.J2010.daysUntil(zdt),etec);
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(85.18471813),0));
+        assertEquals(ec.ra(),s.equatorialPos().ra(),1e-7);
+        assertEquals(ec.dec(),s.equatorialPos().dec(),1e-8);
+    }
+
+
+
 
 }
