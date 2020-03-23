@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MoonModelTest {
+class MyMoonModelTest {
     @Test
     void MoonModelTest(){
         CelestialObjectModel<Moon> moonO = MoonModel.MOON;
