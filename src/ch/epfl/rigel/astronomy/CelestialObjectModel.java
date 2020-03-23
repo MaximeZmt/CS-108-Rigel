@@ -4,7 +4,7 @@ package ch.epfl.rigel.astronomy;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 
 /**
- * Represents a model of a Celestial Object (generic Interface)
+ * Represents a model of a Celestial Object at a given time (generic Interface)
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -12,7 +12,7 @@ import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 
 public interface CelestialObjectModel<O> {
     /**
-     * Abstract public method
+     * Return the object at a given time depending on the given model
      * @param daysSinceJ2010 The number of days between the date of the modeling and J2010
      * @param eclipticToEquatorialConversion The Converter for the coordinates in order
      *                                       to get EquatorialCoordinates with the Ecliptic one.
