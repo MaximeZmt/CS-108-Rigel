@@ -6,8 +6,7 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -210,6 +209,22 @@ class MyPlanetModelTest {
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(13.04480375),Angle.ofDeg((-1.512753498))));
         assertEquals(ec.ra(), neptune.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), neptune.equatorialPos().dec(),1e-8);
+    }
+
+    @Test
+    void jupiterAtWorksOnRandomValues(){
+        EquatorialCoordinates ep = PlanetModel.JUPITER.at(-2231.0,
+                new EclipticToEquatorialConversion(
+                        ZonedDateTime.of(LocalDate.of(2003, Month.NOVEMBER, 22),
+                                LocalTime.of(0, 0, 0, 0), ZoneOffset.UTC)))
+                .equatorialPos();
+
+        double a =  ep.raHr();
+
+        double a2 = ep.decDeg();
+
+        //assertEquals(11.18675858733765,a); // or 11.187154934709678
+        //assertEquals(3,a2);
     }
 
 
