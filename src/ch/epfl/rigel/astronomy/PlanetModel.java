@@ -112,6 +112,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                     rPrime-rEarth*Math.cos(lPrime-lEarth));
         }
 
+        //TODO check if atan2 or atan
         double beta = Math.atan(
                 (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
                 (rEarthSinLPrimeMinusLEarth));

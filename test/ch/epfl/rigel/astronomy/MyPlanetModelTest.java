@@ -6,8 +6,7 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -211,6 +210,4 @@ class MyPlanetModelTest {
         assertEquals(ec.ra(), neptune.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), neptune.equatorialPos().dec(),1e-8);
     }
-
-
 }
