@@ -44,7 +44,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     private final double angularSize;
     private final double magnitude;
 
-    //immuability checked with assistant
     public static final List<PlanetModel> ALL = List.of(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE);
 
     /**
@@ -62,7 +61,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      * @param magnitude magnitude
      */
     //TODO check if private or package-private
-    //TODO check if have to create attributes
     private PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
                         double orbitalEccentricity, double semiMajorAxis, double orbitalInclination,
                         double lonAscendingNode, double angularSize, double magnitude){
@@ -79,8 +77,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     }
 
     @Override
-    //TODO check if have to use getter or attribute (or smthg else)
-    //TODO check if this.attribute is necessary (or only write attribute)
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
         double m = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
         double v = m+2*orbitalEccentricity*Math.sin(m);
@@ -102,7 +98,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double lambda;
         double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
-        //TODO check if 'if' is correct (Also check for calculation of earth values)
+        //TODO check if 'if' is correct (Also check for calculation of earth values) && earth ?
         if (this.equals(MERCURY) || this.equals(VENUS)){
             lambda = Math.PI+lEarth+Math.atan2(
                     rPrime*Math.sin(lEarth-lPrime),
@@ -112,13 +108,12 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                     rPrime-rEarth*Math.cos(lPrime-lEarth));
         }
 
-        //TODO check if atan2 or atan
+
         double beta = Math.atan(
                 (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
                 (rEarthSinLPrimeMinusLEarth));
 
         //TODO check if normalize is correct
-        RightOpenInterval ci = RightOpenInterval.of((-Math.PI/2),(Math.PI/2));
         //System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
         //System.out.println("beta: "+Angle.toDeg(beta));
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
