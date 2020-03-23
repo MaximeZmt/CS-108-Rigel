@@ -91,7 +91,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double rPrime = r*Math.cos(psi);
         double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*Math.cos(orbitalInclination),
                 Math.cos(l-lonAscendingNode))+lonAscendingNode;
-
+        //System.out.println("LPRIME: "+Angle.toDeg(lPrime));
         double mEarth = (Angle.TAU/365.242191)*(daysSinceJ2010/EARTH.tropicalYear)
                 +EARTH.lonJ2010-EARTH.lonPerigee;
         double vEarth = mEarth+2*EARTH.orbitalEccentricity*Math.sin(mEarth);
