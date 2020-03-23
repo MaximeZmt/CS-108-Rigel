@@ -11,7 +11,7 @@ import java.util.List;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-public final class Asterism { //immuable: liste étoile
+public final class Asterism {
     private final List<Star> starList;
 
     /**
@@ -30,7 +30,8 @@ public final class Asterism { //immuable: liste étoile
      * @return a defensive copy of the Star List
      */
     public List<Star> stars(){
-        return List.copyOf(starList); //cause of immuability: has been already asked and confirmed better than vue
+        //return a defensive copy of the StarList, because it's an immutable class
+        return List.copyOf(starList);
     }
 
 }

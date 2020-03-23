@@ -13,7 +13,8 @@ class MyAsterismTest {
     @Test
     void constructorOnEmptyList(){
         assertThrows(IllegalArgumentException.class,()->{
-            Asterism a = new Asterism(new ArrayList<Star>());
+            Asterism a1 = new Asterism(new ArrayList<Star>());
+            Asterism a2 = new Asterism(null);
         });
     }
 
