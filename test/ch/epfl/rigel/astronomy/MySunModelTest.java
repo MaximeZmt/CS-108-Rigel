@@ -4,12 +4,39 @@ import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MySunModelTest {
+
+    @Test
+    void atWorksOnRandomValues(){
+        double a = SunModel.SUN.at(
+                27 + 31,
+                new EclipticToEquatorialConversion(ZonedDateTime.of(LocalDate.of(
+                        2010,  Month.FEBRUARY, 27),
+                        LocalTime.of(0,0), ZoneOffset.UTC))).equatorialPos().ra();
+
+        double b = SunModel.SUN.at(
+                -2349,
+                new EclipticToEquatorialConversion(ZonedDateTime.of(LocalDate.of(2003, Month.JULY,
+                        27),
+                        LocalTime.of(0, 0, 0, 0),
+                        ZoneOffset.UTC))).equatorialPos().raHr();
+
+        double c = SunModel.SUN.at(
+                -2349,
+                new EclipticToEquatorialConversion(ZonedDateTime.of(LocalDate.of(2003, Month.JULY,
+                        27),
+                        LocalTime.of(0, 0, 0, 0),
+                        ZoneOffset.UTC))).equatorialPos().decDeg();
+
+
+        assertEquals(5.9325494700300885, a);
+        assertEquals(8.392682808297807, b);
+        assertEquals(19.35288373097352, c);
+    }
 
     @Test
     void cambridgeTestValueP105(){ //TODO see the delta
