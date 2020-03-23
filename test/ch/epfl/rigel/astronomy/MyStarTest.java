@@ -13,10 +13,13 @@ class MyStarTest {
             new Star(-1,"Test", EquatorialCoordinates.of(0,0),0,0);
         });
         assertThrows(IllegalArgumentException.class,()->{
-            new Star(-1,"Test", EquatorialCoordinates.of(0,0),0,-0.6f);
+            new Star(1,"Test", EquatorialCoordinates.of(0,0),0,-0.6f);
         });
         assertThrows(IllegalArgumentException.class,()->{
-            new Star(-1,"Test", EquatorialCoordinates.of(0,0),0,5.6f);
+            new Star(1,"Test", EquatorialCoordinates.of(0,0),0,5.6f);
+        });
+        assertDoesNotThrow(()->{
+            new Star(1,"Test", EquatorialCoordinates.of(0,0),0,5.5f);
         });
     }
 
