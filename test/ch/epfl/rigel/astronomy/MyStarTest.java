@@ -30,8 +30,8 @@ class MyStarTest {
     void colorTempTest(){
         Star rigelTestCol = new Star(0,"TestRigel",EquatorialCoordinates.of(0,0),0,-0.03f);
         Star betelgeuseTestCol = new Star(0,"TestBetelgeuse",EquatorialCoordinates.of(0,0),0,1.50f);
-        assertEquals(10500,rigelTestCol.colorTemperature(),20);
-        assertEquals(3800, betelgeuseTestCol.colorTemperature(),20);
+        assertEquals(10500,rigelTestCol.colorTemperature(),20); //obtain 10515
+        assertEquals(3800, betelgeuseTestCol.colorTemperature(),20); //obtain 3793
     }
 
 }

@@ -13,7 +13,7 @@ import ch.epfl.rigel.math.ClosedInterval;
  */
 
 public final class Star extends CelestialObject {
-    private final static ClosedInterval colorI = ClosedInterval.of(-0.5,5.5); // need static ? common to other
+    private final static ClosedInterval colorI = ClosedInterval.of(-0.5,5.5); // Interval of valid ColorIndex
     private final int hipparcosId;
     private final int colorTemperature;
 
@@ -30,11 +30,15 @@ public final class Star extends CelestialObject {
      */
     public Star(int hipparcosId, String name, EquatorialCoordinates equatorialPos, float magnitude, float colorIndex) {
         super(name, equatorialPos, 0, magnitude);
+        //angular size for star is 0 because they are represented as a point
 
+        // Check if HipparcosId is not negative and if the colorIndex is in interval
         Preconditions.checkArgument(hipparcosId>=0 && colorI.contains(colorIndex));
 
         this.hipparcosId = hipparcosId;
-        colorTemperature = (int)Math.floor(4600*((1/(0.92*colorIndex+1.7))+(1/(0.92*colorIndex+0.62)))); //is a floor and better in constructor. Cast is also better in that case, avoid heavy transtype
+
+        //Compute colorTemperature, take the floor value of it.
+        colorTemperature = (int)Math.floor(4600*((1/(0.92*colorIndex+1.7))+(1/(0.92*colorIndex+0.62))));
     }
 
     /**
