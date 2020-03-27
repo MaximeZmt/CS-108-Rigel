@@ -102,7 +102,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double lambda;
         double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
-        //TODO check if 'if' is correct (Also check for calculation of earth values) && earth ?
         if (this.equals(MERCURY) || this.equals(VENUS)){
             lambda = Math.PI+lEarth+Math.atan2(
                     rPrime*Math.sin(lEarth-lPrime),
