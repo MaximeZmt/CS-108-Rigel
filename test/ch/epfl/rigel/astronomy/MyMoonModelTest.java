@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +32,7 @@ class MyMoonModelTest {
         assertEquals(ec.dec(),moon.equatorialPos().dec(),1e-8);
         assertEquals(ec.ra(),moon.equatorialPos().ra(),1e-8);
         assertEquals(Angle.ofDeg(0.546822),moon.angularSize(),1e-7);
-        String str = String.format("%s (%.1f%%)","Lune",22.6);
+        String str = String.format(Locale.ROOT,"%s (%.1f%%)","Lune",22.5);
         assertEquals(str,moon.toString());
     }
 }
