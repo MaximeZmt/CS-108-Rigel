@@ -15,7 +15,6 @@ import java.util.Locale;
  */
 
 public final class GeographicCoordinates extends SphericalCoordinates {
-
     private final static RightOpenInterval LON_INTERVAL = RightOpenInterval.of(Angle.ofDeg(-180), Angle.ofDeg(180));
     private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 

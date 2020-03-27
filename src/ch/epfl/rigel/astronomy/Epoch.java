@@ -1,6 +1,5 @@
 package ch.epfl.rigel.astronomy;
 
-
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 

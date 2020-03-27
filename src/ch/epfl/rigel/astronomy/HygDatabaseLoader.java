@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-
 /**
  * Represents a HYG catalogue loader
  *
@@ -16,9 +15,7 @@ import java.nio.charset.StandardCharsets;
  * @author Maxime Zammit (310251)
  */
 public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et immuable
-
     INSTANCE();
-
 
     /**
      * @see StarCatalogue.Loader#load(InputStream, StarCatalogue.Builder)
@@ -28,7 +25,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
         br.readLine(); // remove first one
-        String line = "";
+        String line;
         int c = 0;
         while ((line = br.readLine())!=null){
             c++;
@@ -38,7 +35,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
             if(starArray[1].equals("")){
                 hipId = 0;
             }else{
-                hipId = Integer.valueOf(starArray[1]);
+                hipId = Integer.parseInt(starArray[1]);
             }
 
             /*
@@ -58,19 +55,19 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
 
             float magnitude;
             if (!starArray[13].equals("")){
-                magnitude = Float.valueOf(starArray[13]);
+                magnitude = Float.parseFloat(starArray[13]);
             }else{
                 magnitude = 0;
             }
 
             float colorIndex;
             if (!starArray[16].equals("")){
-                colorIndex = Float.valueOf(starArray[16]);
+                colorIndex = Float.parseFloat(starArray[16]);
             }else{
                 colorIndex = 0;
             }
 
-            Star star = new Star(hipId,sName, EquatorialCoordinates.of(Double.valueOf(starArray[23]),Double.valueOf(starArray[24])),magnitude,colorIndex);
+            Star star = new Star(hipId,sName, EquatorialCoordinates.of(Double.parseDouble(starArray[23]),Double.parseDouble(starArray[24])),magnitude,colorIndex);
             builder.addStar(star);
         }
         isr.close();

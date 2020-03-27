@@ -9,7 +9,6 @@ import ch.epfl.rigel.Preconditions;
  * @author Maxime Zammit (310251)
  */
 public final class Angle {
-
     public final static double TAU = 2*Math.PI;
     public final static double RAD_PER_ARCSEC = TAU/(360*3600);
     public final static double RAD_PER_HR = TAU/24.0;

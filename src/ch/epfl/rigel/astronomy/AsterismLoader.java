@@ -1,7 +1,5 @@
 package ch.epfl.rigel.astronomy;
 
-import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +15,7 @@ import java.util.List;
  * @author Maxime Zammit (310251)
  */
 public enum AsterismLoader implements StarCatalogue.Loader{
-
     INSTANCE();
-
 
     /**
      * @see  StarCatalogue.Loader#load(InputStream, StarCatalogue.Builder) 

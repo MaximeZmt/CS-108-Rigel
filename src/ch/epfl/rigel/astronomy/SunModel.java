@@ -31,8 +31,7 @@ public enum SunModel implements CelestialObjectModel<Sun> {
         float angularSize = (float)(THETA0 * ((1+ ECCENTRICITY *Math.cos(trueAnomaly))/(1- ECCENTRICITY * ECCENTRICITY)));
         EclipticCoordinates ecliC = EclipticCoordinates.of(Angle.normalizePositive(longEcliptique),latEcliptique);
         EquatorialCoordinates equaC = eclipticToEquatorialConversion.apply(ecliC);
-        Sun sunModel = new Sun(ecliC, equaC, angularSize, (float)meanAnomaly);
 
-        return sunModel;
+        return new Sun(ecliC, equaC, angularSize, (float)meanAnomaly);
     }
 }

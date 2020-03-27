@@ -1,6 +1,5 @@
 package ch.epfl.rigel.astronomy;
 
-
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 
 /**
@@ -9,7 +8,6 @@ import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-
 public interface CelestialObjectModel<O> {
     /**
      * Return the object at a given time depending on the given model

@@ -14,7 +14,6 @@ import java.util.function.Function;
  * @author Maxime Zammit (310251)
  */
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
-
     private final double cosEpsilon;
     private final double sinEpsilon;
 
@@ -36,7 +35,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         sinEpsilon = Math.sin(epsilon);
     }
 
-
+    //TODO check javadoc with genericity
     /**
      * @see Function<EclipticCoordinates, EquatorialCoordinates>{@link #apply(EclipticCoordinates)}
      */

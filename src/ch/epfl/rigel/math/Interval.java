@@ -72,9 +72,5 @@ public abstract class Interval {
     public final boolean equals(Object obj) {
         throw new UnsupportedOperationException("Try to call equals in Interval Class");
     }
-
-
-
-
 }
 

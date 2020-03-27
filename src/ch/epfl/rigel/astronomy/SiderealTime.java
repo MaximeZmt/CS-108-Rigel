@@ -16,9 +16,7 @@ import java.time.temporal.ChronoUnit;
  * @author Maxime Zammit (310251)
  */
 public final class SiderealTime {
-
-
-    private SiderealTime(){};
+    private SiderealTime(){}
 
     private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
     /*
@@ -42,7 +40,6 @@ public final class SiderealTime {
 
         double s = HR_INTERVAL.reduce(s0.at(centuriesUntil)+s1.at(deltaHours));
         return Angle.ofHr(s);
-
     }
 
     /**
@@ -55,5 +52,4 @@ public final class SiderealTime {
     public static double local(ZonedDateTime when, GeographicCoordinates where){
         return Angle.normalizePositive(greenwich(when)+where.lon());
     }
-
 }

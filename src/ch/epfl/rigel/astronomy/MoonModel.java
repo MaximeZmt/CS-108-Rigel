@@ -11,7 +11,6 @@ import ch.epfl.rigel.math.Angle;
  * @author Maxime Zammit (310251)
  */
 public enum MoonModel implements CelestialObjectModel<Moon> { // public et immuable
-
     MOON();
 
     private final static double LONGITUDE_MOYENNE = Angle.ofDeg(91.929336);
@@ -20,6 +19,7 @@ public enum MoonModel implements CelestialObjectModel<Moon> { // public et immua
     private final static double INCLINAISON_ORBITE = Angle.ofDeg(5.145396);
     private final static double EXCENTRICITE = 0.0549;
 
+    //TODO check why link points to itself (maybe case of genericity)
     /**
      * @see CelestialObjectModel<Moon>{@link #at(double, EclipticToEquatorialConversion)}
      */

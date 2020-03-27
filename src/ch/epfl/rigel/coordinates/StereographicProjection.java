@@ -12,7 +12,6 @@ import java.util.function.Function;
  * @author Maxime Zammit (310251)
  */
 public final class StereographicProjection implements Function<HorizontalCoordinates, CartesianCoordinates> {
-
     private final HorizontalCoordinates center;
     private final double cosPhi1;
     private final double sinPhi1;
@@ -52,8 +51,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
      */
     public double circleRadiusForParallel(HorizontalCoordinates parallel){
         double phi = parallel.alt();
-        double rho = Math.cos(phi)/(Math.sin(phi)+sinPhi1);
-        return rho;
+        return Math.cos(phi)/(Math.sin(phi)+sinPhi1);
     }
 
     /**
@@ -84,6 +82,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         return HorizontalCoordinates.of(Angle.normalizePositive(lambda),phi);
     }
 
+    //TODO check genericity with javadoc
     /**
      * @see Function<HorizontalCoordinates, CartesianCoordinates>{@link #apply(HorizontalCoordinates)}
      */

@@ -4,7 +4,6 @@ import ch.epfl.rigel.Preconditions;
 
 import java.util.List;
 
-
 /**
  * Represents an Asterism (List of stars)
  *
@@ -24,7 +23,6 @@ public final class Asterism {
         starList = stars;
     }
 
-
     /**
      * Getter of the star list that compose the Asterism
      * @return a defensive copy of the Star List
@@ -33,5 +31,4 @@ public final class Asterism {
         //return a defensive copy of the StarList, because it's an immutable class
         return List.copyOf(starList);
     }
-
 }

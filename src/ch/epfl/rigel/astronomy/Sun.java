@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author Maxime Zammit (310251)
  */
 public final class Sun extends CelestialObject {
-
     private final EclipticCoordinates eclipticPos;
     private final double meanAnomaly;
 
@@ -50,6 +49,4 @@ public final class Sun extends CelestialObject {
     public double meanAnomaly(){
         return meanAnomaly;
     }
-
-
 }

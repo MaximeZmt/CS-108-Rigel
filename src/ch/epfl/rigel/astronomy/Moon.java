@@ -13,7 +13,6 @@ import java.util.Locale;
  * @author Maxime Zammit (310251)
  */
 public final class Moon extends CelestialObject {
-
     private final double phase;
 
     /**

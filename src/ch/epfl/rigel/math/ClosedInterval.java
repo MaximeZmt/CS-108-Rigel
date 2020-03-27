@@ -1,6 +1,7 @@
 package ch.epfl.rigel.math;
 
 import ch.epfl.rigel.Preconditions;
+
 import java.util.Locale;
 
 /**
@@ -10,7 +11,6 @@ import java.util.Locale;
  * @author Maxime Zammit (310251)
  */
 public final class ClosedInterval extends Interval {
-
     private ClosedInterval(double a, double b) {
         super(a, b);
     }
@@ -60,12 +60,7 @@ public final class ClosedInterval extends Interval {
         if(v<= low()) {
             return low();
         }
-        else if(v>=high()) {
-            return high();
-        }
-        else {
-            return v;
-        }
+        else return Math.min(v, high());
     }
 
     /**

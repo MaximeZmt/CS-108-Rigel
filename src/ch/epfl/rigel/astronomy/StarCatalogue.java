@@ -13,7 +13,6 @@ import java.util.*;
  * @author Maxime Zammit (310251)
  */
 public final class StarCatalogue {
-
     private final List<Star> stars;
     private final List<Asterism> asterisms;
     private final Map<Asterism, List<Integer>> map;
@@ -88,7 +87,7 @@ public final class StarCatalogue {
          * @param builder current catalogue builder
          * @throws IOException if input/output error occurs
          */
-        public abstract void load(InputStream inputStream, Builder builder) throws IOException;
+        void load(InputStream inputStream, Builder builder) throws IOException;
     }
 
     /**

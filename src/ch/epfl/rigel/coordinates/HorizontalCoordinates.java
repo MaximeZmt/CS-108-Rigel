@@ -7,7 +7,6 @@ import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.util.Locale;
 
-
 /**
  * Represents horizontal coordinates
  *
@@ -15,7 +14,6 @@ import java.util.Locale;
  * @author Maxime Zammit (310251)
  */
 public final class HorizontalCoordinates extends SphericalCoordinates {
-
     private final static RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
     private final static ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
 

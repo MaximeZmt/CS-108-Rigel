@@ -4,7 +4,6 @@ import ch.epfl.rigel.coordinates.EclipticCoordinates;
 import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
-import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import java.util.List;
  * @author Maxime Zammit (310251)
  */
 public enum PlanetModel implements CelestialObjectModel<Planet> {
-
     MERCURY("Mercure", 0.24085, 75.5671, 77.612, 0.205627,
             0.387098, 7.0051, 48.449, 6.74, -0.42),
     VENUS("Vénus", 0.615207, 272.30044, 131.54, 0.006812,
@@ -60,7 +58,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      * @param angularSize angular size
      * @param magnitude magnitude
      */
-
     PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
                         double orbitalEccentricity, double semiMajorAxis, double orbitalInclination,
                         double lonAscendingNode, double angularSize, double magnitude){
@@ -76,6 +73,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         this.magnitude = magnitude;
     }
 
+    //TODO genericity with javadoc
     /**
      * @see CelestialObjectModel<Planet>{@link #at(double, EclipticToEquatorialConversion)}
      */

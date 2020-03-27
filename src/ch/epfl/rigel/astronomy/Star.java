@@ -4,7 +4,6 @@ import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.ClosedInterval;
 
-
 /**
  * Represents Stars as a celestial object
  *
@@ -16,7 +15,6 @@ public final class Star extends CelestialObject {
     private final static ClosedInterval colorI = ClosedInterval.of(-0.5,5.5); // Interval of valid ColorIndex
     private final int hipparcosId;
     private final int colorTemperature;
-
 
     /**
      * public constructor to create a star instance
@@ -49,7 +47,6 @@ public final class Star extends CelestialObject {
         return hipparcosId;
     }
 
-
     /**
      * Getter for the colorTemperature
      * @return the color Temperature (colorTemperature)
@@ -57,6 +54,4 @@ public final class Star extends CelestialObject {
     public int colorTemperature(){
         return colorTemperature;
     }
-
-
 }
