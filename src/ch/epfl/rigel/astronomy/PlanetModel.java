@@ -81,6 +81,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      */
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
+
+        //data needed to compute the position of all planets
         double m = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
         double v = m+2*orbitalEccentricity*Math.sin(m);
         double r = (semiMajorAxis*(1-orbitalEccentricity*orbitalEccentricity))/
@@ -90,7 +92,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double rPrime = r*Math.cos(psi);
         double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*Math.cos(orbitalInclination),
                 Math.cos(l-lonAscendingNode))+lonAscendingNode;
-        //System.out.println("LPRIME: "+Angle.toDeg(lPrime));
+
+        //data for the position of the earth
         double mEarth = (Angle.TAU/365.242191)*(daysSinceJ2010/EARTH.tropicalYear)
                 +EARTH.lonJ2010-EARTH.lonPerigee;
         double vEarth = mEarth+2*EARTH.orbitalEccentricity*Math.sin(mEarth);
@@ -98,9 +101,11 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 (1+EARTH.orbitalEccentricity*Math.cos(vEarth));
         double lEarth = vEarth+EARTH.lonPerigee;
 
-        double lambda;
+        //redundant calculation
         double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
+        //different calculations for longitude of inferior and superior planets
+        double lambda;
         if (this.equals(MERCURY) || this.equals(VENUS)){
             lambda = Math.PI+lEarth+Math.atan2(
                     rPrime*Math.sin(lEarth-lPrime),
@@ -110,32 +115,25 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                     rPrime-rEarth*Math.cos(lPrime-lEarth));
         }
 
-
+        //latitude for all planets
         double beta = Math.atan(
                 (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
                 (rEarthSinLPrimeMinusLEarth));
 
-        //System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
-        //System.out.println("beta: "+Angle.toDeg(beta));
+        //position in equatorial coordinates of the given planet computed with the previous data
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
                 Angle.normalizePositive(lambda),beta);
         EquatorialCoordinates equatorialCoordinates = eclipticToEquatorialConversion.apply(eclipticCoordinates);
 
+        //angular size of the given planet
         double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
         double thetaArcSec = angularSize/rho;
-        //System.out.println("thetaArcSec: "+ thetaArcSec);
-        //System.out.println("Rho: "+rho);
         double theta = Angle.ofDMS(0,0,thetaArcSec);
-        //System.out.println("Theta (rad):"+theta);
+
+        //magnitude of the given planet
         double phase = (1+Math.cos(lambda-l))/2;
         double magn = magnitude+5*Math.log10((r*rho)/Math.sqrt(phase));
-        //System.out.println("MagnO: "+magn);
-        //System.out.println("Magnitude: "+magnitude);
-        //System.out.println("phase: "+phase);
-        //System.out.println("r: "+r);
-        //System.out.println("rho: "+rho);
 
         return new Planet(nameFr, equatorialCoordinates, (float)theta, (float)magn);
-
     }
 }
