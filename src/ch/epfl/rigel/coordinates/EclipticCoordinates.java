@@ -16,6 +16,9 @@ import java.util.Locale;
 public final class EclipticCoordinates extends SphericalCoordinates {
     private final static RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
     private final static ClosedInterval LATITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
+    /*
+    Intervals that are used to check if the given angle in of() method are valid.
+     */
 
     private EclipticCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
