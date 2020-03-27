@@ -107,13 +107,9 @@ class MyPlanetModelTest {
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(166.310510),Angle.ofDeg(1.036466)));
         assertEquals(ec.ra(), jupiter.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), jupiter.equatorialPos().dec(),1e-8);
-        //TODO implement with real values
-        System.out.println("Magnitude (book): "+-1.99121985);
-        System.out.println("Magnitude (Compute): "+jupiter.magnitude());
-        System.out.println("AngularSize (Book): "+Angle.ofDMS(0,0,35.14290308));
-        System.out.println("AngularSize (Compute): "+Angle.toDeg(jupiter.angularSize())*3600);
-        assertEquals(Angle.ofDMS(0,0,35.1), jupiter.angularSize(),Angle.ofDMS(0,0,0.1)/2); //TODO check for precision data from cambridge
-        assertEquals(-1.986222784, jupiter.magnitude(),1e-2); //TODO ask on Piazza for precision
+        //value checked on framapad
+        assertEquals(Angle.ofDMS(0,0,35.1), jupiter.angularSize(),Angle.ofDMS(0,0,0.1)/2); //1.7022492829710245E-4 checked with framapad
+        assertEquals(-1.986222784, jupiter.magnitude(),1e-2); //-1.9885659217834473 value get on Framapad, same as book but with different precision (need same decimal as book)
     }
 
     @Test
