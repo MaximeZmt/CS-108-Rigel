@@ -41,8 +41,15 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
                 hipId = Integer.valueOf(starArray[1]);
             }
 
+            /*
+            to determine the name
+            first we assign the proper column to the sName var
+            But if sName var still empty
+            we fill it with bayer index (or ? by default) a blank
+            space and the con index
+             */
             String sName = starArray[6];
-            if (sName.equals("")){ //TODO Verify if Correct
+            if (sName.equals("")){
                 if (starArray[27].equals("")){
                     sName = "?";
                 }
