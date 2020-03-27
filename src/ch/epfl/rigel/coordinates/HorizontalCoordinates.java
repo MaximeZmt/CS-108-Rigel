@@ -18,7 +18,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
     private final static ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
     /*
     Two interval in order to check the value of the accepted angle in the of() method that
-    is used to build new HorizontalCoordinates
+    is used to build new HorizontalCoordinates.
      */
 
     private HorizontalCoordinates(double azimuth, double altitude) {

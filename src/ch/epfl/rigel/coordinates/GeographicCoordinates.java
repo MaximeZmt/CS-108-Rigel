@@ -19,7 +19,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
     /*
     as the of() method that is used to build new GeographicCoordinates receive angle, we set the two
-    intervals that we accept in order to check if the given angle are in the interval
+    intervals that we accept in order to check if the given angle are in the interval.
      */
 
     private GeographicCoordinates(double longitude, double latitude) {
