@@ -63,7 +63,7 @@ public final class StarCatalogue {
      */
     public Set<Asterism> asterisms(){
         //TODO check if correct way of doing
-        Set<Asterism> ll = map.keySet();
+        Set<Asterism> ll = map.keySet(); //TODO rename var
         return Collections.unmodifiableSet(ll);
     }
 
@@ -72,6 +72,7 @@ public final class StarCatalogue {
      *
      * @param asterism the given asterism
      * @return list of indexes
+     * @throws IllegalArgumentException if Asterism is not contained in the list
      */
     public List<Integer> asterismIndices(Asterism asterism){
         Preconditions.checkArgument(this.asterisms.contains(asterism));
@@ -124,7 +125,7 @@ public final class StarCatalogue {
 
         /**
          * Returns an unmodifiable view of the stars of the currently building catalogue
-         *
+         * 
          * @return unmodifiable view of the stars
          */
         public List<Star> stars(){
