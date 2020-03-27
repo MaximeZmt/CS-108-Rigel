@@ -60,8 +60,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      * @param angularSize angular size
      * @param magnitude magnitude
      */
-    //TODO check if private or package-private
-    private PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
+
+    PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
                         double orbitalEccentricity, double semiMajorAxis, double orbitalInclination,
                         double lonAscendingNode, double angularSize, double magnitude){
         this.nameFr = nameFr;
