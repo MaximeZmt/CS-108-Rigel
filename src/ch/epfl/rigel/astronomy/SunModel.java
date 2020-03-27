@@ -19,7 +19,9 @@ public enum SunModel implements CelestialObjectModel<Sun> {
     private final static double SUN_LONGITUDE_AT_J2010 = Angle.ofDeg(279.557208);
     private final static double SUN_LONGITUDE_AT_PERIGEE = Angle.ofDeg(283.112438);
 
-
+    /**
+     * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion) TODO show Mike
+     */
     @Override
     public Sun at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
         double meanAnomaly = (Angle.TAU/365.242191)*daysSinceJ2010 + SUN_LONGITUDE_AT_J2010 - SUN_LONGITUDE_AT_PERIGEE;
@@ -32,5 +34,5 @@ public enum SunModel implements CelestialObjectModel<Sun> {
         Sun sunModel = new Sun(ecliC, equaC, angularSize, (float)meanAnomaly);
 
         return sunModel;
-    } //immuable
+    }
 }
