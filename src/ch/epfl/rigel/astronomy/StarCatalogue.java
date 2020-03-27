@@ -106,7 +106,7 @@ public final class StarCatalogue {
         /**
          * Default constructor
          */
-        //TODO check if we have to make a constructor or not -> has been asked and yes: by default constructor mean without argument
+        //TODO ask if it is like this or do we have to call an interface "Builder" or something
         public Builder(){
             starList = new ArrayList<>();
             asterismList = new ArrayList<>();
