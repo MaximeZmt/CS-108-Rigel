@@ -22,7 +22,7 @@ public final class SiderealTime {
 
     private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
     /*
-    Class Formula are in Hr -> want to work with radian
+     Class Formula are in Hr -> want to work with radian
      Use two method withZoneSameInstant and truncatedTo
      */
 

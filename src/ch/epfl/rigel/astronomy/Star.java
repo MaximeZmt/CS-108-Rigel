@@ -32,7 +32,7 @@ public final class Star extends CelestialObject {
         super(name, equatorialPos, 0, magnitude);
         //angular size for star is 0 because they are represented as a point
 
-        // Check if HipparcosId is not negative and if the colorIndex is in interval
+        //Checks if HipparcosId is not negative and if the colorIndex is in interval
         Preconditions.checkArgument(hipparcosId>=0 && colorI.contains(colorIndex));
 
         this.hipparcosId = hipparcosId;
