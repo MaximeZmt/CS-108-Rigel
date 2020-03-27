@@ -20,7 +20,7 @@ public enum SunModel implements CelestialObjectModel<Sun> {
     private final static double SUN_LONGITUDE_AT_PERIGEE = Angle.ofDeg(283.112438);
 
     /**
-     * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion) TODO show Mike
+     * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion)
      */
     @Override
     public Sun at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
