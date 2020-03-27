@@ -188,7 +188,6 @@ class MyPlanetModelTest {
     }
 
     @Test
-    //TODO value not in interval
     void atWorksOnNeptuneSuperiorPlanet(){
         ZonedDateTime zdt = ZonedDateTime.of(
                 2030,

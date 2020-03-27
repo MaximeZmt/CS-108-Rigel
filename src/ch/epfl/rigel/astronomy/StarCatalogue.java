@@ -125,7 +125,7 @@ public final class StarCatalogue {
 
         /**
          * Returns an unmodifiable view of the stars of the currently building catalogue
-         * 
+         *
          * @return unmodifiable view of the stars
          */
         public List<Star> stars(){
