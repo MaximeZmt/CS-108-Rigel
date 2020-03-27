@@ -30,5 +30,8 @@ class MyMoonModelTest {
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(214.862515),Angle.ofDeg(1.716257)));
         assertEquals(ec.dec(),moon.equatorialPos().dec(),1e-8);
         assertEquals(ec.ra(),moon.equatorialPos().ra(),1e-8);
+        assertEquals(0.546822,moon.angularSize());
+        String str = String.format("%s (%.1f%%)","Lune",22.6);
+        //assertEquals(str,moon.toString());
     }
 }

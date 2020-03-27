@@ -29,7 +29,7 @@ public enum AsterismLoader implements StarCatalogue.Loader{
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
         List<Star> starList = builder.stars();
-        String line = "";
+        String line;
         while ((line = br.readLine())!=null){
             String[] hipparcosIdListString = line.split(",");
             List<Star> starListAsterism = new ArrayList<>();
