@@ -18,8 +18,8 @@ public final class GeographicCoordinates extends SphericalCoordinates {
     private final static RightOpenInterval LON_INTERVAL = RightOpenInterval.of(Angle.ofDeg(-180), Angle.ofDeg(180));
     private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
     /*
-    as the of method that is used to build new Geographic coordinates uses degree, we set the two
-    intervals of the angle that we accept in order to check if the given angle are in the interval
+    as the of() method that is used to build new Geographic coordinates receive angle, we set the two
+    intervals that we accept in order to check if the given angle are in the interval
      */
 
     private GeographicCoordinates(double longitude, double latitude) {
