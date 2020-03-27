@@ -79,7 +79,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     /**
      * @see CelestialObjectModel<Planet>{@link #at(double, EclipticToEquatorialConversion)}
      */
-    //TODO check for earth
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
         double m = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
@@ -116,7 +115,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
                 (rEarthSinLPrimeMinusLEarth));
 
-        //TODO check if normalize is correct
         //System.out.println("lambda: "+Angle.toDeg(Angle.normalizePositive(lambda)));
         //System.out.println("beta: "+Angle.toDeg(beta));
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(
@@ -137,7 +135,6 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         //System.out.println("r: "+r);
         //System.out.println("rho: "+rho);
 
-        //TODO check if cast is correct
         return new Planet(nameFr, equatorialCoordinates, (float)theta, (float)magn);
 
     }
