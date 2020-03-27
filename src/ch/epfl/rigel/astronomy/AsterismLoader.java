@@ -24,6 +24,7 @@ public enum AsterismLoader implements StarCatalogue.Loader{
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
+
         List<Star> starList = builder.stars();
         String line;
         while ((line = br.readLine())!=null){
@@ -31,6 +32,7 @@ public enum AsterismLoader implements StarCatalogue.Loader{
             List<Star> starListAsterism = new ArrayList<>();
             List<Integer> hipparcosIdListInt = new ArrayList<>();
 
+            //converts the hipparcos Id list from String to Integer
             for (String s : hipparcosIdListString){
                 hipparcosIdListInt.add(Integer.valueOf(s));
             }
