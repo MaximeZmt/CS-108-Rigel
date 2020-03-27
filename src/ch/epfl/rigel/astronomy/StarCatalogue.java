@@ -106,6 +106,7 @@ public final class StarCatalogue {
         /**
          * Default constructor
          */
+        //TODO ask if it is like this or do we have to call an interface "Builder" or something
         public Builder(){
             starList = new ArrayList<>();
             asterismList = new ArrayList<>();
