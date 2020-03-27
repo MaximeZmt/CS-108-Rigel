@@ -36,6 +36,10 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         sinEpsilon = Math.sin(epsilon);
     }
 
+
+    /**
+     * @see Function<EclipticCoordinates, EquatorialCoordinates>{@link #apply(EclipticCoordinates)}
+     */
     @Override
     public EquatorialCoordinates apply(EclipticCoordinates ecl) {
         double lon = ecl.lon();
@@ -45,11 +49,17 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         return EquatorialCoordinates.of(Angle.normalizePositive(ra), dec); //has been check with an assisstant
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("called hashCode from EclipticToEquatorialConversion");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException("called equals from EclipticToEquatorialConversion");

@@ -15,6 +15,9 @@ public final class RightOpenInterval extends Interval{
         super(a, b);
     }
 
+    /**
+     * @see Interval#contains(double)
+     */
     @Override
     public boolean contains(double v) {
         return v<high()&&v>=low();
@@ -59,6 +62,10 @@ public final class RightOpenInterval extends Interval{
         return x- (y * Math.floor(x/y));
     }
 
+
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "[%.2f,%.2[", low(), high());

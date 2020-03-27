@@ -71,26 +71,42 @@ public final class GeographicCoordinates extends SphericalCoordinates {
         return true;
     }
 
+    /**
+     * @see SphericalCoordinates#lon()
+     */
     @Override
     public double lon() {
         return super.lon();
     }
 
+    /**
+     * @see SphericalCoordinates#lonDeg()
+     */
     @Override
     public double lonDeg() {
         return super.lonDeg();
     }
 
+
+    /**
+     * @see SphericalCoordinates#lat()
+     */
     @Override
     public double lat() {
         return super.lat();
     }
 
+    /**
+     * @see SphericalCoordinates#latDeg()
+     */
     @Override
     public double latDeg() {
         return super.latDeg();
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "(lon=%.4f°, lat=%.4f°)", lonDeg(), latDeg());

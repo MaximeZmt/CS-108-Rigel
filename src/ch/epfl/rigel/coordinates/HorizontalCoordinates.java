@@ -141,6 +141,9 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
         return Math.acos( Math.sin(this.alt()) * Math.sin(that.alt()) + Math.cos(this.alt()) * Math.cos(that.alt()) * Math.cos(this.az()-that.az())   );
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "(az=%.4f°, alt=%.4f°)", azDeg(), altDeg());

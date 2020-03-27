@@ -33,6 +33,10 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
 
     }
 
+
+    /**
+     * @see Function<EquatorialCoordinates, HorizontalCoordinates>{@link #apply(EquatorialCoordinates)}
+     */
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
         double H =  siderealTimeResult - equatorialCoordinates.ra(); //1.53472618892;
@@ -44,11 +48,17 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
         return HorizontalCoordinates.of(Angle.normalizePositive(A),h);
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("called hashCode from EquatorialToHorizontalConversion");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException("called equals from EquatorialToHorizontalConversion");

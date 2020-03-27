@@ -19,6 +19,10 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
 
     INSTANCE();
 
+
+    /**
+     * @see StarCatalogue.Loader#load(InputStream, StarCatalogue.Builder)
+     */
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);

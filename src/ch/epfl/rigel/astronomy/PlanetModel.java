@@ -76,6 +76,9 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         this.magnitude = magnitude;
     }
 
+    /**
+     * @see CelestialObjectModel<Planet>{@link #at(double, EclipticToEquatorialConversion)}
+     */
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
         double m = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;

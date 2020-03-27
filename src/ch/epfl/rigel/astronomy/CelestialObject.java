@@ -1,6 +1,7 @@
 package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.Preconditions;
+import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 
 import java.util.Objects;
@@ -82,6 +83,9 @@ public abstract class CelestialObject {
         return name();
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return info();

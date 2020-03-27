@@ -15,6 +15,9 @@ public final class ClosedInterval extends Interval {
         super(a, b);
     }
 
+    /**
+     * @see Interval#contains(double)
+     */
     @Override
     public boolean contains(double v) {
         return v<=high()&&v>=low();
@@ -65,6 +68,9 @@ public final class ClosedInterval extends Interval {
         }
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT, "[%.2f,%.2f]", low(), high());

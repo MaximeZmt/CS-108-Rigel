@@ -84,6 +84,9 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         return HorizontalCoordinates.of(Angle.normalizePositive(lambda),phi);
     }
 
+    /**
+     * @see Function<HorizontalCoordinates, CartesianCoordinates>{@link #apply(HorizontalCoordinates)}
+     */
     @Override
     public CartesianCoordinates apply(HorizontalCoordinates horizontalCoordinates) {
         double phi = horizontalCoordinates.alt();
@@ -98,16 +101,25 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         return CartesianCoordinates.of(x,y);
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("Called hashCode from StereographicProjection");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException("Called equals from StereographicProjection");
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT,"StereographicProjection, center : (az=%.4f ; alt=%.4f)",

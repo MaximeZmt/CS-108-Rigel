@@ -60,11 +60,17 @@ abstract class SphericalCoordinates {
         return Angle.toDeg(latitude);
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public final int hashCode() {
         throw new UnsupportedOperationException("Try to call hashCode in SphericalCoordinates class");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public final boolean equals(Object obj) {
         throw new UnsupportedOperationException("Try to call equals in SphericalCoordinates class");

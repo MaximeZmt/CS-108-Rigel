@@ -46,16 +46,25 @@ public final class CartesianCoordinates {
         return y;
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("Called hashCode from CartesianCoordinates");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException("Called equals from CartesianCoordinates");
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return String.format(Locale.ROOT,"(x=%.4f ; y=%.4f)",x,y);

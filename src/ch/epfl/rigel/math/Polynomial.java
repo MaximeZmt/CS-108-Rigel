@@ -44,6 +44,9 @@ public final class Polynomial {
         return returnValue;
     }
 
+    /**
+     * @see Object#toString() 
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -68,11 +71,17 @@ public final class Polynomial {
         return sb.toString();
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         throw new UnsupportedOperationException("Try to call hashCode in Polynomial");
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         throw new UnsupportedOperationException("Try to call equals in Polynomial");
