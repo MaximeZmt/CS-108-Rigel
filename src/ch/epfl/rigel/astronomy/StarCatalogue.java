@@ -26,7 +26,6 @@ public final class StarCatalogue {
      * @throws IllegalArgumentException if one of the asterisms contains a star that is not in the given list of stars
      */
     public StarCatalogue(List<Star> stars, List<Asterism> asterisms){
-        //TODO check if double for is good
         for (Asterism a : asterisms){
             for (Star s : a.stars()){
                 Preconditions.checkArgument(stars.contains(s));
@@ -62,9 +61,8 @@ public final class StarCatalogue {
      * @return a set of asterisms
      */
     public Set<Asterism> asterisms(){
-        //TODO check if correct way of doing
-        Set<Asterism> ll = map.keySet(); //TODO rename var
-        return Collections.unmodifiableSet(ll);
+        Set<Asterism> ast = map.keySet();
+        return Collections.unmodifiableSet(ast);
     }
 
     /**
