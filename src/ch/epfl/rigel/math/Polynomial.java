@@ -52,17 +52,17 @@ public final class Polynomial {
         StringBuilder sb = new StringBuilder();
         for (int i=0 ; i<coefficients.length ; ++i){
             if(coefficients[i]!=0){
-               if(i>0 && coefficients[i]>0){
+               if(i>0 && coefficients[i]>0){ //append a plus, if it is not the first term and if positive
                     sb.append("+");
                }
-               if (Math.abs(coefficients[i])!=1){
+               if (Math.abs(coefficients[i])!=1){ //append the value of the coefficient
                    sb.append(coefficients[i]);
-               }else if (coefficients[i]==-1){
+               }else if (coefficients[i]==-1){ //if coefficient is negative, append a minus
                    sb.append("-");
                }
-               if (i<(coefficients.length-1)){
+               if (i<(coefficients.length-1)){ //append the x value if power is at least one
                    sb.append("x");
-                   if (i<(coefficients.length-2)){
+                   if (i<(coefficients.length-2)){ //write the power of the x value if at least two
                        sb.append("^").append(coefficients.length - 1 - i);
                    }
                }
