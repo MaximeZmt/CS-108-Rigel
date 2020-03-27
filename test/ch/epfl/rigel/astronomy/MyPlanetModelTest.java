@@ -114,7 +114,6 @@ class MyPlanetModelTest {
     }
 
     @Test
-    //TODO value not in interval
     void atWorksOnJupiterSuperiorPlanet(){ // partially done
         ZonedDateTime zdt = ZonedDateTime.of(
                 2003,
