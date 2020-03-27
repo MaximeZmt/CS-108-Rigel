@@ -35,7 +35,6 @@ public final class StarCatalogue {
         this.stars = stars;
         this.asterisms = asterisms;
 
-        //TODO check
         map = new HashMap<>();
         for (Asterism a : asterisms){
             List<Integer> indexList = new ArrayList<>();
