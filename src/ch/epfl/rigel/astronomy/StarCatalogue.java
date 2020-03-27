@@ -125,7 +125,6 @@ public final class StarCatalogue {
          * @return unmodifiable view of the stars
          */
         public List<Star> stars(){
-            //TODO check if really immuable and unmodifiable
             return Collections.unmodifiableList(starList);
         }
 
@@ -158,7 +157,6 @@ public final class StarCatalogue {
          * @throws IOException if input/output errors occurs
          */
         public Builder loadFrom(InputStream inputStream, Loader loader) throws IOException{
-            //TODO check if correct
             loader.load(inputStream, this);
             return this;
         }
