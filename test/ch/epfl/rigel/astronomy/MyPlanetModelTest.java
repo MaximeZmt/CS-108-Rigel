@@ -63,33 +63,6 @@ class MyPlanetModelTest {
         assertEquals(ec.dec(), venus.equatorialPos().dec(),1e-8);
     }
 
-    //TODO check with earth
-    /*
-    @Test
-    void atWorksOnEarthSuperiorPlanet(){
-        ZonedDateTime zdt = ZonedDateTime.of(
-                2000,
-                6,
-                16,
-                0,
-                0,
-                0,
-                0,
-                ZoneId.of("UTC")
-        );
-        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(ZonedDateTime.now());
-        Planet earth = PlanetModel.EARTH.at(
-                Epoch.J2010.daysUntil(zdt), etec);
-
-        assertEquals("Terre", earth.name());
-        assertEquals("Terre", earth.info());
-        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(175.1726954),Angle.ofDeg((0))));
-        assertEquals(ec.ra(), earth.equatorialPos().ra(),1e-8);
-        assertEquals(ec.dec(), earth.equatorialPos().dec(),1e-8);
-    }
-
-     */
-
     @Test
     void atWorksOnMarsSuperiorPlanet(){
         ZonedDateTime zdt = ZonedDateTime.of(
