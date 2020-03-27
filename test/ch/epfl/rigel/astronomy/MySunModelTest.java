@@ -41,7 +41,7 @@ class MySunModelTest {
     }
 
     @Test
-    void cambridgeTestValueP105(){ //TODO see the delta
+    void cambridgeTestValueP105(){
         CelestialObjectModel<Sun> sunO = SunModel.SUN;
         ZonedDateTime zdt = ZonedDateTime.of(
                 2003,
@@ -55,13 +55,9 @@ class MySunModelTest {
         );
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         Sun s = sunO.at(Epoch.J2010.daysUntil(zdt),etec);
-        assertEquals(Angle.ofDeg(201.159131),Angle.normalizePositive(s.meanAnomaly()),1e-6); //TODO ask why 201.159131 -> 0.000001/2 doesn't work ->related to explanation of monday
-
-        assertEquals(123.580601,s.eclipticPos().lonDeg(),1e-6);
-        assertEquals(0,s.eclipticPos().latDeg());
-
-        assertEquals(Angle.ofHr(8+(23./60)+(34./3600)),s.equatorialPos().ra(),1e-4);
-        assertEquals(Angle.ofDMS(19,21,10),s.equatorialPos().dec(),1e-4);
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(123.5806048),Angle.ofDeg(0)));
+        assertEquals(s.equatorialPos().ra(),ec.ra(),1e-7);
+        assertEquals(s.equatorialPos().dec(),ec.dec(),1e-7);
     }
 
     @Test

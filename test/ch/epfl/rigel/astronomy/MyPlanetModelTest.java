@@ -111,8 +111,8 @@ class MyPlanetModelTest {
         System.out.println("Magnitude (book): "+-1.99121985);
         System.out.println("Magnitude (Compute): "+jupiter.magnitude());
         System.out.println("AngularSize (Book): "+Angle.ofDMS(0,0,35.14290308));
-        System.out.println("AngularSize (Compute): "+jupiter.angularSize());
-        assertEquals(Angle.ofDMS(0,0,35.1), jupiter.angularSize(),1e-7); //TODO check for precision data from cambridge
+        System.out.println("AngularSize (Compute): "+Angle.toDeg(jupiter.angularSize())*3600);
+        assertEquals(Angle.ofDMS(0,0,35.1), jupiter.angularSize(),Angle.ofDMS(0,0,0.1)/2); //TODO check for precision data from cambridge
         assertEquals(-1.986222784, jupiter.magnitude(),1e-2); //TODO ask on Piazza for precision
     }
 
