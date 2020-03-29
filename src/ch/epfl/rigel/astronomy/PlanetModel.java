@@ -99,7 +99,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 (1+EARTH.orbitalEccentricity*Math.cos(vEarth));
         double lEarth = vEarth+EARTH.lonPerigee;
 
-        //redundant calculation
+        //redundant calculation //TODO what is that comment ?
         double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
         //different calculations for longitude of inferior and superior planets
