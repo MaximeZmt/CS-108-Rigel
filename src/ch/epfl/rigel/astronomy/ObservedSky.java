@@ -77,22 +77,23 @@ public class ObservedSky { // public et immuable
 
 
     //should be public ? methode d'acces
-    Sun sun(){
+    public Sun sun(){
         return sunInstance;
     }
-    CartesianCoordinates sunPosition(){
+
+    public CartesianCoordinates sunPosition(){
         return sunCartCoordinates;
     }
 
-    Moon moon(){
+    public Moon moon(){
         return moonInstance;
     }
 
-    CartesianCoordinates moonPosition(){
+    public CartesianCoordinates moonPosition(){
         return moonCartCoordinates;
     }
 
-    List<Planet> planets(){
+    public List<Planet> planets(){
         return List.copyOf(planetsList);
     }
 
@@ -100,18 +101,18 @@ public class ObservedSky { // public et immuable
         return Arrays.copyOf(planetPosArray,planetPosArray.length); // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
     }
 
-    List<Star> stars(){
+    public List<Star> stars(){
         return List.copyOf(starList);
     }
 
-    double[] starsPosition(){
+    public double[] starsPosition(){
         return Arrays.copyOf(starPosArray,starPosArray.length);
     }
 
     //asterismAccess method
     //listIndexstar asterismgiven -> both calling starcatalogue method
 
-    CelestialObject objectClosestTo(CartesianCoordinates cc,double maxDist){
+    public CelestialObject objectClosestTo(CartesianCoordinates cc,double maxDist){
         double closestDist = maxDist;
         double tempoDist = 0;
         CelestialObject co = null;
