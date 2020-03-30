@@ -25,10 +25,10 @@ public class ObservedSky { // public et immuable
 
     Sun sun(){
         //return SunModel.SUN.at();
-        return null
+        return null;
     }
     CartesianCoordinates sunPosition(){
-        return null
+        return null;
     }
 
 }
