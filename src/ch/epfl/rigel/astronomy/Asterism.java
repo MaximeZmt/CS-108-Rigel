@@ -20,7 +20,7 @@ public final class Asterism {
      */
     public Asterism(List<Star> stars){
         Preconditions.checkArgument(!stars.isEmpty());
-        starList = stars;
+        starList = List.copyOf(stars); //TODO Il manquait la copie defensive !!! (reason why lost 1 pts)
     }
 
     /**
