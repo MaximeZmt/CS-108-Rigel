@@ -24,11 +24,21 @@ public class ObservedSky { // public et immuable
 
     }
 
+
+    //should be public
     Sun sun(){
         //return SunModel.SUN.at();
         return null;
     }
     CartesianCoordinates sunPosition(){
+        return null;
+    }
+
+    Moon moon(){
+        return null;
+    }
+
+    CartesianCoordinates moonPosition(){
         return null;
     }
 
@@ -39,4 +49,13 @@ public class ObservedSky { // public et immuable
     double[] planetPositions(){
         return null; // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
     }
+
+    List<Star> stars(){
+        return null;
+    }
+
+    double[] starsPosition(){
+        return null;
+    }
+
 }
