@@ -6,6 +6,7 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 /**
  * Represent a set of CelestialObject projected in a plan with a stereographic projection
@@ -31,4 +32,11 @@ public class ObservedSky { // public et immuable
         return null;
     }
 
+    List<Planet> planets(){
+        return null;
+    }
+
+    double[] planetPositions(){
+        return null; // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
+    }
 }
