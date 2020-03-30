@@ -30,6 +30,7 @@ public class ObservedSky { // public et immuable
     private final List<Star> starList;
     private final double[] starPosArray;
 
+
     ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){ //public or package-private or private ?
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
@@ -72,7 +73,6 @@ public class ObservedSky { // public et immuable
             counter++;
         }
 
-
     }
 
 
@@ -106,6 +106,56 @@ public class ObservedSky { // public et immuable
 
     double[] starsPosition(){
         return Arrays.copyOf(starPosArray,starPosArray.length);
+    }
+
+    //asterismAccess method
+    //listIndexstar asterismgiven -> both calling starcatalogue method
+
+    CelestialObject objectClosestTo(CartesianCoordinates cc,double maxDist){
+        double closestDist = maxDist;
+        double tempoDist = 0;
+        CelestialObject co = null;
+        //sun
+        tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
+        if (tempoDist<closestDist){
+            co = sunInstance;
+            closestDist = tempoDist;
+        }
+
+        //moon
+        tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
+        if(tempoDist<closestDist){
+            co = moonInstance;
+            closestDist = tempoDist;
+        }
+
+        //planet
+
+        for(Planet p : planetsList){
+            int index = planetsList.indexOf(p);
+            tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
+            if(tempoDist<closestDist){
+                closestDist = tempoDist;
+                co = p;
+            }
+        }
+
+
+        //stars
+
+        for(Star s : starList){
+            int index = starList.indexOf(s);
+            tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
+            if(tempoDist<closestDist){
+                closestDist = tempoDist;
+                co = s;
+            }
+        }
+        return co;
+    }
+
+    private double dist(double x1, double x2, double y1, double y2){
+        return Math.sqrt((x1-x2)*(x1-x2)+ (y1-y2)*(y1-y2));
     }
 
 }
