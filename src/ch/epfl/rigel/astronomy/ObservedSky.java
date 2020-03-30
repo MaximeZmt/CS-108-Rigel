@@ -20,8 +20,9 @@ public class ObservedSky { // public et immuable
     /*
     info + model soleil lune planete -> calculer pos projetee dans plan de tout objet celeste (Soleil, Lune,planete, etoile) sauf terre
      */
+    private final ZonedDateTime zdt;
     ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){ //public or package-private or private ?
-
+        this.zdt = zdt;
     }
 
 
@@ -35,6 +36,7 @@ public class ObservedSky { // public et immuable
     }
 
     Moon moon(){
+        return MoonModel.MOON.at(Epoch.J2010.daysUntil(),);
         return null;
     }
 
