@@ -1,5 +1,5 @@
 package ch.epfl.rigel.gui;
-
+/*
 import ch.epfl.rigel.Preconditions;
 import ch.epfl.rigel.math.ClosedInterval;
 import javafx.scene.paint.Color;
@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+
+ */
 /**
  * [fillTxt]
  *
@@ -14,7 +16,7 @@ import java.nio.charset.StandardCharsets;
  * @author Maxime Zammit (310251)
  */
 public class BlackBodyColor {
-
+/*
     private BlackBodyColor(){}
 
     //TODO ask for return statement outside of try catch statement
@@ -52,4 +54,6 @@ public class BlackBodyColor {
         }
         return null;
     }
+
+ */
 }
