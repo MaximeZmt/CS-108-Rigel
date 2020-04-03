@@ -38,13 +38,13 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      */
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
-        double H =  siderealTimeResult - equatorialCoordinates.ra(); //1.53472618892;
-        double cosH = Math.cos(H);
-        double sinH = Math.sin(H);
-        double delta = equatorialCoordinates.dec(); // declinaison
-        double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosH);
-        double A = Math.atan2((-Math.cos(delta)*cosPhi*sinH),(Math.sin(delta)-(sinPhi*Math.sin(h))));
-        return HorizontalCoordinates.of(Angle.normalizePositive(A),h);
+        double hourAngle =  siderealTimeResult - equatorialCoordinates.ra();
+        double cosHourAngle = Math.cos(hourAngle);
+        double sinHourAngle = Math.sin(hourAngle);
+        double delta = equatorialCoordinates.dec();
+        double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosHourAngle);
+        double azimuth = Math.atan2((-Math.cos(delta)*cosPhi*sinHourAngle),(Math.sin(delta)-(sinPhi*Math.sin(h))));
+        return HorizontalCoordinates.of(Angle.normalizePositive(azimuth),h);
     }
 
     /**
