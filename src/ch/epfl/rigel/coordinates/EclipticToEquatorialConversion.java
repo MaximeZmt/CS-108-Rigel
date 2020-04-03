@@ -53,7 +53,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      */
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException("called hashCode from EclipticToEquatorialConversion");
+        throw new UnsupportedOperationException("Called hashCode from EclipticToEquatorialConversion");
     }
 
     /**
@@ -61,6 +61,6 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      */
     @Override
     public boolean equals(Object obj) {
-        throw new UnsupportedOperationException("called equals from EclipticToEquatorialConversion");
+        throw new UnsupportedOperationException("Called equals from EclipticToEquatorialConversion");
     }
 }

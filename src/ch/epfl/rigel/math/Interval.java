@@ -70,7 +70,7 @@ public abstract class Interval {
      */
     @Override
     public final boolean equals(Object obj) {
-        throw new UnsupportedOperationException("Try to call equals in Interval Class");
+        throw new UnsupportedOperationException("Try to call equals in interval class");
     }
 }
 

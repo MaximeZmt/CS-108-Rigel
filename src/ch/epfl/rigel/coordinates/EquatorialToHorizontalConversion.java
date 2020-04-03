@@ -52,7 +52,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      */
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException("called hashCode from EquatorialToHorizontalConversion");
+        throw new UnsupportedOperationException("Called hashCode from EquatorialToHorizontalConversion");
     }
 
     /**
@@ -60,7 +60,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      */
     @Override
     public boolean equals(Object obj) {
-        throw new UnsupportedOperationException("called equals from EquatorialToHorizontalConversion");
+        throw new UnsupportedOperationException("Called equals from EquatorialToHorizontalConversion");
     }
 }
 
