@@ -6,11 +6,10 @@ import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MyMoonModelTest {
     @Test
@@ -34,5 +33,37 @@ class MyMoonModelTest {
         assertEquals(Angle.ofDeg(0.546822),moon.angularSize(),1e-7);
         String str = String.format(Locale.ROOT,"%s (%.1f%%)","Lune",22.5);
         assertEquals(str,moon.toString());
+    }
+
+    @Test
+    //frama test
+    void atRaHrWorksOnRandomValues(){
+        double moon = MoonModel.MOON.at(
+                -2313,
+                new EclipticToEquatorialConversion(
+                        ZonedDateTime.of(
+                                LocalDate.of(2003,  Month.SEPTEMBER, 1),
+                                LocalTime.of(0,0), ZoneOffset.UTC
+                        )
+                )
+        ).equatorialPos().raHr();
+
+        assertEquals(14.211456457835897, moon);
+    }
+
+    @Test
+    //frama test
+    void atDecWorksOnRandomValues(){
+        double moon = MoonModel.MOON.at(
+                -2313,
+                new EclipticToEquatorialConversion(
+                        ZonedDateTime.of(
+                                LocalDate.of(2003,  Month.SEPTEMBER, 1),
+                                LocalTime.of(0,0), ZoneOffset.UTC
+                        )
+                )
+        ).equatorialPos().dec();
+
+        assertEquals(-0.20114171346014934, moon);
     }
 }
