@@ -12,7 +12,7 @@ import ch.epfl.rigel.math.ClosedInterval;
  */
 
 public final class Star extends CelestialObject {
-    private final static ClosedInterval colorI = ClosedInterval.of(-0.5,5.5); // Interval of valid ColorIndex
+    private final static ClosedInterval COLOR_I = ClosedInterval.of(-0.5,5.5); // Interval of valid ColorIndex
     private final int hipparcosId;
     private final int colorTemperature;
 
@@ -31,7 +31,7 @@ public final class Star extends CelestialObject {
         //angular size for star is 0 because they are represented as a point
 
         //Checks if HipparcosId is not negative and if the colorIndex is in interval
-        Preconditions.checkArgument(hipparcosId>=0 && colorI.contains(colorIndex));
+        Preconditions.checkArgument(hipparcosId>=0 && COLOR_I.contains(colorIndex));
 
         this.hipparcosId = hipparcosId;
 
