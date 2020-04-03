@@ -1,9 +1,14 @@
 package ch.epfl.rigel.astronomy;
 
+import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +42,4 @@ class MyHygDatabaseLoaderTest {
             assertNotNull(rigel);
         }
     }
-
-
-
 }
