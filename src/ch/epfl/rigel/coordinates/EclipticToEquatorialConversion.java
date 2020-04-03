@@ -35,9 +35,9 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         sinEpsilon = Math.sin(epsilon);
     }
 
-    //TODO check javadoc with genericity
+
     /**
-     * @see Function<EclipticCoordinates, EquatorialCoordinates>{@link #apply(EclipticCoordinates)}
+     * @see Function#apply(Object)
      */
     @Override
     public EquatorialCoordinates apply(EclipticCoordinates ecl) {

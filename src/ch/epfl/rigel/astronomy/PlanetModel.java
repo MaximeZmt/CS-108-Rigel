@@ -73,9 +73,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         this.magnitude = magnitude;
     }
 
-    //TODO genericity with javadoc
     /**
-     * @see CelestialObjectModel<Planet>{@link #at(double, EclipticToEquatorialConversion)}
+     * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion)
      */
     @Override
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
@@ -99,7 +98,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
                 (1+EARTH.orbitalEccentricity*Math.cos(vEarth));
         double lEarth = vEarth+EARTH.lonPerigee;
 
-        //redundant calculation //TODO what is that comment ?
+        //value that is used many times down below
         double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
 
         //different calculations for longitude of inferior and superior planets

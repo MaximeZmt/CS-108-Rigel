@@ -19,9 +19,8 @@ public enum MoonModel implements CelestialObjectModel<Moon> { // public et immua
     private final static double INCLINAISON_ORBITE = Angle.ofDeg(5.145396);
     private final static double EXCENTRICITE = 0.0549;
 
-    //TODO check why link points to itself (maybe case of genericity)
     /**
-     * @see CelestialObjectModel<Moon>{@link #at(double, EclipticToEquatorialConversion)}
+     * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion)
      */
     @Override
     public Moon at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {

@@ -82,9 +82,8 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         return HorizontalCoordinates.of(Angle.normalizePositive(lambda),phi);
     }
 
-    //TODO check genericity with javadoc
     /**
-     * @see Function<HorizontalCoordinates, CartesianCoordinates>{@link #apply(HorizontalCoordinates)}
+     * @see Function#apply(Object)
      */
     @Override
     public CartesianCoordinates apply(HorizontalCoordinates horizontalCoordinates) {

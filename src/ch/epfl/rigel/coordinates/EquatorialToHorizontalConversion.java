@@ -33,9 +33,8 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
 
     }
 
-    //TODO check javadoc with genericity
     /**
-     * @see Function<EquatorialCoordinates, HorizontalCoordinates>{@link #apply(EquatorialCoordinates)}
+     * @see Function#apply(Object)
      */
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
