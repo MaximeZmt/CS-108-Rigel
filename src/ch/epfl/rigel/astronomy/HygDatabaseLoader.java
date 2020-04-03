@@ -24,7 +24,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
-        br.readLine(); // remove first one
+        br.readLine(); // ignore first line
         String line;
         int c = 0;
         while ((line = br.readLine())!=null){
