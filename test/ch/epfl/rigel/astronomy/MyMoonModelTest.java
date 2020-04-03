@@ -53,7 +53,7 @@ class MyMoonModelTest {
         EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(258.847528),Angle.ofDeg(3.124568388)));
         assertEquals(ec.dec(),moon.equatorialPos().dec(),1e-5);
         assertEquals(ec.ra(),moon.equatorialPos().ra(),1e-4);
-        assertEquals(Angle.ofDeg(0.492429151),moon.angularSize(),1e-7);
+        assertEquals(Angle.ofDeg(0.492429),moon.angularSize(),1e-4);
         String str = String.format(Locale.ROOT,"%s (%.1f%%)","Lune",99.7);
         assertEquals(str,moon.toString());
     }
