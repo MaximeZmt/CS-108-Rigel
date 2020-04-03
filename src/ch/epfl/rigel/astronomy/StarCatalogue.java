@@ -95,7 +95,6 @@ public final class StarCatalogue {
      */
     public final static class Builder{
 
-        //StarCatalogue starCatalogue;
         private final List<Star> starList;
         private final List<Asterism> asterismList;
 
