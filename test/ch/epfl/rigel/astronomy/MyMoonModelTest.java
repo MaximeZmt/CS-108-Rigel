@@ -36,6 +36,30 @@ class MyMoonModelTest {
     }
 
     @Test
+    void CambridgeXlsTest1(){
+        CelestialObjectModel<Moon> moonO = MoonModel.MOON;
+        ZonedDateTime zdt = ZonedDateTime.of(
+                2000,
+                6,
+                16,
+                7,
+                56,
+                6,
+                0,
+                ZoneId.of("UTC")
+        );
+        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
+        Moon moon = moonO.at(Epoch.J2010.daysUntil(zdt),etec);
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(258.847528),Angle.ofDeg(3.124568388)));
+        assertEquals(ec.dec(),moon.equatorialPos().dec(),1e-5);
+        assertEquals(ec.ra(),moon.equatorialPos().ra(),1e-4);
+        assertEquals(Angle.ofDeg(0.492429151),moon.angularSize(),1e-7);
+        String str = String.format(Locale.ROOT,"%s (%.1f%%)","Lune",99.7);
+        assertEquals(str,moon.toString());
+    }
+
+
+    @Test
     //frama test
     void atRaHrWorksOnRandomValues(){
         double moon = MoonModel.MOON.at(
