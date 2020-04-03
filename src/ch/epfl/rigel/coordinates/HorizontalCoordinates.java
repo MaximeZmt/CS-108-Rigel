@@ -92,8 +92,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @throws IllegalStateException if fails
      */
     public String azOctantName(String n, String e, String s, String w){
-        int num = ((int) (azDeg()+22.5)/45)%8;
-        switch(num){
+        int octantPosition = ((int) (azDeg()+22.5)/45)%8;
+        switch(octantPosition){
             case 0:
                 return n;
             case 1:
