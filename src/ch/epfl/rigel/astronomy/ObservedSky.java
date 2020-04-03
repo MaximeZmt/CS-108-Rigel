@@ -44,7 +44,7 @@ public class ObservedSky { // public et immuable
         moonCartCoordinates = stereoProj.apply(ethc.apply(moonInstance.equatorialPos()));
 
         //planet
-        planetsList = new ArrayList<>(); //TODO ask if it's better ArrayList or LinkedList
+        planetsList = new ArrayList<>();
         planetPosArray = new double[14]; //only 7 planet, earth does'nt count
         Iterator pIterator = PlanetModel.ALL.iterator();
         int counter = 0;
