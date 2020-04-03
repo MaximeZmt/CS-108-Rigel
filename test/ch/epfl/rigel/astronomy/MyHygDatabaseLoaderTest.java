@@ -40,6 +40,7 @@ class MyHygDatabaseLoaderTest {
                     rigel = s;
             }
             assertNotNull(rigel);
+            assertEquals(0.180,rigel.magnitude(),1e-6);
         }
     }
 }
