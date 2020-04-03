@@ -68,13 +68,14 @@ class MyAsterismLoaderTest {
                     }
                 }
                 if (sss.isEmpty()){
-                    System.out.println(st.toString());
-                    System.out.println(catalogue.asterismIndices(a).toString());
+                    //System.out.println(st.toString());
+                    //System.out.println(catalogue.asterismIndices(a).toString());
                     List<Integer> ltc = catalogue.asterismIndices(a);
+                    List<Integer> newhipList = new ArrayList<>();
                     for(Integer num : ltc){
-                        System.out.println(starList.get(num).hipparcosId());
+                        newhipList.add(starList.get(num).hipparcosId());
                     }
-                    //assertEquals(List.of("Rigel","Saiph","Alnitak","Betelgeuse","Mu Ori","Xi Ori", "Chi-2 Ori").toString(), st.toString());
+                    assertEquals(List.of(54879,54872,57632,54879,49669,49583,50583,50335,48455,47908).toString(),newhipList.toString());
                 }
             }
         }catch(Exception e){
