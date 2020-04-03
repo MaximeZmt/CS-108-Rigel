@@ -26,9 +26,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
         BufferedReader br = new BufferedReader(isr);
         br.readLine(); // ignore first line
         String line;
-        int c = 0;
         while ((line = br.readLine())!=null){
-            c++;
             String[] starArray = line.split(",");
 
             int hipId;
