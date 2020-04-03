@@ -66,4 +66,15 @@ class MyMoonModelTest {
 
         assertEquals(-0.20114171346014934, moon);
     }
+
+    @Test
+        //frama test
+    void atAngularSizeWorksOnRandomValues(){
+        double moon = MoonModel.MOON.at(Epoch.J2010.daysUntil(ZonedDateTime.of(LocalDate.of(1979, 9, 1),LocalTime.of(0, 0),
+                ZoneOffset.UTC)), new EclipticToEquatorialConversion(ZonedDateTime.of(
+                LocalDate.of(1979, 9, 1),LocalTime.of(0, 0),ZoneOffset.UTC))).
+                angularSize();
+
+        assertEquals(0.009225908666849136, moon);
+    }
 }
