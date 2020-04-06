@@ -31,7 +31,7 @@ public class ObservedSky { // public et immuable
     private final double[] starPosArray;
 
 
-    ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){ //public or package-private or private ?
+    public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){ //public or package-private or private ?
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
 
@@ -155,7 +155,7 @@ public class ObservedSky { // public et immuable
         return co;
     }
 
-    private double dist(double x1, double x2, double y1, double y2){
+    private double dist(double x1, double x2, double y1, double y2){ //TODO Math.hypot()
         return Math.sqrt((x1-x2)*(x1-x2)+ (y1-y2)*(y1-y2));
     }
 
