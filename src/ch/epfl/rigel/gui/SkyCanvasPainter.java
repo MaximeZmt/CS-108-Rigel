@@ -23,7 +23,7 @@ public class SkyCanvasPainter { //classe instanciable
     private final Canvas canvas;
     private final GraphicsContext ctx;
     private final static ClosedInterval MAGNITUDE_INTERVAL = ClosedInterval.of(-2,5);
-    private final static double FIXED_ARC_TAN_FACTOR = Math.atan(Angle.ofDeg(0.5)/4);
+    private final static double FIXED_TAN_FACTOR = Math.tan(Angle.ofDeg(0.5)/4);
 
     public SkyCanvasPainter(Canvas canvas){ //suppose public cause instanciable
         this.canvas = canvas;
@@ -58,14 +58,19 @@ public class SkyCanvasPainter { //classe instanciable
         double[] starPos = sky.starsPosition();
         double[] newStarPos = new double[starPos.length];
         planeToCanvas.transform2DPoints(starPos,0,newStarPos,0,(starPos.length/2));
+        int count = 0;
         for(Star s:starList){
-            double starMagn = s.magnitude();
-            double diameter = ObjectDiameter(starMagn);
-            int index = starList.indexOf(s);
-            ctx.setFill(Color.WHITE);
-            double x = newStarPos[2*index]-(0.5*diameter);
-            double y = newStarPos[(2*index)+1]-(0.5*diameter);
-            ctx.fillOval(x,y,x+diameter,y+diameter);
+            count++;
+            if (count < 1000) {
+                double starMagn = s.magnitude();
+                double diameter = ObjectDiameter(starMagn);
+                System.out.println(diameter);
+                int index = starList.indexOf(s);
+                ctx.setFill(Color.WHITE);
+                double x = newStarPos[2 * index] - (0.5 * diameter);
+                double y = newStarPos[(2 * index) + 1] - (0.5 * diameter);
+                ctx.fillOval(x, y, x + diameter, y + diameter);
+            }
         }
         //max size 95% of 0.5 degrees
         // min size 10% of diam of 0.5 degrees
@@ -82,7 +87,7 @@ public class SkyCanvasPainter { //classe instanciable
         //System.out.println(clipMagn);
         double sizeFactor = (99-17*clipMagn)/140;
         //System.out.println(sizeFactor);
-        double diameter = sizeFactor*2*FIXED_ARC_TAN_FACTOR;
+        double diameter = sizeFactor*2*FIXED_TAN_FACTOR;
         return diameter;
     }
 
