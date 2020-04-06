@@ -31,8 +31,8 @@ public final class StarCatalogue {
             }
         }
 
-        this.stars = stars;
-        this.asterisms = asterisms;
+        this.stars = List.copyOf(stars); // TODO forget immutable copyOf
+        this.asterisms = List.copyOf(asterisms); //suppose should do it also here
 
         map = new HashMap<>();
         for (Asterism a : asterisms){
@@ -72,7 +72,7 @@ public final class StarCatalogue {
      */
     public List<Integer> asterismIndices(Asterism asterism){
         Preconditions.checkArgument(this.asterisms.contains(asterism));
-        return map.get(asterism);
+        return List.copyOf(map.get(asterism)); //TODO was missing copyOf
     }
 
     /**
