@@ -45,9 +45,11 @@ public class BlackBodyColor {
             String line;
             int temperature = 1000;
             while ((line = br.readLine())!=null) {
-                if ((line.charAt(10) == '1') && (line.charAt(0) != '#')){
-                    integerColorMap.put(temperature, Color.web(line.substring(80,86)));
-                    temperature = temperature+100;
+                if (line.charAt(0) != '#') {
+                    if (line.charAt(10) == '1') {
+                        integerColorMap.put(temperature, Color.web(line.substring(80, 87)));
+                        temperature = temperature + 100;
+                    }
                 }
             }
 
