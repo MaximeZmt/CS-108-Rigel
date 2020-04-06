@@ -35,7 +35,6 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
         sinEpsilon = Math.sin(epsilon);
     }
 
-
     /**
      * @see Function#apply(Object)
      */
