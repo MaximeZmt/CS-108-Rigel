@@ -61,15 +61,16 @@ public class SkyCanvasPainter { //classe instanciable
         int count = 0;
         for(Star s:starList){
             count++;
-            if (count < 1000 && count>990) {
+            if (count < 999999 && count>0) {
                 double starMagn = s.magnitude();
                 double diameter = ObjectDiameter(starMagn);
-                System.out.println(diameter);
+                //System.out.println(diameter);
                 int index = starList.indexOf(s);
-                ctx.setFill(Color.WHITE);
-                double x = newStarPos[2 * index] - (0.5 * diameter);
-                double y = newStarPos[(2 * index) + 1] - (0.5 * diameter);
-                ctx.fillOval(x, y, x + diameter, y + diameter);
+                ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
+                double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
+                double x = newStarPos[2 * index] - (0.5 * diam2);
+                double y = newStarPos[(2 * index) + 1] - (0.5 * diam2);
+                ctx.fillOval(x, y, diam2,diam2);
             }
         }
         //max size 95% of 0.5 degrees
