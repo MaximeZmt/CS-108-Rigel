@@ -18,7 +18,7 @@ import java.util.List;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-public class SkyCanvasPainter { //classe instanciable
+public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Finale:check in project, same as static = CAPS
 
     private final Canvas canvas;
     private final GraphicsContext ctx;
