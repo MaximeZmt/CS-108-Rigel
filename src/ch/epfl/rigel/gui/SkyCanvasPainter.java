@@ -61,7 +61,7 @@ public class SkyCanvasPainter { //classe instanciable
         int count = 0;
         for(Star s:starList){
             count++;
-            if (count < 1000) {
+            if (count < 1000 && count>990) {
                 double starMagn = s.magnitude();
                 double diameter = ObjectDiameter(starMagn);
                 System.out.println(diameter);
