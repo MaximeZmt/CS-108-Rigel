@@ -49,7 +49,7 @@ public final class Star extends CelestialObject {
 
     /**
      * Getter for the colorTemperature
-     * 
+     *
      * @return the color Temperature (colorTemperature)
      */
     public int colorTemperature(){
