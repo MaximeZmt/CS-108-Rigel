@@ -15,12 +15,9 @@ import java.util.Locale;
  */
 
 public final class GeographicCoordinates extends SphericalCoordinates {
+    //Intervals that are used to check if the given angle in of() method is valid.
     private final static RightOpenInterval LON_INTERVAL = RightOpenInterval.of(Angle.ofDeg(-180), Angle.ofDeg(180));
     private final static ClosedInterval LAT_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
-    /*
-    as the of() method that is used to build new GeographicCoordinates receive angle, we set the two
-    intervals that we accept in order to check if the given angle are in the interval.
-     */
 
     private GeographicCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
