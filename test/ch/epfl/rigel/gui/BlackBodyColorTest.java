@@ -5,12 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * [description text]
- *
- * @author Michael Freeman (313215)
- * @author Maxime Zammit (310251)
- */
+
 class BlackBodyColorTest {
 
     @Test
