@@ -28,7 +28,6 @@ public final class Asterism {
      * @return a defensive copy of the Star List
      */
     public List<Star> stars(){
-        //return a defensive copy of the StarList, because it's an immutable class
         return List.copyOf(starList);
     }
 }
