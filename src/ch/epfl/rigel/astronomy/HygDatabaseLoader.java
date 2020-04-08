@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et immuable
+public enum HygDatabaseLoader implements StarCatalogue.Loader {
     INSTANCE();
 
     /**
@@ -24,7 +24,7 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
         InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
-        br.readLine(); // ignore first line
+        br.readLine(); //ignore first line
         String line;
         while ((line = br.readLine())!=null){
             String[] starArray = line.split(",");
@@ -38,9 +38,9 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader { // public et imm
 
             /*
             to determine the name
-            first we assign the proper column to the sName var
-            But if sName var still empty
-            we fill it with bayer index (or ? by default) a blank
+            first we assign the proper column to the sName var.
+            If sName var is still empty
+            we fill it with bayer index (or ? by default), a blank
             space and the con index
              */
             String sName = starArray[6];
