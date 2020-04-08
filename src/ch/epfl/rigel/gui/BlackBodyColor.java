@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 /**
- * [fillTxt]
+ * Get the color of a BlackBody given it's temperature
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
