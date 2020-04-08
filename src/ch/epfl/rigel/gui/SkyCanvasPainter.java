@@ -23,7 +23,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     private final Canvas canvas;
     private final GraphicsContext ctx;
     private final static ClosedInterval MAGNITUDE_INTERVAL = ClosedInterval.of(-2,5);
-    private final static double FIXED_TAN_FACTOR = Math.tan(Angle.ofDeg(0.5)/4);
 
     public SkyCanvasPainter(Canvas canvas){ //suppose public cause instanciable
         this.canvas = canvas;
@@ -55,27 +54,20 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Star> starList = sky.stars();
+        double multiplyFacor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
         double[] newStarPos = new double[starPos.length];
-        planeToCanvas.transform2DPoints(starPos,0,newStarPos,0,(starPos.length/2));
-        int count = 0;
-        for(Star s:starList){
-            count++;
-            if (count < 999999 && count>0) {
-                double starMagn = s.magnitude();
-                double diameter = ObjectDiameter(starMagn);
-                //System.out.println(diameter);
-                int index = starList.indexOf(s);
-                ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
-                double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
-                double x = newStarPos[2 * index] - (0.5 * diam2);
-                double y = newStarPos[(2 * index) + 1] - (0.5 * diam2);
-                ctx.fillOval(x, y, diam2,diam2);
-            }
+        planeToCanvas.transform2DPoints(starPos, 0, newStarPos, 0, (starPos.length / 2));
+        for (Star s : starList) {
+            double starMagn = s.magnitude();
+            double diameter = ObjectDiameter(starMagn, multiplyFacor);
+            int index = starList.indexOf(s);
+            ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
+            double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
+            double x = newStarPos[2 * index] - (0.5 * diam2);
+            double y = newStarPos[(2 * index) + 1] - (0.5 * diam2);
+            ctx.fillOval(x, y, diam2, diam2);
         }
-        //max size 95% of 0.5 degrees
-        // min size 10% of diam of 0.5 degrees
-        //MAGNITUDE_INTERVAL.clip(value)
     }
 
     public void drawPlanets(){}
@@ -83,12 +75,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawMoon(){}
     public void drawHorizon(){}
 
-    static double ObjectDiameter(double magn){
+    static double ObjectDiameter(double magn, double multiplyFactor){
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
-        //System.out.println(clipMagn);
         double sizeFactor = (99-17*clipMagn)/140;
-        //System.out.println(sizeFactor);
-        double diameter = sizeFactor*2*FIXED_TAN_FACTOR;
+        double diameter = sizeFactor*multiplyFactor;
         return diameter;
     }
 
