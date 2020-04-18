@@ -37,7 +37,8 @@ public final class DrawSky extends Application {
                     .build();
 
             ZonedDateTime when =
-                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
+                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00"); //TODO ask why and if normal that we do not see the sun with that time or at noon
+                    //ZonedDateTime.parse("2020-02-17T14:15:00+01:00"); //time where we see the sun
             GeographicCoordinates where =
                     GeographicCoordinates.ofDeg(6.57, 46.52);
             HorizontalCoordinates projCenter =
@@ -56,6 +57,7 @@ public final class DrawSky extends Application {
 
             painter.clear();
             painter.drawStars(sky, projection, planeToCanvas);
+            painter.drawSun(sky, projection, planeToCanvas);
 
             WritableImage fxImage =
                     canvas.snapshot(null, null);
