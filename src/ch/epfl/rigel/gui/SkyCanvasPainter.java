@@ -1,9 +1,6 @@
 package ch.epfl.rigel.gui;
 
-import ch.epfl.rigel.astronomy.Moon;
-import ch.epfl.rigel.astronomy.ObservedSky;
-import ch.epfl.rigel.astronomy.Star;
-import ch.epfl.rigel.astronomy.Sun;
+import ch.epfl.rigel.astronomy.*;
 import ch.epfl.rigel.coordinates.CartesianCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
@@ -57,6 +54,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+        //asterism
+        List<Asterism> asterismList ; //TODO how do we get the asterism list
+
+        //stars
         List<Star> starList = sky.stars();
         double multiplyFacor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
