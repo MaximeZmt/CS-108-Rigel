@@ -1,5 +1,6 @@
 package ch.epfl.rigel.gui;
 
+import ch.epfl.rigel.astronomy.Moon;
 import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.astronomy.Star;
 import ch.epfl.rigel.astronomy.Sun;
@@ -87,16 +88,16 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5)); //TODO why not angular size
 
         double sunDiamTransformed = planeToCanvas.deltaTransform(sunDiam,0).getX();
-        Color c = Color.YELLOW.deriveColor(0,0,0,0.25);
+        Color c = Color.YELLOW.deriveColor(0,0,0,0.25); //TODO how do we apply the opacity factor
         ctx.setFill(c);
         double diam1 = sunDiamTransformed *2.2;
         double x1 = planeCoord.getX() - (0.5*diam1);
         double y1 = planeCoord.getY()  - (0.5*diam1);
-        System.out.println("x:"+x1);
-        System.out.println("y:"+y1);
+        //System.out.println("x:"+x1);
+        //System.out.println("y:"+y1);
         ctx.fillOval(x1,y1,diam1,diam1);
 
-        ctx.setGlobalAlpha(1);
+        ctx.setFill(Color.YELLOW);
         double diam2 = sunDiamTransformed+2;
         double x2 = planeCoord.getX() - (0.5*diam2);
         double y2 = planeCoord.getY()  - (0.5*diam2);
@@ -107,21 +108,24 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double y3 = planeCoord.getY()  - (0.5*sunDiamTransformed);
         ctx.fillOval(x3,y3,sunDiamTransformed,sunDiamTransformed);
 
-
-
-    /*
-    un disque dont le diamètre est celui du Soleil et la couleur Color.WHITE,
-un disque dont le diamètre est celui du Soleil plus 2 et la couleur Color.YELLOW,
-un disque dont le diamètre est celui du Soleil multiplié par 2.2 et dont la couleur est Color.YELLOW
-mais avec une opacité de 25% seulement, représentant un halo autour du Soleil.
-     */
-
-
     }
 
 
 
-    public void drawMoon(){}
+    public void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+        Moon moon = sky.moon();
+        CartesianCoordinates moonPos = sky.moonPosition();
+        double moonDiam = projection.applyToAngle(moon.angularSize()); //TODO ask if it is the correct way to get diameter
+        double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
+        Point2D coordTransformed = planeToCanvas.deltaTransform(moonPos.x(),moonPos.y());
+        double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
+        double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
+        //System.out.println("x:"+x);
+        //System.out.println("y:"+y);
+        ctx.setFill(Color.WHITE);
+        ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
+    }
+
     public void drawHorizon(){}
 
     static double ObjectDiameter(double magn, double multiplyFactor){
