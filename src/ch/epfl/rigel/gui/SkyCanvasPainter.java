@@ -67,7 +67,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size()); //peut être remis dans star pos
         for (Star s : starList) {
             double starMagn = s.magnitude();
-            double diameter = ObjectDiameter(starMagn, multiplyFactor); //min method
+            double diameter = objectDiameter(starMagn, multiplyFactor); //min method
             int index = starList.indexOf(s);
             ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
             double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX(); //not sure to understand why deltaTransform and not transform
@@ -86,7 +86,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         int counter = 0;
         for(Planet p: planetList){
             double planetMagn = p.magnitude();
-            double diameter = ObjectDiameter(planetMagn,multiplyFactor);
+            double diameter = objectDiameter(planetMagn,multiplyFactor);
             ctx.setFill(Color.LIGHTGRAY);
             double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
             double x = planetCoord[(2*counter)];
@@ -153,7 +153,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.strokeOval(centerTransformed.getX(), centerTransformed.getY(), diamTransformed, diamTransformed);
     }
 
-    static double ObjectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
+    static double objectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
         double sizeFactor = (99-17*clipMagn)/140;
         double diameter = sizeFactor*multiplyFactor;
