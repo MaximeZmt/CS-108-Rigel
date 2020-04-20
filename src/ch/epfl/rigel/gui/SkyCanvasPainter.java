@@ -59,13 +59,13 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
         //stars
         List<Star> starList = sky.stars();
-        double multiplyFacor = projection.applyToAngle(Angle.ofDeg(0.5));
+        double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
         double[] newStarPos = new double[starPos.length];
         planeToCanvas.transform2DPoints(starPos, 0, newStarPos, 0, (starPos.length / 2));
         for (Star s : starList) {
             double starMagn = s.magnitude();
-            double diameter = ObjectDiameter(starMagn, multiplyFacor);
+            double diameter = ObjectDiameter(starMagn, multiplyFactor);
             int index = starList.indexOf(s);
             ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
             double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX(); //not sure to understand why deltaTransform and not transform
@@ -76,8 +76,22 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
     public void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
-
-
+        List<Planet> planetList = sky.planets();
+        double[] planetCoord = sky.planetPositions();
+        double[] newPlanetCoord = new double[planetCoord.length];
+        planeToCanvas.transform2DPoints(planetCoord, 0, newPlanetCoord, 0, (planetCoord.length / 2));
+        double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
+        int counter = 0;
+        for(Planet p: planetList){
+            double planetMagn = p.magnitude();
+            double diameter = ObjectDiameter(planetMagn,multiplyFactor);
+            ctx.setFill(Color.LIGHTGRAY);
+            double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
+            double x = newPlanetCoord[(2*counter)];
+            double y = newPlanetCoord[(2*counter)+1];
+            counter++;
+            System.out.println("Planet: "+p.name()+" created");
+        }
     }
 
 
@@ -129,7 +143,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
     public void drawHorizon(){}
 
-    static double ObjectDiameter(double magn, double multiplyFactor){
+    static double ObjectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
         double sizeFactor = (99-17*clipMagn)/140;
         double diameter = sizeFactor*multiplyFactor;

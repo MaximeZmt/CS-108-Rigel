@@ -97,7 +97,7 @@ public class ObservedSky { // public et immuable
         return List.copyOf(planetsList);
     }
 
-    double[] planetPositions(){
+    public double[] planetPositions(){
         return Arrays.copyOf(planetPosArray,planetPosArray.length); // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
     }
 
