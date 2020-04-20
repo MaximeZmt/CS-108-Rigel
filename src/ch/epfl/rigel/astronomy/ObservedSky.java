@@ -30,8 +30,12 @@ public class ObservedSky { // public et immuable
     private final List<Star> starList;
     private final double[] starPosArray;
 
+    private final StarCatalogue starCatalogue;
 
-    public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){ //public or package-private or private ?
+
+    public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){//TODO public or package-private or private ?
+        this.starCatalogue = starCatalogue;
+
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
 
@@ -115,6 +119,14 @@ public class ObservedSky { // public et immuable
     liste des index des étoiles d'un astérisme donné. Ces méthodes ne font rien d'autre qu'appeler les méthodes
     correspondantes du catalogue d'étoiles utilisé.
      */
+
+    public Set<Asterism> asterisms(){
+        return starCatalogue.asterisms();
+    }
+
+    public List<Integer> asterismIndices(Asterism asterism){
+        return starCatalogue.asterismIndices(asterism);
+    }
 
     //asterismAccess method
     //listIndexstar asterismgiven -> both calling starcatalogue method
