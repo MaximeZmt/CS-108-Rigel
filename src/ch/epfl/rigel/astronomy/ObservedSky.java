@@ -120,7 +120,7 @@ public class ObservedSky { // public et immuable
     correspondantes du catalogue d'étoiles utilisé.
      */
 
-    public Set<Asterism> asterisms(){
+    public Set<Asterism> asterisms(){ //TODO Check if ok for immuability
         return starCatalogue.asterisms();
     }
 

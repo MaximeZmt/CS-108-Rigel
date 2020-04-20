@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.ZonedDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public final class DrawSky extends Application {
     public static void main(String[] args) { launch(args); }
@@ -43,7 +42,7 @@ public final class DrawSky extends Application {
             GeographicCoordinates where =
                     GeographicCoordinates.ofDeg(6.57, 46.52);
             HorizontalCoordinates projCenter =
-                    HorizontalCoordinates.ofDeg(180, 45);
+                    HorizontalCoordinates.ofDeg(180, 45); //WE LOOK AT 180(=South) and 45 degrée alt
             StereographicProjection projection;
             projection = new StereographicProjection(projCenter);
             ObservedSky sky =

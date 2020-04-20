@@ -62,16 +62,16 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         List<Star> starList = sky.stars();
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
-        double[] newStarPos = new double[starPos.length];
-        planeToCanvas.transform2DPoints(starPos, 0, newStarPos, 0, starList.size()); //peut être remis dans star pos
+        //double[] newStarPos = new double[starPos.length];
+        planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size()); //peut être remis dans star pos
         for (Star s : starList) {
             double starMagn = s.magnitude();
             double diameter = ObjectDiameter(starMagn, multiplyFactor); //min method
             int index = starList.indexOf(s);
             ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
             double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX(); //not sure to understand why deltaTransform and not transform
-            double x = newStarPos[2 * index] - (0.5 * diam2);
-            double y = newStarPos[(2 * index) + 1] - (0.5 * diam2);
+            double x = starPos[2 * index] - (0.5 * diam2);
+            double y = starPos[(2 * index) + 1] - (0.5 * diam2);
             ctx.fillOval(x, y, diam2, diam2);
         }
     }
@@ -79,8 +79,8 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Planet> planetList = sky.planets();
         double[] planetCoord = sky.planetPositions();
-        double[] newPlanetCoord = new double[planetCoord.length];
-        planeToCanvas.transform2DPoints(planetCoord, 0, newPlanetCoord, 0, (planetCoord.length / 2));
+        //double[] newPlanetCoord = new double[planetCoord.length];
+        planeToCanvas.transform2DPoints(planetCoord, 0, planetCoord, 0, planetList.size());
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         int counter = 0;
         for(Planet p: planetList){
@@ -88,10 +88,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double diameter = ObjectDiameter(planetMagn,multiplyFactor);
             ctx.setFill(Color.LIGHTGRAY);
             double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
-            double x = newPlanetCoord[(2*counter)];
-            double y = newPlanetCoord[(2*counter)+1];
+            double x = planetCoord[(2*counter)];
+            double y = planetCoord[(2*counter)+1];
             counter++;
-            System.out.println("Planet: "+p.name()+" created");
+            //System.out.println("Planet: "+p.name()+" created");
         }
     }
 
@@ -101,10 +101,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         Sun sun = sky.sun();
         CartesianCoordinates sunPos = sky.sunPosition();
         Point2D planeCoord = planeToCanvas.deltaTransform(sunPos.x(),sunPos.y());
-        double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5)); //TODO why not angular size
+        double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5));
 
         double sunDiamTransformed = planeToCanvas.deltaTransform(sunDiam,0).getX();
-        Color c = Color.YELLOW.deriveColor(0,1,1,0.25); //TODO how do we apply the opacity factor
+        Color c = Color.YELLOW.deriveColor(0,1,1,0.25);
         ctx.setFill(c);
         double diam1 = sunDiamTransformed *2.2;
         double x1 = planeCoord.getX() - (0.5*diam1);
@@ -131,7 +131,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         Moon moon = sky.moon();
         CartesianCoordinates moonPos = sky.moonPosition();
-        double moonDiam = projection.applyToAngle(moon.angularSize()); //TODO ask if it is the correct way to get diameter
+        double moonDiam = projection.applyToAngle(moon.angularSize());
         double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
         Point2D coordTransformed = planeToCanvas.deltaTransform(moonPos.x(),moonPos.y());
         double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
