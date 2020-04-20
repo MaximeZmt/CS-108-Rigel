@@ -57,15 +57,16 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         //asterism
         List<Asterism> asterismList ; //TODO how do we get the asterism list
 
+
         //stars
         List<Star> starList = sky.stars();
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
         double[] newStarPos = new double[starPos.length];
-        planeToCanvas.transform2DPoints(starPos, 0, newStarPos, 0, (starPos.length / 2));
+        planeToCanvas.transform2DPoints(starPos, 0, newStarPos, 0, starList.size()); //peut être remis dans star pos
         for (Star s : starList) {
             double starMagn = s.magnitude();
-            double diameter = ObjectDiameter(starMagn, multiplyFactor);
+            double diameter = ObjectDiameter(starMagn, multiplyFactor); //min method
             int index = starList.indexOf(s);
             ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
             double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX(); //not sure to understand why deltaTransform and not transform
@@ -103,7 +104,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5)); //TODO why not angular size
 
         double sunDiamTransformed = planeToCanvas.deltaTransform(sunDiam,0).getX();
-        Color c = Color.YELLOW.deriveColor(0,0,0,0.25); //TODO how do we apply the opacity factor
+        Color c = Color.YELLOW.deriveColor(0,1,1,0.25); //TODO how do we apply the opacity factor
         ctx.setFill(c);
         double diam1 = sunDiamTransformed *2.2;
         double x1 = planeCoord.getX() - (0.5*diam1);
