@@ -146,11 +146,11 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
-        Point2D coordTransformed = planeToCanvas.deltaTransform(center.x(), center.y());
+        Point2D centerTransformed = planeToCanvas.deltaTransform(center.x(), center.y());
         double diam = 2*projection.circleRadiusForParallel(parallel);
         double diamTransformed = planeToCanvas.deltaTransform(diam,0).getX();
         ctx.setStroke(Color.RED);
-        ctx.strokeOval(coordTransformed.getX(), coordTransformed.getY(), diamTransformed, diamTransformed);
+        ctx.strokeOval(centerTransformed.getX(), centerTransformed.getY(), diamTransformed, diamTransformed);
     }
 
     static double ObjectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
