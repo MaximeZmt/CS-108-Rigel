@@ -2,6 +2,7 @@ package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.*;
 import ch.epfl.rigel.coordinates.CartesianCoordinates;
+import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
@@ -142,7 +143,15 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
     }
 
-    public void drawHorizon(){}
+    public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
+        HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
+        CartesianCoordinates center = projection.circleCenterForParallel(parallel);
+        Point2D coordTransformed = planeToCanvas.deltaTransform(center.x(), center.y());
+        double diam = 2*projection.circleRadiusForParallel(parallel);
+        double diamTransformed = planeToCanvas.deltaTransform(diam,0).getX();
+        ctx.setStroke(Color.RED);
+        ctx.strokeOval(coordTransformed.getX(), coordTransformed.getY(), diamTransformed, diamTransformed);
+    }
 
     static double ObjectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
