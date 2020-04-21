@@ -1,8 +1,6 @@
 package ch.epfl.rigel.gui;
 
-import ch.epfl.rigel.astronomy.HygDatabaseLoader;
-import ch.epfl.rigel.astronomy.ObservedSky;
-import ch.epfl.rigel.astronomy.StarCatalogue;
+import ch.epfl.rigel.astronomy.*;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
@@ -30,20 +28,24 @@ public final class DrawSky extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try (InputStream hs = resourceStream("/hygdata_v3.csv")){
+        try (InputStream hs = resourceStream("/hygdata_v3.csv");
+             InputStream as = resourceStream("/asterisms.txt")){
             StarCatalogue catalogue = new StarCatalogue.Builder()
                     .loadFrom(hs, HygDatabaseLoader.INSTANCE)
+                    .loadFrom(as, AsterismLoader.INSTANCE)
                     .build();
 
             ZonedDateTime when =
-                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00"); //TODO ask why and if normal that we do not see the sun with that time or at noon
+                    ZonedDateTime.parse("2020-02-17T20:17:08+01:00");
+                    //ZonedDateTime.parse("2020-02-17T20:15:00+01:00"); //TODO ask why and if normal that we do not see the sun with that time or at noon
                     //ZonedDateTime.parse("2020-02-17T20:17:08+01:00");
                     //ZonedDateTime.parse("2020-02-17T14:15:00+01:00"); //time where we see the sun
                     //ZonedDateTime.parse("2020-02-17T09:15:00+01:00"); //time where we see the moon
             GeographicCoordinates where =
                     GeographicCoordinates.ofDeg(6.57, 46.52);
             HorizontalCoordinates projCenter =
-                    HorizontalCoordinates.ofDeg(180, 45); //WE LOOK AT 180(=South) and 45 degrée alt
+                    HorizontalCoordinates.ofDeg(186, 35);
+                    //HorizontalCoordinates.ofDeg(180, 45); //WE LOOK AT 180(=South) and 45 degrée alt
             StereographicProjection projection;
             projection = new StereographicProjection(projCenter);
             ObservedSky sky =
