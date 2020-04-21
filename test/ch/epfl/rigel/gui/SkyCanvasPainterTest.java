@@ -6,7 +6,7 @@ import ch.epfl.rigel.math.Angle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 class SkyCanvasPainterTest {
     @Test
     void testObjectDiameter(){
@@ -16,4 +16,4 @@ class SkyCanvasPainterTest {
         assertEquals(2.99*1e-3,val,1e-6);
     }
 
-}
+}*/

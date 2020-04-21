@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Transform;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * [fillTxt]
@@ -55,16 +56,39 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
-        //asterism
-        List<Asterism> asterismList ; //TODO how do we get the asterism list
-
-
-        //stars
         List<Star> starList = sky.stars();
-        double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         double[] starPos = sky.starsPosition();
         //double[] newStarPos = new double[starPos.length];
         planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size()); //peut être remis dans star pos
+
+
+        //asterism
+        Set<Asterism> asterismSet = sky.asterisms();
+        ctx.setStroke(Color.BLUE);
+        for (Asterism asterism : asterismSet){
+            ctx.beginPath();
+            List<Integer> indiceList = sky.asterismIndices(asterism);
+            int counter = 0;
+            for (int indice : indiceList){
+                int nextIndice = indiceList.get(counter+1);
+                boolean indiceIsInCanvas = canvas.getBoundsInLocal().contains(starPos[2*indice], starPos[2*indice+1]);
+                boolean nextIndiceIsInCanvas = canvas.getBoundsInLocal().contains(starPos[2*nextIndice], starPos[2*nextIndice+1]);
+                if (!indiceIsInCanvas && !nextIndiceIsInCanvas){
+                    ctx.moveTo(starPos[2*nextIndice], starPos[2*nextIndice+1]);
+
+                } else {
+                    ctx.lineTo(starPos[2*nextIndice], starPos[2*nextIndice+1]);
+                    ctx.stroke();
+                }
+                ctx.stroke();
+                counter++;
+            }
+        }
+
+
+        //stars
+        double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
+
         for (Star s : starList) {
             double starMagn = s.magnitude();
             double diameter = objectDiameter(starMagn, multiplyFactor); //min method
