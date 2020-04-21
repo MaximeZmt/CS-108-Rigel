@@ -66,23 +66,29 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         Set<Asterism> asterismSet = sky.asterisms();
         ctx.setStroke(Color.BLUE);
         for (Asterism asterism : asterismSet){
-            ctx.beginPath();
             List<Integer> indiceList = sky.asterismIndices(asterism);
-            int counter = 0;
-            for (int indice : indiceList){
-                int nextIndice = indiceList.get(counter+1);
-                boolean indiceIsInCanvas = canvas.getBoundsInLocal().contains(starPos[2*indice], starPos[2*indice+1]);
-                boolean nextIndiceIsInCanvas = canvas.getBoundsInLocal().contains(starPos[2*nextIndice], starPos[2*nextIndice+1]);
-                if (!indiceIsInCanvas && !nextIndiceIsInCanvas){
-                    ctx.moveTo(starPos[2*nextIndice], starPos[2*nextIndice+1]);
+            double x0 = starPos[2*indiceList.get(0)];
+            double y0 = starPos[2*indiceList.get(0)+1];
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
 
+            int counter = 0;
+            for (int indice : indiceList.subList(0,indiceList.size()-1)){
+                int nextIndice = indiceList.get(counter+1);
+                double x1 = starPos[2*indice];
+                double y1 = starPos[2*indice+1];
+                double x2 = starPos[2*nextIndice];
+                double y2 = starPos[2*nextIndice+1];
+
+                //TODO not sure if working bc test context (time and place) is not propice for check
+                if (canvas.getBoundsInLocal().contains(x1,y1) || canvas.getBoundsInLocal().contains(x2,y2)){
+                    ctx.lineTo(x2, y2);
                 } else {
-                    ctx.lineTo(starPos[2*nextIndice], starPos[2*nextIndice+1]);
-                    ctx.stroke();
+                    ctx.moveTo(x2,y2);
                 }
-                ctx.stroke();
                 counter++;
             }
+            ctx.stroke();
         }
 
 
@@ -174,7 +180,9 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double diam = 2*projection.circleRadiusForParallel(parallel);
         double diamTransformed = planeToCanvas.deltaTransform(diam,0).getX();
         ctx.setStroke(Color.RED);
-        ctx.strokeOval((centerTransformed.getX()-diamTransformed*0.5), (centerTransformed.getY()-diamTransformed*0.5), diamTransformed, diamTransformed);
+        double x = centerTransformed.getX()-diamTransformed*0.5;
+        double y =  centerTransformed.getY()-diamTransformed*0.5;
+        ctx.strokeOval(x,y, diamTransformed, diamTransformed);
     }
 
     static double objectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
