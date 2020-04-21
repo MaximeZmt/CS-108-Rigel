@@ -174,7 +174,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double diam = 2*projection.circleRadiusForParallel(parallel);
         double diamTransformed = planeToCanvas.deltaTransform(diam,0).getX();
         ctx.setStroke(Color.RED);
-        ctx.strokeOval(centerTransformed.getX(), centerTransformed.getY(), diamTransformed, diamTransformed);
+        ctx.strokeOval((centerTransformed.getX()-diamTransformed*0.5), (centerTransformed.getY()-diamTransformed*0.5), diamTransformed, diamTransformed);
     }
 
     static double objectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
