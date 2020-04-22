@@ -186,18 +186,86 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
         //System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
-
         Point2D centerTransformed = planeToCanvas.transform(center.x(), center.y());
-
         double diam = projection.circleRadiusForParallel(parallel);
-
         double diamTransformed = 2*planeToCanvas.deltaTransform(diam,0).getX();
-
-        ctx.setStroke(Color.RED);
-
         double x = centerTransformed.getX()-diamTransformed*0.5;
         double y =  centerTransformed.getY()-diamTransformed*0.5;
+        ctx.setStroke(Color.RED);
+        ctx.setLineWidth(2);
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
+
+        //TODO check if optimal and check for +15
+        HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,0);
+        HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, 0);
+        HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,0);
+        HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,0);
+        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,0);
+        HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,0);
+        HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,0);
+        HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,0);
+
+        CartesianCoordinates northProjection = projection.apply(north);
+        CartesianCoordinates northEastProjection = projection.apply(northEast);
+        CartesianCoordinates eastProjection = projection.apply(east);
+        CartesianCoordinates southEastProjection = projection.apply(southEast);
+        CartesianCoordinates southProjection = projection.apply(south);
+        CartesianCoordinates southWestProjection = projection.apply(southWest);
+        CartesianCoordinates westProjection = projection.apply(west);
+        CartesianCoordinates northWestProjection = projection.apply(northWest);
+
+        Point2D northProjectionTransformed = planeToCanvas.transform(northProjection.x(),northProjection.y());
+        Point2D northEastProjectionTransformed = planeToCanvas.transform(northEastProjection.x(),northEastProjection.y());
+        Point2D eastProjectionTransformed = planeToCanvas.transform(eastProjection.x(),eastProjection.y());
+        Point2D southEastProjectionTransformed = planeToCanvas.transform(southEastProjection.x(),southEastProjection.y());
+        Point2D southProjectionTransformed = planeToCanvas.transform(southProjection.x(),southProjection.y());
+        Point2D southWestProjectionTransformed = planeToCanvas.transform(southWestProjection.x(),southWestProjection.y());
+        Point2D westProjectionTransformed = planeToCanvas.transform(westProjection.x(),westProjection.y());
+        Point2D northWestProjectionTransformed = planeToCanvas.transform(northWestProjection.x(),northWestProjection.y());
+
+        ctx.setFill(Color.RED);
+        ctx.fillText(
+                north.azOctantName("N","E","S","W"),
+                northProjectionTransformed.getX(),
+                northProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                northEast.azOctantName("N","E","S","W"),
+                northEastProjectionTransformed.getX(),
+                northEastProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                east.azOctantName("N","E","S","W"),
+                eastProjectionTransformed.getX(),
+                eastProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                southEast.azOctantName("N","E","S","W"),
+                southEastProjectionTransformed.getX(),
+                southEastProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                south.azOctantName("N","E","S","W"),
+                southProjectionTransformed.getX(),
+                southProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                southWest.azOctantName("N","E","S","W"),
+                southWestProjectionTransformed.getX(),
+                southWestProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                west.azOctantName("N","E","S","W"),
+                westProjectionTransformed.getX(),
+                westProjectionTransformed.getY()+15
+        );
+        ctx.fillText(
+                northWest.azOctantName("N","E","S","W"),
+                northWestProjectionTransformed.getX(),
+                northWestProjectionTransformed.getY()+15
+        );
+
+
     }
 
     static double objectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
