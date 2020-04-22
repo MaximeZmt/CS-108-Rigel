@@ -225,42 +225,42 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
         ctx.setFill(Color.RED);
         ctx.fillText(
-                north.azOctantName("N","E","S","W"),
+                north.azOctantName("N","E","S","O"),
                 northProjectionTransformed.getX(),
                 northProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                northEast.azOctantName("N","E","S","W"),
+                northEast.azOctantName("N","E","S","O"),
                 northEastProjectionTransformed.getX(),
                 northEastProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                east.azOctantName("N","E","S","W"),
+                east.azOctantName("N","E","S","O"),
                 eastProjectionTransformed.getX(),
                 eastProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                southEast.azOctantName("N","E","S","W"),
+                southEast.azOctantName("N","E","S","O"),
                 southEastProjectionTransformed.getX(),
                 southEastProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                south.azOctantName("N","E","S","W"),
+                south.azOctantName("N","E","S","O"),
                 southProjectionTransformed.getX(),
                 southProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                southWest.azOctantName("N","E","S","W"),
+                southWest.azOctantName("N","E","S","O"),
                 southWestProjectionTransformed.getX(),
                 southWestProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                west.azOctantName("N","E","S","W"),
+                west.azOctantName("N","E","S","O"),
                 westProjectionTransformed.getX(),
                 westProjectionTransformed.getY()+15
         );
         ctx.fillText(
-                northWest.azOctantName("N","E","S","W"),
+                northWest.azOctantName("N","E","S","O"),
                 northWestProjectionTransformed.getX(),
                 northWestProjectionTransformed.getY()+15
         );
