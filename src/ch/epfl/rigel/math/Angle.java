@@ -50,6 +50,7 @@ public final class Angle {
     public static double ofDMS(int deg, int min, double sec){
         Preconditions.checkInInterval(BASIS_60, min);
         Preconditions.checkInInterval(BASIS_60, sec);
+        Preconditions.checkArgument(deg>=0);
         sec = sec + min*60 + deg * 3600;
         return ofArcsec(sec);
     }

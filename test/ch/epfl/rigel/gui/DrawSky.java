@@ -52,7 +52,8 @@ public final class DrawSky extends Application {
                     new ObservedSky(when, where, projection, catalogue);
 
             Canvas canvas =
-                    new Canvas(800, 600);
+                    //new Canvas(800, 600);
+                    new Canvas(1000, 800);
             Transform planeToCanvas =
                     Transform.affine(1300, 0, 0, -1300, 400, 300);
             SkyCanvasPainter painter =
