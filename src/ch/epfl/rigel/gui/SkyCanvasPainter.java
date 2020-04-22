@@ -174,7 +174,9 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
-        HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
+        Point2D centerModif = planeToCanvas.deltaTransform(0,0);
+        System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
+        HorizontalCoordinates parallel = HorizontalCoordinates.of(centerModif.getX(),centerModif.getY());
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
         Point2D centerTransformed = planeToCanvas.deltaTransform(center.x(), center.y());
         double diam = 2*projection.circleRadiusForParallel(parallel);
