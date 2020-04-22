@@ -104,6 +104,14 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double x = starPos[2 * index] - (0.5 * diam2);
             double y = starPos[(2 * index) + 1] - (0.5 * diam2);
             ctx.fillOval(x, y, diam2, diam2);
+            if(s.name().equals("Betelgeuse")){
+                System.out.println("Test");
+                System.out.println("Temperature: "+s.colorTemperature());
+                System.out.println("Color: "+BlackBodyColor.colorForTemperature(s.colorTemperature()));
+                System.out.printf("X: %.15f \n",x);
+                System.out.printf("Y: %.15f \n",y);
+                System.out.printf("diam: %.15f \n",diam2);
+            }
         }
     }
 
@@ -174,14 +182,19 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
-        Point2D centerModif = planeToCanvas.deltaTransform(0,0);
-        System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
-        HorizontalCoordinates parallel = HorizontalCoordinates.of(centerModif.getX(),centerModif.getY());
+
+        HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
+        //System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
-        Point2D centerTransformed = planeToCanvas.deltaTransform(center.x(), center.y());
-        double diam = 2*projection.circleRadiusForParallel(parallel);
-        double diamTransformed = planeToCanvas.deltaTransform(diam,0).getX();
+
+        Point2D centerTransformed = planeToCanvas.transform(center.x(), center.y());
+
+        double diam = projection.circleRadiusForParallel(parallel);
+
+        double diamTransformed = 2*planeToCanvas.deltaTransform(diam,0).getX();
+
         ctx.setStroke(Color.RED);
+
         double x = centerTransformed.getX()-diamTransformed*0.5;
         double y =  centerTransformed.getY()-diamTransformed*0.5;
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
