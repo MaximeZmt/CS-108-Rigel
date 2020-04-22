@@ -153,7 +153,7 @@ class MyPlanetModelTest {
 
         assertEquals("Uranus", uranus.name());
         assertEquals("Uranus", uranus.info());
-        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(1.168783179),Angle.ofDeg((-0.752737291))));
+        EquatorialCoordinates ec = etec.apply(EclipticCoordinates.of(Angle.ofDeg(79.42682977),Angle.ofDeg((0.059836082))));
         assertEquals(ec.ra(), uranus.equatorialPos().ra(),1e-8);
         assertEquals(ec.dec(), uranus.equatorialPos().dec(),1e-8);
     }
