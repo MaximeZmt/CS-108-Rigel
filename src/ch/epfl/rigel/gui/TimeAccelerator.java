@@ -27,7 +27,8 @@ public interface TimeAccelerator {
     //TODO looks shitty
     static TimeAccelerator discrete(int simulatedTimeFrequency, Duration steps){
         return (initialSimulatedTime, realTime) ->
-                initialSimulatedTime.plusNanos(steps.multipliedBy((long)Math.floor(simulatedTimeFrequency*realTime)).toNanos());
+                initialSimulatedTime.plusNanos((long)(steps.getNano() * Math.floor(simulatedTimeFrequency*realTime)));
+        //initialSimulatedTime.plusNanos(steps.multipliedBy((long)Math.floor(simulatedTimeFrequency*realTime)));
     }
 }
 

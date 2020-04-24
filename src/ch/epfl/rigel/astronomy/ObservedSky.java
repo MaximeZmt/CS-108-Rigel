@@ -28,7 +28,7 @@ public class ObservedSky {
     private final double[] starPosArray;
 
     private final StarCatalogue starCatalogue;
-    //TODO Finish javadoc 
+    //TODO Finish javadoc
     /**
      *
      * @param zdt
