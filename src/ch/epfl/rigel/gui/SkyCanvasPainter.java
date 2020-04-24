@@ -230,15 +230,14 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.setLineWidth(2);
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
 
-        //TODO check if optimal and check for +15
-        HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,0);
-        HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, 0);
-        HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,0);
-        HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,0);
-        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,0);//-1.5
-        HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,0);
-        HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,0);
-        HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,0);
+        HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,-0.5);
+        HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, -0.5);
+        HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,-0.5);
+        HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,-0.5);
+        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,-0.5); //TODO ask if -1.5 or -0.5 (cause otherwise line is strike)
+        HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,-0.5);
+        HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,-0.5);
+        HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,-0.5);
 
         CartesianCoordinates northProjection = projection.apply(north);
         CartesianCoordinates northEastProjection = projection.apply(northEast);
@@ -262,42 +261,42 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.fillText(
                 north.azOctantName("N","E","S","O"),
                 northProjectionTransformed.getX(),
-                northProjectionTransformed.getY()+15 //
+                northProjectionTransformed.getY()
         );
         ctx.fillText(
                 northEast.azOctantName("N","E","S","O"),
                 northEastProjectionTransformed.getX(),
-                northEastProjectionTransformed.getY()+15
+                northEastProjectionTransformed.getY()
         );
         ctx.fillText(
                 east.azOctantName("N","E","S","O"),
                 eastProjectionTransformed.getX(),
-                eastProjectionTransformed.getY()+15
+                eastProjectionTransformed.getY()
         );
         ctx.fillText(
                 southEast.azOctantName("N","E","S","O"),
                 southEastProjectionTransformed.getX(),
-                southEastProjectionTransformed.getY()+15
+                southEastProjectionTransformed.getY()
         );
         ctx.fillText(
                 south.azOctantName("N","E","S","O"),
                 southProjectionTransformed.getX(),
-                southProjectionTransformed.getY()+15
+                southProjectionTransformed.getY()
         );
         ctx.fillText(
                 southWest.azOctantName("N","E","S","O"),
                 southWestProjectionTransformed.getX(),
-                southWestProjectionTransformed.getY()+15
+                southWestProjectionTransformed.getY()
         );
         ctx.fillText(
                 west.azOctantName("N","E","S","O"),
                 westProjectionTransformed.getX(),
-                westProjectionTransformed.getY()+15
+                westProjectionTransformed.getY()
         );
         ctx.fillText(
                 northWest.azOctantName("N","E","S","O"),
                 northWestProjectionTransformed.getX(),
-                northWestProjectionTransformed.getY()+15
+                northWestProjectionTransformed.getY()
         );
 
 
