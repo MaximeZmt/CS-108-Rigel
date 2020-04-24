@@ -17,8 +17,8 @@ public enum NamedTimeAccelerator {
     //TODO parse working ?
     SIDERAL_DAY("jour sidéral", TimeAccelerator.discrete(60, Duration.parse("PT23H56M4S")));
 
-    private String name;
-    private TimeAccelerator accelerator;
+    private final String name;
+    private final TimeAccelerator accelerator;
 
     NamedTimeAccelerator(String name, TimeAccelerator accelerator){
         this.name = name;
