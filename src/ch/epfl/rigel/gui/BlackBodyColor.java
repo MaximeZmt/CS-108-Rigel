@@ -6,14 +6,12 @@ import javafx.scene.paint.Color;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 /**
- * Get the color of a BlackBody given it's temperature
+ * Class which contain the method to get the color of a BlackBody given it's temperature
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -21,12 +19,15 @@ import java.util.Map;
 public class BlackBodyColor {
 
     private final static String FILE_NAME = "/bbr_color.txt";
-    //private final static Map<Integer, Color> TEMP_COLOR_MAP = fileToMap();
-    private final static List<Color> LIST_COLOR = fileToMap();
+    private final static Map<Integer, Color> TEMP_COLOR_MAP = fileToMap();
 
     private BlackBodyColor(){}
 
-    //TODO ask for return statement outside of try catch statement
+    /**
+     * Get the color of a BlackBody given it's temperature
+     * @param temp temperature of a BlackBody in kelvin degrees
+     * @return Color of the BlackBody
+     */
     public static Color colorForTemperature(double temp) {
         Preconditions.checkInInterval(ClosedInterval.of(1000,40000),temp);
 
@@ -35,29 +36,23 @@ public class BlackBodyColor {
         int temp2 = (int)(temp-10);
         temp = temp*100;
 
-        //return TEMP_COLOR_MAP.get((int)temp);
-        return LIST_COLOR.get(temp2);
+        return TEMP_COLOR_MAP.get((int)temp);
     }
 
-    private static List<Color> fileToMap(){ //Map<Integer, Color>
+    private static Map<Integer, Color> fileToMap(){
         InputStream colorStream = BlackBodyColor.class.getResourceAsStream(FILE_NAME);
         InputStreamReader isr = new InputStreamReader(colorStream, StandardCharsets.US_ASCII);
         BufferedReader br = new BufferedReader(isr);
 
-        //TODO ask if better map or list
+
         Map<Integer, Color> integerColorMap = new HashMap<>();
-        List<Color> colorIndex2 = new ArrayList<>();
         try {
             String line;
             int temperature = 1000;
             while ((line = br.readLine())!=null) {
                 if (line.charAt(0) != '#') {
-                    if (line.charAt(10) == '1') { //10deg
-                        if(line.substring(80).equals("#474545")){
-                            System.out.println("Test");
-                        }
-                        integerColorMap.put(temperature, Color.web(line.substring(80))); //, 87
-                        colorIndex2.add(Color.web(line.substring(80)));
+                    if (line.charAt(10) == '1') { //Equivalent to 10deg
+                        integerColorMap.put(temperature, Color.web(line.substring(80)));
                         temperature = temperature + 100;
                     }
                 }
@@ -66,6 +61,6 @@ public class BlackBodyColor {
         } catch (IOException e){
             throw new UncheckedIOException(e);
         }
-        return colorIndex2;
+        return integerColorMap;
     }
 }
