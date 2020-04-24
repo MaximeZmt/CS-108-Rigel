@@ -302,7 +302,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
 
     }
-    
+
     private static double objectDiameter(double magn, double multiplyFactor){
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
         double sizeFactor = (99-17*clipMagn)/140;
