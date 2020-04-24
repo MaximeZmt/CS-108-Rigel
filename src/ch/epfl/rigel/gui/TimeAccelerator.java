@@ -21,14 +21,13 @@ public interface TimeAccelerator {
 
     //TODO check if correct and check if .plusNanos is correct
     static TimeAccelerator continuous(int alpha){
-        return (t0,deltaT) -> t0.plusNanos(alpha*deltaT);
+        return (initialSimulatedTime,realTime) -> initialSimulatedTime.plusNanos(alpha*realTime);
     }
-
+    
     //TODO looks shitty
-    static TimeAccelerator discrete(int simulatedTimeFrequency, Duration steps){
-        return (t0, deltaT) ->
-                t0.plus(steps.multipliedBy((long)Math.floor(simulatedTimeFrequency*deltaT)));
-        //initialSimulatedTime.plusNanos(steps.multipliedBy((long)Math.floor(simulatedTimeFrequency*realTime)));
+    static TimeAccelerator discrete(long simulatedTimeFrequency, Duration steps){
+        return (initialSimulatedTime, realTime) ->
+                initialSimulatedTime.plus((steps.multipliedBy(simulatedTimeFrequency*realTime/1_000_000_000)));
     }
 }
 

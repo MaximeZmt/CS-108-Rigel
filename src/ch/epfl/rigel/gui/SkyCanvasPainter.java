@@ -235,7 +235,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, 0);
         HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,0);
         HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,0);
-        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,0);
+        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,0);//-1.5
         HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,0);
         HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,0);
         HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,0);
@@ -262,7 +262,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.fillText(
                 north.azOctantName("N","E","S","O"),
                 northProjectionTransformed.getX(),
-                northProjectionTransformed.getY()+15
+                northProjectionTransformed.getY()+15 //
         );
         ctx.fillText(
                 northEast.azOctantName("N","E","S","O"),
