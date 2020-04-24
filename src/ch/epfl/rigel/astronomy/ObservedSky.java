@@ -13,11 +13,8 @@ import java.util.*;
  * @author Maxime Zammit (310251)
  */
 
-public class ObservedSky { // public et immuable
+public class ObservedSky {
 
-    /*
-    info + model soleil lune planete -> calculer pos projetee dans plan de tout objet celeste (Soleil, Lune,planete, etoile) sauf terre
-     */
     private final Sun sunInstance;
     private final CartesianCoordinates sunCartCoordinates;
 
@@ -31,11 +28,17 @@ public class ObservedSky { // public et immuable
     private final double[] starPosArray;
 
     private final StarCatalogue starCatalogue;
-
-
-    public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){//TODO public or package-private or private ?
+    //TODO Finish javadoc 
+    /**
+     *
+     * @param zdt
+     * @param observPos
+     * @param stereoProj
+     * @param starCatalogue
+     */
+    public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){
         this.starCatalogue = starCatalogue;
-
+         //TODO ask if ETEC is a good name or not
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
 
