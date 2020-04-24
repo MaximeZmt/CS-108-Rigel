@@ -9,13 +9,13 @@ import java.time.ZonedDateTime;
  * [description text]
  *
  * @author Michael Freeman (313215)
- * @author Maxime Zammit (310251)
+ * @author Maxime Zammit (310251) //TODO Check cause in average it is 50/2
  */
 public final class TimeAnimator extends AnimationTimer {
     private final DateTimeBean dateTimeBean;
     private final BooleanProperty running = new SimpleBooleanProperty(false);
     private final ObjectProperty<TimeAccelerator> timeAccelerator = new SimpleObjectProperty<>(null);
-    private long startedTime = 0;
+    private long timeStamp = 0;
 
     public TimeAnimator(DateTimeBean dateTimeBean){
         this.dateTimeBean = dateTimeBean;
@@ -23,11 +23,11 @@ public final class TimeAnimator extends AnimationTimer {
 
     @Override
     public void handle(long l) {
-        if (startedTime == 0){
-            startedTime = l;
+        if (timeStamp == 0){
+            timeStamp = l;
         }else{
-            long deltaT = l-startedTime;
-            startedTime = l;
+            long deltaT = l- timeStamp;
+            timeStamp = l;
             ZonedDateTime zdt = getTimeAccelerator().adjust(dateTimeBean.getZonedDateTime(),deltaT);
             dateTimeBean.setZonedDateTime(zdt);
         }
@@ -37,7 +37,7 @@ public final class TimeAnimator extends AnimationTimer {
     public void start() {
         super.start();
         running.set(true);
-        startedTime = 0;
+        timeStamp = 0;
     }
 
     @Override
