@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * [fillTxt]
+ * Instantiable class that represent a "skyPainter",
+ * An object that is able to paint the sky
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -27,6 +28,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     private final GraphicsContext ctx;
     private final static ClosedInterval MAGNITUDE_INTERVAL = ClosedInterval.of(-2,5);
 
+    /**
+     * Public constructor to create a painter
+     * @param canvas Canvas that will be edited.
+     */
     public SkyCanvasPainter(Canvas canvas){ //suppose public cause instanciable
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
@@ -50,11 +55,20 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
      */
 
+    /**
+     * Clear the Canvas of the painter
+     */
     public void clear(){
         ctx.setFill(Color.BLACK);
         ctx.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
     }
 
+    /**
+     * Draw on the canvas of the painter: Asterism and Stars
+     * @param sky The sky which the painter will paint
+     * @param projection The projection from real world onto a plane
+     * @param planeToCanvas Change from projection coordinate system to Canvas
+     */
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Star> starList = sky.stars();
         double[] starPos = sky.starsPosition();
@@ -115,6 +129,12 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         }
     }
 
+    /**
+     * Draw on the canvas of the painter: planets
+     * @param sky The sky which the painter will paint
+     * @param projection The projection from real world onto a plane
+     * @param planeToCanvas Change from projection coordinate system to Canvas
+     */
     public void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Planet> planetList = sky.planets();
         double[] planetCoord = sky.planetPositions();
@@ -134,7 +154,12 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         }
     }
 
-
+    /**
+     * Draw on the canvas of the painter: The sun
+     * @param sky The sky which the painter will paint
+     * @param projection The projection from real world onto a plane
+     * @param planeToCanvas Change from projection coordinate system to Canvas
+     */
     public void drawSun(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
 
         Sun sun = sky.sun();
@@ -166,7 +191,12 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     }
 
 
-
+    /**
+     * Draw on the canvas of the painter: The moon
+     * @param sky The sky which the painter will paint
+     * @param projection The projection from real world onto a plane
+     * @param planeToCanvas Change from projection coordinate system to Canvas
+     */
     public void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         Moon moon = sky.moon();
         CartesianCoordinates moonPos = sky.moonPosition();
@@ -181,6 +211,11 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
     }
 
+    /**
+     * Draw on the canvas of the painter: The Horizon and the octant name
+     * @param projection The projection from real world onto a plane
+     * @param planeToCanvas Change from projection coordinate system to Canvas
+     */
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
 
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
@@ -267,8 +302,8 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
 
     }
-
-    static double objectDiameter(double magn, double multiplyFactor){ //TODO put in private at the end, now cannot cause test
+    
+    private static double objectDiameter(double magn, double multiplyFactor){
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
         double sizeFactor = (99-17*clipMagn)/140;
         double diameter = sizeFactor*multiplyFactor;
