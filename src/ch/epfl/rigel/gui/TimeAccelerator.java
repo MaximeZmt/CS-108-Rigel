@@ -11,13 +11,13 @@ import java.time.ZonedDateTime;
  */
 @FunctionalInterface
 public interface TimeAccelerator {
-    /** //TODO do not agree with realTime var name
+    /** //TODO do not agree with deltaT var name
      * Compute simulate time T
      * @param t0  Initial simulate time
      * @param deltaT Represents (T-T0), the difference of time in nanoseconds
      * @return new ZoneDateTime with the simulate Time T
      */
-    ZonedDateTime adjust(ZonedDateTime initialSimulatedTime, long realTime); //TODO check if public or package private # It is necessarily public cause Functional interface is public -> if private -> should have a body
+    ZonedDateTime adjust(ZonedDateTime t0, long deltaT); //TODO check if public or package private # It is necessarily public cause Functional interface is public -> if private -> should have a body
 
     //TODO check if correct and check if .plusNanos is correct
     static TimeAccelerator continuous(int alpha){
