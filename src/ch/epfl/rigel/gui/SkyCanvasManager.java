@@ -1,11 +1,24 @@
 package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.CelestialObject;
+import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.astronomy.StarCatalogue;
+import ch.epfl.rigel.coordinates.GeographicCoordinates;
+import ch.epfl.rigel.coordinates.HorizontalCoordinates;
+import ch.epfl.rigel.coordinates.StereographicProjection;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.transform.Transform;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 /**
  * [description text]
@@ -14,15 +27,45 @@ import javafx.beans.property.SimpleObjectProperty;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
-    private final DoubleProperty mouseAzDeg = new SimpleDoubleProperty();
-    private final DoubleProperty mouseAltDeg = new SimpleDoubleProperty();
-    private final ObjectProperty<CelestialObject> objectUnderMouse = new SimpleObjectProperty<>();
+    public final DoubleProperty mouseAzDeg = new SimpleDoubleProperty();
+    public final DoubleProperty mouseAltDeg = new SimpleDoubleProperty(); //TODO check if public as online
+    public final ObjectProperty<CelestialObject> objectUnderMouse = new SimpleObjectProperty<>();
+
+    private final ObjectProperty<HorizontalCoordinates> center;
+    private final ObjectProperty<LocalDate> date;
+    private final ObjectProperty<LocalTime> time;
+    private final ObjectProperty<ZoneId> zone;
+    private final ObservableValue<GeographicCoordinates> observCoordinates;
+
+
+
+
+    private final ObservableValue<StereographicProjection> projetion;
+    private final ObservableValue<Transform> planeToCanvas;
+    private final ObservableValue<ObservedSky> sky;
 
     public SkyCanvasManager(StarCatalogue catalogue,
                      DateTimeBean dateTimeBean,
                      ObserverLocationBean observerLocationBean,
                      ViewingParametersBean viewingParametersBean
                      ){
+
+        Canvas canvas = new Canvas(1000, 800);
+        center = viewingParametersBean.centerProperty(); //TODO should we create getCenter and setCenter ? don't think so
+        date = dateTimeBean.dateProperty();
+        time = dateTimeBean.timeProperty();
+        zone = dateTimeBean.zoneProperty();
+        observCoordinates = observerLocationBean.coordinatesProperty();
+
+
+
+        // Transform planeToCanvas =
+        //                    Transform.affine(1300, 0, 0, -1300, 400, 300);
+
+        projetion = Bindings.createObjectBinding(()->new StereographicProjection(center.get()),center);
+        sky = Bindings.createObjectBinding(()->new ObservedSky(ZonedDateTime.of(date.get(),time.get(),zone.get()),observCoordinates.getValue(),projetion.getValue(),catalogue),date,time,zone,observCoordinates,projetion);
+        //planeToCanvas = Bindings.createObjectBinding(()->Transform.affine())
+
 /*
         crée un certain nombre de propriétés et liens décrits plus bas,
                 installe un auditeur (listener) pour être informé des mouvements du curseur de la souris, et stocker sa position dans une propriété,
@@ -31,7 +74,7 @@ public final class SkyCanvasManager {
                 installe un auditeur pour réagir aux pressions sur les touches du curseur et changer le centre de projection en fonction,
                 installe des auditeurs pour être informé des changements des liens et propriétés ayant un impact sur le dessin du ciel, et demander dans ce cas au peintre de le redessiner.
 
-        
+
  */
 
     }
