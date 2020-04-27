@@ -2,6 +2,7 @@ package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,27 +19,41 @@ import javafx.beans.value.ObservableValue;
 public final class ObserverLocationBean {
     private final DoubleProperty lonDeg = new SimpleDoubleProperty(0);
     private final DoubleProperty latDeg = new SimpleDoubleProperty(0);
-    private final ObservableValue<GeographicCoordinates> coordinates = Bindings.createObjectBinding(()->
+    private final ObjectBinding<GeographicCoordinates> coordinates = Bindings.createObjectBinding(()->
             GeographicCoordinates.ofDeg(lonDeg.get(),latDeg.get()),lonDeg,latDeg);
 
-    public DoubleProperty lonDegProperty(){
+    public double getLonDeg() {
+        return lonDeg.get();
+    }
+    public DoubleProperty lonDegProperty() {
         return lonDeg;
     }
-    public DoubleProperty latDegProperty(){
+    public void setLonDeg(double lonDeg) {
+        this.lonDeg.set(lonDeg);
+    }
+
+    public double getLatDeg() {
+        return latDeg.get();
+    }
+    public DoubleProperty latDegProperty() {
         return latDeg;
+    }
+    public void setLatDeg(double latDeg) {
+        this.latDeg.set(latDeg);
+    }
+
+    public GeographicCoordinates getCoordinates() {
+        return coordinates.get();
+    }
+    public ObjectBinding<GeographicCoordinates> coordinatesProperty() {
+        return coordinates;
+    }
+    public void setCoordinates(GeographicCoordinates geographicCoordinates){
+        setLonDeg(geographicCoordinates.lonDeg());
+        setLatDeg(geographicCoordinates.latDeg());
     }
 
     //TODO pas getlong et getLat ?
-    public ObservableValue<GeographicCoordinates> coordinatesProperty(){
-        return coordinates;
-    }
-    public GeographicCoordinates getCoordinates(){
-        return  coordinates.getValue();
-    }
 
-    public void setCoordinates(GeographicCoordinates newGeoCoordinates){
-        lonDeg.setValue(newGeoCoordinates.lonDeg());
-        latDeg.setValue(newGeoCoordinates.latDeg());
-    }
 }
 
