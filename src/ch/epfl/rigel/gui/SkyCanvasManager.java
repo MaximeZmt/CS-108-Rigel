@@ -50,7 +50,7 @@ public final class SkyCanvasManager {
     //planeToCanvas
     private final DoubleProperty canvasWidth;
     private final DoubleProperty canvasHeight;
-    private final DoubleProperty fieldOfView;
+    private final DoubleProperty fieldOfViewDeg;
     private final DoubleBinding dilatationFactor;
     private final ObjectBinding<Transform> planeToCanvas;
 
@@ -84,10 +84,10 @@ public final class SkyCanvasManager {
         //TODO check initial values
         canvasWidth = new SimpleDoubleProperty(1000);
         canvasHeight = new SimpleDoubleProperty(800);
-        fieldOfView = new SimpleDoubleProperty(68.4);
+        fieldOfViewDeg = viewingParametersBean.fieldOfViewDegProperty();
         dilatationFactor = Bindings.createDoubleBinding(()->
-                canvasWidth.get()/(projection.get().applyToAngle(Angle.ofDeg(fieldOfView.get()))),
-                canvasWidth, projection, fieldOfView
+                canvasWidth.get()/(projection.get().applyToAngle(Angle.ofDeg(fieldOfViewDeg.get()))),
+                canvasWidth, projection, fieldOfViewDeg
         );
         planeToCanvas = Bindings.createObjectBinding(()->
                 Transform.affine(
@@ -142,7 +142,7 @@ public final class SkyCanvasManager {
         //canvas and painter
         canvas = new SimpleObjectProperty<>(new Canvas(canvasWidth.get(), canvasHeight.get()));
         painter = new SkyCanvasPainter(canvas.get());
-        drawSky(painter);
+        //drawSky(painter);
 
         //listeners
         canvas.get().setOnMouseMoved(e -> setMousePosition(CartesianCoordinates.of(e.getX(),e.getY())));
@@ -151,36 +151,48 @@ public final class SkyCanvasManager {
                 canvas.get().requestFocus();
             }
         });
+        //TODO check why - and not not + and fix limit for zoom
         canvas.get().setOnScroll(e->{
             if (Math.abs(e.getDeltaX()) >= Math.abs(e.getDeltaY())){
-                setFieldOfView(e.getDeltaX());
+                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()-e.getDeltaX());
             } else {
-                setFieldOfView(e.getDeltaY());
+                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()-e.getDeltaY());
             }
         });
         canvas.get().setOnKeyPressed(e->{
-            //TODO put '5' in a static attribute
+            //TODO put '1' in a static attribute
             //TODO check for default switch
+            //TODO errors comming from equals
+            //TODO sun and moon (maybe planets) move when changing center of projection
             switch(e.getCode()){
                 case UP:
-                    setCenter(HorizontalCoordinates.of(center.get().az(), center.get().alt()+5));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg(), center.get().altDeg()+1));
                     break;
                 case DOWN:
-                    setCenter(HorizontalCoordinates.of(center.get().az(), center.get().alt()-5));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg(), center.get().altDeg()-1));
                     break;
                 case LEFT:
-                    setCenter(HorizontalCoordinates.of(center.get().az()-5, center.get().alt()));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg()-1, center.get().altDeg()));
                     break;
                 case RIGHT:
-                    setCenter(HorizontalCoordinates.of(center.get().az()+5, center.get().alt()));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg()+1, center.get().altDeg()));
                     break;
             }
         });
 
         //drawing listeners
+        //TODO wich one ??
+        //TODO doesnt update at start and when changing the size of the window
         canvas.addListener((o, oV, nV) -> drawSky(painter));
         center.addListener((o, oV, nV) -> drawSky(painter));
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
+        planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));
+        projection.addListener((o, oV, nV) -> drawSky(painter));
+        fieldOfViewDeg.addListener((o, oV, nV) -> drawSky(painter));
+        canvasHeight.addListener((o, oV, nV) -> drawSky(painter));
+        canvasWidth.addListener((o, oV, nV) -> drawSky(painter));
+        //viewingParametersBean.centerProperty().addListener((o, oV, nV) -> drawSky(painter));
+        //viewingParametersBean.fieldOfViewDegProperty().addListener((o, oV, nV) -> drawSky(painter));
 
 /*
         crée un certain nombre de propriétés et liens décrits plus bas,
@@ -204,20 +216,14 @@ public final class SkyCanvasManager {
         return objectUnderMouse;
     }
 
-    private void setFieldOfView(double fieldOfView) {
-        this.fieldOfView.set(fieldOfView);
-    }
-
-    public void setCenter(HorizontalCoordinates center) {
-        this.center.set(center);
-    }
-
     private void drawSky(SkyCanvasPainter painter){
+        System.out.println("OUI");
         painter.clear();
         painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
+        //TODO horizon doesnt seems to be cruked (tordu)
         painter.drawHorizon(projection.get(), planeToCanvas.get());
     }
 
