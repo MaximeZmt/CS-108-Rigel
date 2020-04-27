@@ -231,7 +231,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.setLineWidth(2);
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
         ctx.setTextBaseline(VPos.TOP);
-        
+
         HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,-0.5);
         HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, -0.5);
         HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,-0.5);
