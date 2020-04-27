@@ -231,9 +231,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.setLineWidth(2);
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
         ctx.setTextBaseline(VPos.TOP);
-
-        //TODO MAKE IT IN A LOOP
-
+        
         HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,-0.5);
         HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, -0.5);
         HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,-0.5);
@@ -243,67 +241,18 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,-0.5);
         HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,-0.5);
 
-        CartesianCoordinates northProjection = projection.apply(north);
-        CartesianCoordinates northEastProjection = projection.apply(northEast);
-        CartesianCoordinates eastProjection = projection.apply(east);
-        CartesianCoordinates southEastProjection = projection.apply(southEast);
-        CartesianCoordinates southProjection = projection.apply(south);
-        CartesianCoordinates southWestProjection = projection.apply(southWest);
-        CartesianCoordinates westProjection = projection.apply(west);
-        CartesianCoordinates northWestProjection = projection.apply(northWest);
+        HorizontalCoordinates[] cardinalList = {north, northEast, east, southEast, south, southWest, west, northWest};
 
-        Point2D northProjectionTransformed = planeToCanvas.transform(northProjection.x(),northProjection.y());
-        Point2D northEastProjectionTransformed = planeToCanvas.transform(northEastProjection.x(),northEastProjection.y());
-        Point2D eastProjectionTransformed = planeToCanvas.transform(eastProjection.x(),eastProjection.y());
-        Point2D southEastProjectionTransformed = planeToCanvas.transform(southEastProjection.x(),southEastProjection.y());
-        Point2D southProjectionTransformed = planeToCanvas.transform(southProjection.x(),southProjection.y());
-        Point2D southWestProjectionTransformed = planeToCanvas.transform(southWestProjection.x(),southWestProjection.y());
-        Point2D westProjectionTransformed = planeToCanvas.transform(westProjection.x(),westProjection.y());
-        Point2D northWestProjectionTransformed = planeToCanvas.transform(northWestProjection.x(),northWestProjection.y());
-
-        ctx.setFill(Color.RED);
-        ctx.fillText(
-                north.azOctantName("N","E","S","O"),
-                northProjectionTransformed.getX(),
-                northProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                northEast.azOctantName("N","E","S","O"),
-                northEastProjectionTransformed.getX(),
-                northEastProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                east.azOctantName("N","E","S","O"),
-                eastProjectionTransformed.getX(),
-                eastProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                southEast.azOctantName("N","E","S","O"),
-                southEastProjectionTransformed.getX(),
-                southEastProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                south.azOctantName("N","E","S","O"),
-                southProjectionTransformed.getX(),
-                southProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                southWest.azOctantName("N","E","S","O"),
-                southWestProjectionTransformed.getX(),
-                southWestProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                west.azOctantName("N","E","S","O"),
-                westProjectionTransformed.getX(),
-                westProjectionTransformed.getY()
-        );
-        ctx.fillText(
-                northWest.azOctantName("N","E","S","O"),
-                northWestProjectionTransformed.getX(),
-                northWestProjectionTransformed.getY()
-        );
-
-
+        for (HorizontalCoordinates cardinalPoint : cardinalList){
+            CartesianCoordinates cardinalProjection = projection.apply(cardinalPoint);
+            Point2D cardinalProjectionTransformed = planeToCanvas.transform(cardinalProjection.x(),cardinalProjection.y());
+            ctx.setFill(Color.RED);
+            ctx.fillText(
+                    cardinalPoint.azOctantName("N","E","S","O"),
+                    cardinalProjectionTransformed.getX(),
+                    cardinalProjectionTransformed.getY()
+            );
+        }
     }
 
     private static double objectDiameter(double magn, double multiplyFactor){
