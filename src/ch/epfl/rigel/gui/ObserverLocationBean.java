@@ -24,7 +24,7 @@ public final class ObserverLocationBean {
 
    public DoubleProperty lonDegProperty(){return lonDeg;};
 
-   public DoubleProperty latDegProperty(){return latDeg};
+   public DoubleProperty latDegProperty(){return latDeg;};
 
    // pas getlong et getLat
 
@@ -36,17 +36,5 @@ public final class ObserverLocationBean {
         lonDeg.setValue(newGeoCoordinates.lonDeg());
         latDeg.setValue(newGeoCoordinates.latDeg());
     }
-
-
-
-
-           /*
-    la longitude de la position de l'observateur, en degrés, nommée p.ex. lonDeg,
-    la latitude de la position de l'observateur, en degrés, nommée p.ex. latDeg,
-    les deux coordonnées précédentes, mais combinées en une instance de GeographicCoordinates, nommée p.ex. coordinates.
-    La dernière de ces « propriétés » est en fait un lien créé au moyen de la méthode createObjectBinding et dont la valeur est déterminée par les deux autres propriétés.
-
-            L'intérêt d'offrir ainsi la position de l'observateur sous deux formes, à savoir « déconstruite » (longitude et latitude séparée) et composite (longitude et latitude combinées dans une instance de GeographicCoordinates) est que cela facilite la construction de l'interface utilisateur, comme nous le verrons à l'étape suivante.
-*/
 }
 
