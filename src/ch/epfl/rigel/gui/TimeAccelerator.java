@@ -19,7 +19,7 @@ public interface TimeAccelerator {
      */
     ZonedDateTime adjust(ZonedDateTime t0, long deltaT);
 
-    static TimeAccelerator continuous(int alpha){ //TODO possibly type long
+    static TimeAccelerator continuous(int alpha){
         return (t0,deltaT) -> t0.plusNanos(alpha*deltaT);
     }
     

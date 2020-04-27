@@ -7,6 +7,7 @@ import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -77,10 +78,10 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
 
         //asterism
-        Set<Asterism> asterismSet = sky.asterisms();
+        Set<Asterism> asterismSet = sky.getAsterism();
         ctx.setStroke(Color.BLUE);
         for (Asterism asterism : asterismSet){
-            List<Integer> indiceList = sky.asterismIndices(asterism);
+            List<Integer> indiceList = sky.getAsterismIndices(asterism);
             double x0 = starPos[2*indiceList.get(0)];
             double y0 = starPos[2*indiceList.get(0)+1];
             ctx.beginPath();
@@ -229,12 +230,15 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
+        ctx.setTextBaseline(VPos.TOP);
+
+        //TODO MAKE IT IN A LOOP
 
         HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,-0.5);
         HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, -0.5);
         HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,-0.5);
         HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,-0.5);
-        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,-0.5); //TODO ask if -1.5 or -0.5 (cause otherwise line is strike)
+        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,-0.5);
         HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,-0.5);
         HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,-0.5);
         HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,-0.5);

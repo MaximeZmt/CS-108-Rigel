@@ -116,18 +116,17 @@ public class ObservedSky {
         return Arrays.copyOf(starPosArray,starPosArray.length);
     }
 
-    //TODO ADD Asterism access
     /*
     La classe ObservedSky offre également des méthodes donnant accès aux astérismes du catalogue utilisé, ainsi qu'à la
     liste des index des étoiles d'un astérisme donné. Ces méthodes ne font rien d'autre qu'appeler les méthodes
     correspondantes du catalogue d'étoiles utilisé.
      */
 
-    public Set<Asterism> asterisms(){ //TODO Check if ok for immuability
+    public Set<Asterism> getAsterism(){ //TODO add get
         return starCatalogue.asterisms();
     }
 
-    public List<Integer> asterismIndices(Asterism asterism){
+    public List<Integer> getAsterismIndices(Asterism asterism){
         return starCatalogue.asterismIndices(asterism);
     }
 

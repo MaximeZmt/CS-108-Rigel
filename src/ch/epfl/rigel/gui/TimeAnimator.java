@@ -16,14 +16,16 @@ public final class TimeAnimator extends AnimationTimer {
     private final BooleanProperty running = new SimpleBooleanProperty(false);
     private final ObjectProperty<TimeAccelerator> timeAccelerator = new SimpleObjectProperty<>(null);
     private long timeStamp = 0;
+    private boolean firstTime = true;
 
     public TimeAnimator(DateTimeBean dateTimeBean){
         this.dateTimeBean = dateTimeBean;
     }
 
     @Override
-    public void handle(long l) {
-        if (timeStamp == 0){
+    public void handle(long l) { //TODO boolean is better
+        if (firstTime){
+            firstTime = false;
             timeStamp = l;
         }else{
             long deltaT = l- timeStamp;
@@ -37,7 +39,7 @@ public final class TimeAnimator extends AnimationTimer {
     public void start() {
         super.start();
         running.set(true);
-        timeStamp = 0;
+        firstTime = true;
     }
 
     @Override
