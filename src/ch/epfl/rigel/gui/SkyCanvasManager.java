@@ -6,6 +6,7 @@ import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
+import ch.epfl.rigel.math.Angle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -58,13 +59,16 @@ public final class SkyCanvasManager {
         observCoordinates = observerLocationBean.coordinatesProperty();
 
 
-
-        // Transform planeToCanvas =
-        //                    Transform.affine(1300, 0, 0, -1300, 400, 300);
-
         projetion = Bindings.createObjectBinding(()->new StereographicProjection(center.get()),center);
         sky = Bindings.createObjectBinding(()->new ObservedSky(ZonedDateTime.of(date.get(),time.get(),zone.get()),observCoordinates.getValue(),projetion.getValue(),catalogue),date,time,zone,observCoordinates,projetion);
-        //planeToCanvas = Bindings.createObjectBinding(()->Transform.affine())
+        planeToCanvas = Bindings.createObjectBinding(()->{
+            double width = 800;
+            double height = 600;
+            double fov = 68.4; // in deg
+            double factor = width/(projetion.getValue().applyToAngle(Angle.ofDeg(fov)));
+            Transform planeToCanvas = Transform.affine(factor,0,0,-factor,width/2,height/2);
+            return planeToCanvas;
+        },projetion); // TOBECOMPLETED
 
 /*
         crée un certain nombre de propriétés et liens décrits plus bas,
