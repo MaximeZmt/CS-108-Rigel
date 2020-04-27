@@ -17,12 +17,24 @@ public final class ViewingParametersBean { // public et instanciable
     private final DoubleProperty fieldOfViewDeg = new SimpleDoubleProperty(0);
     private final ObjectProperty<HorizontalCoordinates> center = new SimpleObjectProperty<>(null);
 
-    public DoubleProperty fieldOfViewDegProperty(){return fieldOfViewDeg;}
-    public double getfieldOfViewDeg(){return fieldOfViewDeg.doubleValue();}
-    public void setFieldOfViewDeg(double newFieldOfViewDeg){fieldOfViewDeg.setValue(newFieldOfViewDeg);}
+    public double getFieldOfViewDeg() {
+        return fieldOfViewDeg.get();
+    }
+    public DoubleProperty fieldOfViewDegProperty() {
+        return fieldOfViewDeg;
+    }
+    public void setFieldOfViewDeg(double fieldOfViewDeg) {
+        this.fieldOfViewDeg.set(fieldOfViewDeg);
+    }
 
-    public ObjectProperty<HorizontalCoordinates> centerProperty(){return center;}
-    public HorizontalCoordinates getCenter(){return center.get();}
-    public void setCenter(HorizontalCoordinates newCenter){center.set(newCenter);}
+    public HorizontalCoordinates getCenter() {
+        return center.get();
+    }
+    public ObjectProperty<HorizontalCoordinates> centerProperty() {
+        return center;
+    }
+    public void setCenter(HorizontalCoordinates center) {
+        this.center.set(center);
+    }
 
 }
