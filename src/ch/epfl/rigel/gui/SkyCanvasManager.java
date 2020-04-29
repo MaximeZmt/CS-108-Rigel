@@ -44,7 +44,7 @@ public final class SkyCanvasManager {
 
 
     //projection
-    private final ObjectProperty<HorizontalCoordinates> center;
+    //private final ObjectProperty<HorizontalCoordinates> center;
     private final ObjectBinding<StereographicProjection> projection;
 
     //planeToCanvas
@@ -77,8 +77,11 @@ public final class SkyCanvasManager {
         mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0,0));
 
         //projection
-        center = viewingParametersBean.centerProperty(); //TODO should we create getCenter and setCenter ? don't think so
-        projection = Bindings.createObjectBinding(()->new StereographicProjection(center.get()),center);
+        //center = viewingParametersBean.centerProperty(); //TODO should we create getCenter and setCenter ? don't think so
+        projection = Bindings.createObjectBinding(()->
+                new StereographicProjection(viewingParametersBean.getCenter()),
+                viewingParametersBean.centerProperty()
+        );
 
         //planeToCanvas
         //TODO check initial values
@@ -166,16 +169,20 @@ public final class SkyCanvasManager {
             //TODO sun and moon (maybe planets) move when changing center of projection
             switch(e.getCode()){
                 case UP:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg(), center.get().altDeg()+1));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()+1));
                     break;
                 case DOWN:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg(), center.get().altDeg()-1));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()-1));
                     break;
                 case LEFT:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg()-1, center.get().altDeg()));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+                            viewingParametersBean.getCenter().azDeg()-1, viewingParametersBean.getCenter().altDeg()));
                     break;
                 case RIGHT:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(center.get().azDeg()+1, center.get().altDeg()));
+                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+                            viewingParametersBean.getCenter().azDeg()+1, viewingParametersBean.getCenter().altDeg()));
                     break;
             }
         });
@@ -184,7 +191,7 @@ public final class SkyCanvasManager {
         //TODO wich one ??
         //TODO doesnt update at start and when changing the size of the window
         canvas.addListener((o, oV, nV) -> drawSky(painter));
-        center.addListener((o, oV, nV) -> drawSky(painter));
+        //center.addListener((o, oV, nV) -> drawSky(painter));
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
         planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));
         projection.addListener((o, oV, nV) -> drawSky(painter));
