@@ -163,26 +163,26 @@ public final class SkyCanvasManager {
             }
         });
         canvas.get().setOnKeyPressed(e->{
-            //TODO put '1' in a static attribute
+            //TODO put '5' in a static attribute
             //TODO check for default switch
             //TODO errors comming from equals
             //TODO sun and moon (maybe planets) move when changing center of projection
             switch(e.getCode()){
                 case UP:
                     viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()+1));
+                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()+5));
                     break;
                 case DOWN:
                     viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()-1));
+                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()-5));
                     break;
                 case LEFT:
                     viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg()-1, viewingParametersBean.getCenter().altDeg()));
+                            viewingParametersBean.getCenter().azDeg()-5, viewingParametersBean.getCenter().altDeg()));
                     break;
                 case RIGHT:
                     viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg()+1, viewingParametersBean.getCenter().altDeg()));
+                            viewingParametersBean.getCenter().azDeg()+5, viewingParametersBean.getCenter().altDeg()));
                     break;
             }
         });
