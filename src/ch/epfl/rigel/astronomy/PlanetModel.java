@@ -108,17 +108,18 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double lEarth = realAnomalyEarth+EARTH.lonPerigee;
 
         //value that is used many times down below
-        double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
+        double lEMinusLP = lEarth-lPrime;
+        double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(-1*lEMinusLP);
 
         //different calculations for longitude of inferior and superior planets (lambda)
         double lambda;
         if (this.equals(MERCURY) || this.equals(VENUS)){ //inferior
             lambda = Math.PI+lEarth+Math.atan2(
-                    rPrime*Math.sin(lEarth-lPrime),
-                    rEarth-rPrime*Math.cos(lEarth-lPrime));
+                    rPrime*Math.sin(lEMinusLP),
+                    rEarth-rPrime*Math.cos(lEMinusLP));
         } else { //superior
             lambda = lPrime+Math.atan2(rEarthSinLPrimeMinusLEarth,
-                    rPrime-rEarth*Math.cos(lPrime-lEarth));
+                    rPrime-rEarth*Math.cos(-1*lEMinusLP));
         }
 
         //latitude for all planets (beta)
