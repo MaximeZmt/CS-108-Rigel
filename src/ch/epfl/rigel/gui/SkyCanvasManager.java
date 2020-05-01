@@ -163,10 +163,15 @@ public final class SkyCanvasManager {
         //it is normal if scroll is inverted
         //TODO add limit for zoom
         canvas.setOnScroll(e->{
+            double newFieldOfViewDeg;
             if (Math.abs(e.getDeltaX()) >= Math.abs(e.getDeltaY())){
-                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()+e.getDeltaX());
+                newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaX();
             } else {
-                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()+e.getDeltaY());
+                newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaY();
+            }
+
+            if (30 <= newFieldOfViewDeg && newFieldOfViewDeg <= 150){
+                viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
             }
         });
         canvas.setOnKeyPressed(e->{
@@ -174,10 +179,15 @@ public final class SkyCanvasManager {
             //TODO check for default switch
             //TODO sun and moon (maybe planets) move when changing center of projection -> modifier sunmodel pour voir d ou vient  l erreur
             //TODO use map
-            viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+            HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(
                     viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0],
-                    viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1])
-            );
+                    viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1]);
+
+            if (5 <= newCoordinates.altDeg() && newCoordinates.altDeg() <= 90
+            && 0 <= newCoordinates.azDeg() && newCoordinates.azDeg() < 360){
+                viewingParametersBean.setCenter(newCoordinates);
+            }
+
         });
 
         //drawing listeners
