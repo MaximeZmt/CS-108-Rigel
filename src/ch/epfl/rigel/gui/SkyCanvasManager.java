@@ -17,12 +17,16 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.transform.Transform;
 
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * [description text]
@@ -31,16 +35,17 @@ import java.time.ZonedDateTime;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
-    //TODO ask if type must be ObservableValue or ObjectBinding for links
 
 
 
 
     //canvas and mousePosition
-    private final ObjectProperty<Canvas> canvas;
+    private final Canvas canvas;
     private final ObjectProperty<CartesianCoordinates> mousePosition;
 
     private final SkyCanvasPainter painter;
+
+    private final Map<KeyCode,int[]> centerCoordinateChanger;
 
 
     //projection
@@ -48,8 +53,8 @@ public final class SkyCanvasManager {
     private final ObjectBinding<StereographicProjection> projection;
 
     //planeToCanvas
-    private final DoubleProperty canvasWidth;
-    private final DoubleProperty canvasHeight;
+    //private final DoubleProperty canvasWidth;
+    //private final DoubleProperty canvasHeight;
     private final DoubleProperty fieldOfViewDeg;
     private final DoubleBinding dilatationFactor;
     private final ObjectBinding<Transform> planeToCanvas;
@@ -63,34 +68,40 @@ public final class SkyCanvasManager {
 
     //mouseHorizontalPosition
     private final ObjectBinding<HorizontalCoordinates> mouseHorizontalPosition;
-    public final DoubleBinding mouseAzDeg;
-    public final DoubleBinding mouseAltDeg; //TODO check if public as online
+    private final DoubleBinding mouseAzDeg;
+    private final DoubleBinding mouseAltDeg; //TODO check if public as online -> privé mais accesseur
 
-    public final ObjectBinding<CelestialObject> objectUnderMouse; //TODO check if public as online
+    private final ObjectBinding<CelestialObject> objectUnderMouse; //TODO check if public as online
 
     public SkyCanvasManager(StarCatalogue catalogue,
                             DateTimeBean dateTimeBean,
                             ObserverLocationBean observerLocationBean,
                             ViewingParametersBean viewingParametersBean
     ){
+        centerCoordinateChanger = Map.of(
+                KeyCode.UP, new int[]{0,5},
+                KeyCode.RIGHT, new int[]{10,0},
+                KeyCode.DOWN, new int[]{0,-5},
+                KeyCode.LEFT, new int[]{-10,0});
+
         //TODO check for initial value
+        //canvas and painter
+        canvas = new Canvas();
+        painter = new SkyCanvasPainter(canvas);
         mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0,0));
 
         //projection
-        //center = viewingParametersBean.centerProperty(); //TODO should we create getCenter and setCenter ? don't think so
+        //center = viewingParametersBean.centerProperty();
         projection = Bindings.createObjectBinding(()->
                 new StereographicProjection(viewingParametersBean.getCenter()),
                 viewingParametersBean.centerProperty()
         );
 
         //planeToCanvas
-        //TODO check initial values
-        canvasWidth = new SimpleDoubleProperty(1000);
-        canvasHeight = new SimpleDoubleProperty(800);
         fieldOfViewDeg = viewingParametersBean.fieldOfViewDegProperty();
         dilatationFactor = Bindings.createDoubleBinding(()->
-                canvasWidth.get()/(projection.get().applyToAngle(Angle.ofDeg(fieldOfViewDeg.get()))),
-                canvasWidth, projection, fieldOfViewDeg
+                canvas.widthProperty().get()/(projection.get().applyToAngle(Angle.ofDeg(fieldOfViewDeg.get()))),
+                canvas.widthProperty(), projection, fieldOfViewDeg
         );
         planeToCanvas = Bindings.createObjectBinding(()->
                 Transform.affine(
@@ -98,10 +109,10 @@ public final class SkyCanvasManager {
                         0,
                         0,
                         -dilatationFactor.get(),
-                        canvasWidth.get()/2,
-                        canvasHeight.get()/2
+                        canvas.widthProperty().get()/2,
+                        canvas.heightProperty().get()/2
                 ),
-                dilatationFactor, canvasWidth, canvasHeight
+                dilatationFactor, canvas.widthProperty(), canvas.heightProperty()
         );
 
         //observedSky
@@ -142,85 +153,65 @@ public final class SkyCanvasManager {
             return observedSky.get().objectClosestTo(coordinates ,10); //TODO put '10' in a static variable
         }, mousePosition, planeToCanvas, observedSky);
 
-        //canvas and painter
-        canvas = new SimpleObjectProperty<>(new Canvas(canvasWidth.get(), canvasHeight.get()));
-        painter = new SkyCanvasPainter(canvas.get());
-        //drawSky(painter);
-
         //listeners
-        canvas.get().setOnMouseMoved(e -> setMousePosition(CartesianCoordinates.of(e.getX(),e.getY())));
-        canvas.get().setOnMousePressed(e->{
+        canvas.setOnMouseMoved(e -> mousePosition.set(CartesianCoordinates.of(e.getX(),e.getY())));
+        canvas.setOnMousePressed(e->{
             if (e.isPrimaryButtonDown()){
-                canvas.get().requestFocus();
+                canvas.requestFocus();
             }
         });
-        //TODO check why - and not not + and fix limit for zoom
-        canvas.get().setOnScroll(e->{
+        //it is normal if scroll is inverted
+        //TODO add limit for zoom
+        canvas.setOnScroll(e->{
             if (Math.abs(e.getDeltaX()) >= Math.abs(e.getDeltaY())){
-                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()-e.getDeltaX());
+                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()+e.getDeltaX());
             } else {
-                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()-e.getDeltaY());
+                viewingParametersBean.setFieldOfViewDeg(fieldOfViewDeg.get()+e.getDeltaY());
             }
         });
-        canvas.get().setOnKeyPressed(e->{
+        canvas.setOnKeyPressed(e->{
             //TODO put '5' in a static attribute
             //TODO check for default switch
-            //TODO errors comming from equals
-            //TODO sun and moon (maybe planets) move when changing center of projection
-            switch(e.getCode()){
-                case UP:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()+5));
-                    break;
-                case DOWN:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg(), viewingParametersBean.getCenter().altDeg()-5));
-                    break;
-                case LEFT:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg()-5, viewingParametersBean.getCenter().altDeg()));
-                    break;
-                case RIGHT:
-                    viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
-                            viewingParametersBean.getCenter().azDeg()+5, viewingParametersBean.getCenter().altDeg()));
-                    break;
-            }
+            //TODO sun and moon (maybe planets) move when changing center of projection -> modifier sunmodel pour voir d ou vient  l erreur
+            //TODO use map
+            viewingParametersBean.setCenter(HorizontalCoordinates.ofDeg(
+                    viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0],
+                    viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1])
+            );
         });
 
         //drawing listeners
-        //TODO wich one ??
-        //TODO doesnt update at start and when changing the size of the window
-        canvas.addListener((o, oV, nV) -> drawSky(painter));
-        //center.addListener((o, oV, nV) -> drawSky(painter));
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
         planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));
-        projection.addListener((o, oV, nV) -> drawSky(painter));
-        fieldOfViewDeg.addListener((o, oV, nV) -> drawSky(painter));
-        canvasHeight.addListener((o, oV, nV) -> drawSky(painter));
-        canvasWidth.addListener((o, oV, nV) -> drawSky(painter));
-        //viewingParametersBean.centerProperty().addListener((o, oV, nV) -> drawSky(painter));
-        //viewingParametersBean.fieldOfViewDegProperty().addListener((o, oV, nV) -> drawSky(painter));
-
-/*
-        crée un certain nombre de propriétés et liens décrits plus bas,
-                installe un auditeur (listener) pour être informé des mouvements du curseur de la souris, et stocker sa position dans une propriété,
-        installe un auditeur pour détecter les clics de la souris sur le canevas et en faire alors le destinataire des événements clavier,
-        installe un auditeur pour réagir aux mouvements de la molette de la souris et/ou du trackpad et changer le champ de vue en fonction,
-                installe un auditeur pour réagir aux pressions sur les touches du curseur et changer le centre de projection en fonction,
-                installe des auditeurs pour être informé des changements des liens et propriétés ayant un impact sur le dessin du ciel, et demander dans ce cas au peintre de le redessiner.
-
-
- */
 
     }
 
     //TODO check if private setters are ok or if we just have to make the set within the code
-    private void setMousePosition(CartesianCoordinates mousePosition) {
-        this.mousePosition.set(mousePosition);
-    }
+
 
     public ObjectBinding<CelestialObject> objectUnderMouseProperty() {
         return objectUnderMouse;
+    }
+
+    //TODO is it useful ?
+    public Number getMouseAzDeg() {
+        return mouseAzDeg.get();
+    }
+
+    public DoubleBinding mouseAzDegProperty() {
+        return mouseAzDeg;
+    }
+
+    public Number getMouseAltDeg() {
+        return mouseAltDeg.get();
+    }
+
+    public DoubleBinding mouseAltDegProperty() {
+        return mouseAltDeg;
+    }
+
+    public CelestialObject getObjectUnderMouse() {
+        return objectUnderMouse.get();
     }
 
     private void drawSky(SkyCanvasPainter painter){
@@ -235,14 +226,7 @@ public final class SkyCanvasManager {
     }
 
     public Canvas canvas(){
-        return canvas.get();
+        return canvas;
     }
 
-    /*
-    créer le canevas sur lequel le ciel est dessiné,
-créer le peintre chargé du dessin du ciel et lui faire redessiner le ciel chaque fois que cela est nécessaire,
-changer le champ de vue lorsque l'utilisateur manipule la molette de la souris et/ou le trackpad,
-changer le centre de projection lorsque l'utilisateur appuie sur les touches du curseur,
-suivre les mouvements de la souris et exporter, via des propriétés, la position de son curseur dans le système de coordonnées horizontal, et l'objet céleste le plus proche de ce curseur.
-     */
 }
