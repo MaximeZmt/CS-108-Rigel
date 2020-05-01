@@ -34,7 +34,7 @@ class MyStereographicProjectionTest {
     @Test
     void ToStringTest(){
         StereographicProjection sp = new StereographicProjection(HorizontalCoordinates.of(0.3,1.4454));
-        assertEquals("StereographicProjection, center : (az=0.3000 ; alt=1.4454)",sp.toString());
+        assertEquals("StereographicProjection, center : (az=17.1887°, alt=82.8153°)",sp.toString());
     }
 
     @Test

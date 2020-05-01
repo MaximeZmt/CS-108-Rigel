@@ -5,6 +5,7 @@ import ch.epfl.rigel.coordinates.EclipticToEquatorialConversion;
 import ch.epfl.rigel.coordinates.EquatorialCoordinates;
 import ch.epfl.rigel.math.Angle;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     NEPTUNE("Neptune", 165.84539, 326.895127, 23.07, 0.010483,
             30.1985, 1.7673, 131.879, 62.20, -6.87);
 
+
+    private final static double ANGULAR_SPEED = (Angle.TAU/365.242191);
+
     private final String nameFr;
     private final double tropicalYear;
     private final double lonJ2010;
@@ -41,8 +45,11 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     private final double lonAscendingNode;
     private final double angularSize;
     private final double magnitude;
+    private final double sinOrbitalInclination;
+    private final double cosOrbitalInclination;
 
-    public static final List<PlanetModel> ALL = List.of(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE);
+
+    public static final List<PlanetModel> ALL = Arrays.asList(PlanetModel.values());
 
     /**
      * Constructor for a planet model
@@ -59,8 +66,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
      * @param magnitude magnitude
      */
     PlanetModel(String nameFr, double tropicalYear, double lonJ2010, double lonPerigee,
-                        double orbitalEccentricity, double semiMajorAxis, double orbitalInclination,
-                        double lonAscendingNode, double angularSize, double magnitude){
+                double orbitalEccentricity, double semiMajorAxis, double orbitalInclination,
+                double lonAscendingNode, double angularSize, double magnitude){
         this.nameFr = nameFr;
         this.tropicalYear = tropicalYear;
         this.lonJ2010 = Angle.ofDeg(lonJ2010);
@@ -71,6 +78,8 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         this.lonAscendingNode = Angle.ofDeg(lonAscendingNode);
         this.angularSize = angularSize;
         this.magnitude = magnitude;
+        this.sinOrbitalInclination = Math.sin(this.orbitalInclination);
+        this.cosOrbitalInclination = Math.cos(this.orbitalInclination);
     }
 
     /**
@@ -80,18 +89,18 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
     public Planet at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
 
         //data needed to compute the position of all planets
-        double meanAnomaly = (Angle.TAU/365.242191)*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
+        double meanAnomaly = ANGULAR_SPEED*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
         double realAnomaly = meanAnomaly+2*orbitalEccentricity*Math.sin(meanAnomaly);
         double r = (semiMajorAxis*(1-orbitalEccentricity*orbitalEccentricity))/
                 (1+orbitalEccentricity*Math.cos(realAnomaly));
         double l = realAnomaly+lonPerigee;
-        double psi = Math.asin(Math.sin(l-lonAscendingNode)*Math.sin(orbitalInclination));
+        double psi = Math.asin(Math.sin(l-lonAscendingNode)*sinOrbitalInclination);
         double rPrime = r*Math.cos(psi);
-        double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*Math.cos(orbitalInclination),
+        double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*cosOrbitalInclination,
                 Math.cos(l-lonAscendingNode))+lonAscendingNode;
 
         //data for the position of the earth
-        double meanAnomalyEarth = (Angle.TAU/365.242191)*(daysSinceJ2010/EARTH.tropicalYear)
+        double meanAnomalyEarth = ANGULAR_SPEED*(daysSinceJ2010/EARTH.tropicalYear)
                 +EARTH.lonJ2010-EARTH.lonPerigee;
         double realAnomalyEarth = meanAnomalyEarth+2*EARTH.orbitalEccentricity*Math.sin(meanAnomalyEarth);
         double rEarth = (EARTH.semiMajorAxis*(1-EARTH.orbitalEccentricity*EARTH.orbitalEccentricity))/
@@ -99,23 +108,24 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         double lEarth = realAnomalyEarth+EARTH.lonPerigee;
 
         //value that is used many times down below
-        double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(lPrime-lEarth);
+        double lEMinusLP = lEarth-lPrime;
+        double rEarthSinLPrimeMinusLEarth = rEarth*Math.sin(-1*lEMinusLP);
 
         //different calculations for longitude of inferior and superior planets (lambda)
         double lambda;
         if (this.equals(MERCURY) || this.equals(VENUS)){ //inferior
             lambda = Math.PI+lEarth+Math.atan2(
-                    rPrime*Math.sin(lEarth-lPrime),
-                    rEarth-rPrime*Math.cos(lEarth-lPrime));
+                    rPrime*Math.sin(lEMinusLP),
+                    rEarth-rPrime*Math.cos(lEMinusLP));
         } else { //superior
             lambda = lPrime+Math.atan2(rEarthSinLPrimeMinusLEarth,
-                    rPrime-rEarth*Math.cos(lPrime-lEarth));
+                    rPrime-rEarth*Math.cos(-1*lEMinusLP));
         }
 
         //latitude for all planets (beta)
         double beta = Math.atan(
                 (rPrime*Math.tan(psi)*Math.sin(lambda-lPrime))/
-                (rEarthSinLPrimeMinusLEarth));
+                        (rEarthSinLPrimeMinusLEarth));
 
         //position in equatorial coordinates of the given planet computed with the previous data
         EclipticCoordinates eclipticCoordinates = EclipticCoordinates.of(

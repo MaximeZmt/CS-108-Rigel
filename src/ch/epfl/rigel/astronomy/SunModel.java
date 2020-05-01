@@ -18,18 +18,19 @@ public enum SunModel implements CelestialObjectModel<Sun> {
     private final static double ECCENTRICITY = 0.016705;
     private final static double SUN_LONGITUDE_AT_J2010 = Angle.ofDeg(279.557208);
     private final static double SUN_LONGITUDE_AT_PERIGEE = Angle.ofDeg(283.112438);
+    private final static double ANGULAR_SPEED = Angle.TAU/365.242191;
 
     /**
      * @see CelestialObjectModel#at(double, EclipticToEquatorialConversion)
      */
     @Override
     public Sun at(double daysSinceJ2010, EclipticToEquatorialConversion eclipticToEquatorialConversion) {
-        double meanAnomaly = (Angle.TAU/365.242191)*daysSinceJ2010 + SUN_LONGITUDE_AT_J2010 - SUN_LONGITUDE_AT_PERIGEE;
-        double trueAnomaly = meanAnomaly+2* ECCENTRICITY *Math.sin(meanAnomaly);
-        double longEcliptique = trueAnomaly + SUN_LONGITUDE_AT_PERIGEE;
-        double latEcliptique = 0;
-        float angularSize = (float)(THETA0 * ((1+ ECCENTRICITY *Math.cos(trueAnomaly))/(1- ECCENTRICITY * ECCENTRICITY)));
-        EclipticCoordinates ecliC = EclipticCoordinates.of(Angle.normalizePositive(longEcliptique),latEcliptique);
+        double meanAnomaly = ANGULAR_SPEED*daysSinceJ2010+SUN_LONGITUDE_AT_J2010-SUN_LONGITUDE_AT_PERIGEE;
+        double trueAnomaly = meanAnomaly+(2*ECCENTRICITY*Math.sin(meanAnomaly));
+        double longEcliptique = trueAnomaly+SUN_LONGITUDE_AT_PERIGEE;
+        float angularSize = (float)(THETA0*((1+ECCENTRICITY*Math.cos(trueAnomaly))/(1-ECCENTRICITY*ECCENTRICITY)));
+
+        EclipticCoordinates ecliC = EclipticCoordinates.of(Angle.normalizePositive(longEcliptique),0);
         EquatorialCoordinates equaC = eclipticToEquatorialConversion.apply(ecliC);
 
         return new Sun(ecliC, equaC, angularSize, (float)meanAnomaly);

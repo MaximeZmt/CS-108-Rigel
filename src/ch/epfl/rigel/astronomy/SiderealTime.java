@@ -18,9 +18,8 @@ import java.time.temporal.ChronoUnit;
  */
 public final class SiderealTime {
     private final static Polynomial S0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
-    private final static Polynomial S1 = Polynomial.of(1.002737909,0);
+    private final static double S1 = 1.002737909;
     private final static double MILLISEC_PER_HOURS_FACTOR = 3600000;
-    private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
 
     private SiderealTime(){}
 
@@ -41,7 +40,7 @@ public final class SiderealTime {
         double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
         double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/MILLISEC_PER_HOURS_FACTOR;
 
-        double s = S0.at(centuriesUntil)+S1.at(deltaHours);
+        double s = S0.at(centuriesUntil)+S1*deltaHours;
         return Angle.normalizePositive(Angle.ofHr(s));
     }
 

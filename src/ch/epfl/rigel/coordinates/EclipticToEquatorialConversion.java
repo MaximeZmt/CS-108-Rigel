@@ -14,6 +14,11 @@ import java.util.function.Function;
  * @author Maxime Zammit (310251)
  */
 public final class EclipticToEquatorialConversion implements Function<EclipticCoordinates, EquatorialCoordinates> {
+    private static final Polynomial EPSILON_POLYNOMIAL = Polynomial.of(
+            Angle.ofArcsec(0.00181),
+            -Angle.ofArcsec(0.0006),
+            -Angle.ofArcsec(46.815),
+            Angle.ofDMS(23,26,21.45));
     private final double cosEpsilon;
     private final double sinEpsilon;
 
@@ -24,13 +29,7 @@ public final class EclipticToEquatorialConversion implements Function<EclipticCo
      * @param when date, time and zone
      */
     public EclipticToEquatorialConversion(ZonedDateTime when){
-        double epsilon = Polynomial.of(
-                Angle.ofDMS(0,0,0.00181),
-                -Angle.ofDMS(0,0,0.0006),
-                -Angle.ofDMS(0,0,46.815),
-                Angle.ofDMS(23,26,21.45))
-                .at(Epoch.J2000.julianCenturiesUntil(when));
-
+        double epsilon = EPSILON_POLYNOMIAL.at(Epoch.J2000.julianCenturiesUntil(when));
         cosEpsilon = Math.cos(epsilon);
         sinEpsilon = Math.sin(epsilon);
     }
