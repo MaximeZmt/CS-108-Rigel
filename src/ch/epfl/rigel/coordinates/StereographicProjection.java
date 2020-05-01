@@ -82,8 +82,9 @@ public final class StereographicProjection implements Function<HorizontalCoordin
             phi = phi1;
         }else{
             double rho = Math.sqrt(x*x+y*y);
-            double sinc = 2*rho/(rho*rho+1);
-            double cosc = (1-rho*rho)/(rho*rho+1);
+            double rhoSquared = rho*rho;
+            double sinc = 2*rho/(rhoSquared+1);
+            double cosc = (1-rhoSquared)/(rhoSquared+1);
             lambda = Math.atan2(x*sinc,rho*cosPhi1*cosc-y*sinPhi1*sinc)+lambda0;
             phi = Math.asin(cosc*sinPhi1+(y*sinc*cosPhi1)/rho);
         }
@@ -128,8 +129,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
      */
     @Override
     public String toString() {
-        return String.format(Locale.ROOT,"StereographicProjection, center : (az=%.4f ; alt=%.4f)",
-                center.az(),
-                center.alt());
+        return String.format(Locale.ROOT,"StereographicProjection, center : %s",
+                center.toString());
     }
 }

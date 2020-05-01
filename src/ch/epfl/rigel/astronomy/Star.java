@@ -31,11 +31,12 @@ public final class Star extends CelestialObject {
         super(name, equatorialPos, 0, magnitude);
         //angular size for star is 0 because they are represented as a point
 
-        Preconditions.checkArgument(hipparcosId>=0 && COLOR_INDEX_INTERVAL.contains(colorIndex));
+        Preconditions.checkArgument(hipparcosId>=0);
+        Preconditions.checkInInterval(COLOR_INDEX_INTERVAL,colorIndex);
 
         this.hipparcosId = hipparcosId;
-
-        colorTemperature = (int)Math.floor(4600*((1/(0.92*colorIndex+1.7))+(1/(0.92*colorIndex+0.62))));
+        double colorIndexMultiplied = 0.92*colorIndex;
+        colorTemperature = (int)Math.floor(4600*((1/(colorIndexMultiplied+1.7))+(1/(colorIndexMultiplied+0.62))));
     }
 
     /**

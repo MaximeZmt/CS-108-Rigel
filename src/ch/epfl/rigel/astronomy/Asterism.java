@@ -28,6 +28,6 @@ public final class Asterism {
      * @return a defensive copy of the Star List
      */
     public List<Star> stars(){
-        return List.copyOf(starList);
+        return starList;
     }
 }
