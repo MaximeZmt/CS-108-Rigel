@@ -9,7 +9,7 @@ import ch.epfl.rigel.Preconditions;
  * @author Maxime Zammit (310251)
  */
 public final class Polynomial {
-    private double[] coefficients;
+    private final double[] coefficients;
     private Polynomial(double[] coefficients){
         this.coefficients = coefficients;
     }

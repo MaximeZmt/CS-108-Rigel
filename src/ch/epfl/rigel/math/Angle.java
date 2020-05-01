@@ -13,6 +13,8 @@ public final class Angle {
     public final static double RAD_PER_ARCSEC = TAU/(360*3600);
     public final static double RAD_PER_HR = TAU/24.0;
     public final static double HR_PER_RAD = 24.0/TAU;
+    public final static double SEC_PER_DEG = 3600;
+    public final static double SEC_PER_MIN = 60;
     public final static RightOpenInterval ANGLE_INTERVAL = RightOpenInterval.of(0,TAU);
     public final static RightOpenInterval BASIS_60 = RightOpenInterval.of(0,60);
 
@@ -51,7 +53,7 @@ public final class Angle {
         Preconditions.checkInInterval(BASIS_60, min);
         Preconditions.checkInInterval(BASIS_60, sec);
         Preconditions.checkArgument(deg>=0);
-        sec = sec + min*60 + deg * 3600;
+        sec = sec + min*SEC_PER_MIN + deg * SEC_PER_DEG;
         return ofArcsec(sec);
     }
 

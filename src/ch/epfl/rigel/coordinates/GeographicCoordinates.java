@@ -48,12 +48,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      * @return (boolean)
      */
     public static boolean isValidLonDeg(double lonDeg){
-        try {
-            Preconditions.checkInInterval(LON_INTERVAL, Angle.ofDeg(lonDeg));
-        } catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
+        return LON_INTERVAL.contains(Angle.ofDeg(lonDeg));
     }
 
     /**
@@ -63,12 +58,7 @@ public final class GeographicCoordinates extends SphericalCoordinates {
      * @return (boolean)
      */
     public static boolean isValidLatDeg(double latDeg){
-        try {
-            Preconditions.checkInInterval(LAT_INTERVAL, Angle.ofDeg(latDeg));
-        } catch (IllegalArgumentException e){
-            return false;
-        }
-        return true;
+        return LAT_INTERVAL.contains(Angle.ofDeg(latDeg));
     }
 
     /**

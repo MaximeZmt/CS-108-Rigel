@@ -20,7 +20,7 @@ public final class RightOpenInterval extends Interval{
      */
     @Override
     public boolean contains(double v) {
-        return v<high()&&v>=low();
+        return low()<=v&&v<high();
     }
 
     /**
@@ -58,7 +58,7 @@ public final class RightOpenInterval extends Interval{
         return low()+ floorMod(v-low(),high()-low());
     }
 
-    private double floorMod(double x, double y){
+    private static double floorMod(double x, double y){
         return x- (y * Math.floor(x/y));
     }
 
@@ -68,7 +68,7 @@ public final class RightOpenInterval extends Interval{
      */
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "[%.2f,%.2[", low(), high());
+        return String.format(Locale.ROOT, "[%.2f,%.2f[", low(), high());
     }
 
 

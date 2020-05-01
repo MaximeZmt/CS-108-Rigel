@@ -6,6 +6,7 @@ import ch.epfl.rigel.math.Polynomial;
 import ch.epfl.rigel.math.RightOpenInterval;
 
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -16,9 +17,13 @@ import java.time.temporal.ChronoUnit;
  * @author Maxime Zammit (310251)
  */
 public final class SiderealTime {
+    private final static Polynomial S0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
+    private final static Polynomial S1 = Polynomial.of(1.002737909,0);
+    private final static double MILLISEC_PER_HOURS_FACTOR = 3600000;
+    private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
+
     private SiderealTime(){}
 
-    private static final RightOpenInterval HR_INTERVAL = RightOpenInterval.of(0,24);
     /*
      Class Formula are in Hr. We want to work with radian
      so we use two method withZoneSameInstant and truncatedTo
@@ -31,15 +36,13 @@ public final class SiderealTime {
      * @return SiderealTime in radian in [0;2Pi[ (double)
      */
     public static double greenwich(ZonedDateTime when){
-        when = when.withZoneSameInstant(ZoneId.of("UTC"));
+        when = when.withZoneSameInstant(ZoneOffset.UTC);
         ZonedDateTime truncatedDays = when.truncatedTo(ChronoUnit.DAYS);
         double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
-        double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/3600000.;
-        Polynomial s0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
-        Polynomial s1 = Polynomial.of(1.002737909,0);
+        double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/MILLISEC_PER_HOURS_FACTOR;
 
-        double s = HR_INTERVAL.reduce(s0.at(centuriesUntil)+s1.at(deltaHours));
-        return Angle.ofHr(s);
+        double s = S0.at(centuriesUntil)+S1.at(deltaHours);
+        return Angle.normalizePositive(Angle.ofHr(s));
     }
 
     /**

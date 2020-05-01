@@ -13,15 +13,17 @@ public enum Epoch {
     J2000(ZonedDateTime.of(
             LocalDateTime.of(
                     LocalDate.of(2000, Month.JANUARY, 1),
-                    LocalTime.of(12, 0)),
-            ZoneId.of("UTC"))),
+                    LocalTime.NOON),
+            ZoneOffset.UTC)),
     J2010(ZonedDateTime.of(
             LocalDateTime.of(
                     LocalDate.of(2010, Month.JANUARY, 1).minusDays(1),
-                    LocalTime.of(0, 0)),
-            ZoneId.of("UTC")));
+                    LocalTime.MIDNIGHT),
+            ZoneOffset.UTC));
 
     private ZonedDateTime date;
+    private final static double  MILLISEC_TO_DAY_FACTOR = 1000 * 60 * 60 * 24;
+    private final static double  NUMBER_OF_DAYS_PER_CENTURY = 365.25*100;
 
     /**
      * Basic constructor for Epoch
@@ -39,7 +41,7 @@ public enum Epoch {
      * @return number of days (can be decimal) (double)
      */
     public double daysUntil(ZonedDateTime when){
-        return date.until(when, ChronoUnit.MILLIS)/86400000.;
+        return date.until(when, ChronoUnit.MILLIS)/MILLISEC_TO_DAY_FACTOR;
     }
 
     /**
@@ -49,6 +51,6 @@ public enum Epoch {
      * @return number of julian centuries (can be decimal) (double)
      */
     public double julianCenturiesUntil(ZonedDateTime when){
-        return date.until(when, ChronoUnit.MILLIS)/(86400000.*36525);
+        return date.until(when, ChronoUnit.MILLIS)/(MILLISEC_TO_DAY_FACTOR*NUMBER_OF_DAYS_PER_CENTURY);
     }
 }
