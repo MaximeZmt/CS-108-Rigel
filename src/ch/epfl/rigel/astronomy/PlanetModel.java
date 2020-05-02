@@ -135,7 +135,7 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         //angular size of the given planet
         double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
         double angularSizeArcSec = angularSize/rho;
-        double angularSize = Angle.ofDMS(0,0,angularSizeArcSec);
+        double angularSize = Angle.ofArcsec(angularSizeArcSec);
 
         //magnitude of the given planet (magn)
         double phase = (1+Math.cos(lambda-l))/2;
