@@ -123,10 +123,8 @@ public class Main extends Application {
 
         Button resetButton = new Button("\uf0e2");
         resetButton.setFont(fontAwesome);
-        Button playButton = new Button("\uf04b");
-        playButton.setFont(fontAwesome);
-        Button pauseButton = new Button("\uf04c");
-        pauseButton.setFont(fontAwesome);
+        Button playPauseButton = new Button("\uf04b"); // "\uf04c" change play to pause
+        playPauseButton.setFont(fontAwesome);
 
 
         fontStream.close();
