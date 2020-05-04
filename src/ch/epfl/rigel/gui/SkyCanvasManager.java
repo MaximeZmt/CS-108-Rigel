@@ -159,8 +159,8 @@ public final class SkyCanvasManager {
             double y = mousePosition.get().y();
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
-                Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
-                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y); //TODO it was inverseTransform and not inversedeltaTransform cause it is a point
+                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY()); //TODO now it's working
                 return observedSky.get().objectClosestTo(coordinates ,10); //TODO put '10' in a static variable
             } catch (NonInvertibleTransformException e){
                 return null;
