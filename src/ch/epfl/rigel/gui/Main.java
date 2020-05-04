@@ -135,7 +135,7 @@ public class Main extends Application {
         ChoiceBox acceleratorSelector = new ChoiceBox();
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
 
-        timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playButton,pauseButton);
+        timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 
         return timeManagerbox;
     }
