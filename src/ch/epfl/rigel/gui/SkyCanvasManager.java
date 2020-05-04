@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
+import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Transform;
 
 import java.awt.event.KeyEvent;
@@ -87,6 +88,8 @@ public final class SkyCanvasManager {
         //TODO check for initial value
         //canvas and painter
         canvas = new Canvas();
+        //canvas.setHeight(500);
+        //canvas.setWidth(500);
         painter = new SkyCanvasPainter(canvas);
         mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0,0));
 
@@ -136,9 +139,14 @@ public final class SkyCanvasManager {
         mouseHorizontalPosition = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
-            Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
-            CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
-            return projection.get().inverseApply(coordinates);
+            //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
+            try {
+                Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
+                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+                return projection.get().inverseApply(coordinates);
+            } catch (NonInvertibleTransformException e){
+                return null;
+            }
         }, mousePosition, planeToCanvas, projection);
         mouseAzDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
         mouseAltDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
@@ -148,9 +156,15 @@ public final class SkyCanvasManager {
         objectUnderMouse = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
-            Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
-            CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
-            return observedSky.get().objectClosestTo(coordinates ,10); //TODO put '10' in a static variable
+            //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
+            try {
+                Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
+                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+                return observedSky.get().objectClosestTo(coordinates ,10); //TODO put '10' in a static variable
+            } catch (NonInvertibleTransformException e){
+                return null;
+            }
+
         }, mousePosition, planeToCanvas, observedSky);
 
         //listeners
@@ -179,15 +193,13 @@ public final class SkyCanvasManager {
             //TODO check for default switch
             //TODO sun and moon (maybe planets) move when changing center of projection -> modifier sunmodel pour voir d ou vient  l erreur
             //TODO use map
-            HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(
-                    viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0],
-                    viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1]);
-
-            if (5 <= newCoordinates.altDeg() && newCoordinates.altDeg() <= 90
-            && 0 <= newCoordinates.azDeg() && newCoordinates.azDeg() < 360){
+            double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
+            double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
+            if (5 <= newAltDeg && newAltDeg <= 90
+            && 0 <= newAzDeg && newAzDeg < 360){
+                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
-
         });
 
         //drawing listeners
