@@ -119,6 +119,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double x = starPos[2 * index] - (0.5 * diam2);
             double y = starPos[(2 * index) + 1] - (0.5 * diam2);
             ctx.fillOval(x, y, diam2, diam2);
+            /*
             if(s.name().equals("Betelgeuse")){
                 System.out.println("Test");
                 System.out.println("Temperature: "+s.colorTemperature());
@@ -127,6 +128,8 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
                 System.out.printf("Y: %.15f \n",y);
                 System.out.printf("diam: %.15f \n",diam2);
             }
+
+             */
         }
     }
 
