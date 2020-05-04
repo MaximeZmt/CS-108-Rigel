@@ -42,7 +42,7 @@ import java.util.function.UnaryOperator;
  */
 public class Main extends Application {
 
-    private ObjectBinding<CelestialObject> objectUnderMouse;
+    private ObjectBinding<CelestialObject> objectUnderMouse; //TODO cannot put it in final. Is ok like that ? should we put getter and setter ? dont think so
 
     public static void main(String[] args) { launch(args); }
 
@@ -205,7 +205,7 @@ public class Main extends Application {
         informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
 
         Text leftText = new Text("Champ de vue : <fov>°");
-        Text centerText = new Text("BLABLA");
+        Text centerText = new Text();
         Text rightText = new Text("Azimut : <az>°, hauteur : <alt>°");
 
         objectUnderMouse.addListener((p, o, n) -> {if (n != null) centerText.setText(n.info());});
