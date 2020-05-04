@@ -1,11 +1,18 @@
 package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.AsterismLoader;
+import ch.epfl.rigel.astronomy.CelestialObject;
 import ch.epfl.rigel.astronomy.HygDatabaseLoader;
 import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -15,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
@@ -34,6 +42,8 @@ import java.util.function.UnaryOperator;
  */
 public class Main extends Application {
 
+    private ObjectBinding<CelestialObject> objectUnderMouse;
+
     public static void main(String[] args) { launch(args); }
 
     private InputStream getResourceStream(String resource) {
@@ -52,14 +62,8 @@ public class Main extends Application {
 
         //MAIN BP
         BorderPane borderPane = new BorderPane();
-        /*borderPane.setTop(toolbar);
-        borderPane.setCenter(appContent);
-        borderPane.setBottom(statusbar);
-        //END MAIN BP
-
-         */
-
         //
+
         try (InputStream hs = getResourceStream("/hygdata_v3.csv");
              InputStream hs2 = getResourceStream("/asterisms.txt")) {
             StarCatalogue catalogue = new StarCatalogue.Builder()
@@ -91,14 +95,17 @@ public class Main extends Application {
 
 
         SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
+        objectUnderMouse = skyCanvas.objectUnderMouseProperty();
+
         Canvas sky = skyCanvas.canvas();
         Pane skyPane = new Pane(sky);
 
         borderPane.setTop(controlBar());
         borderPane.setCenter(skyPane);
+        borderPane.setBottom(informationBar());
 
-            sky.widthProperty().bind(skyPane.widthProperty());
-            sky.heightProperty().bind(skyPane.heightProperty());
+        sky.widthProperty().bind(skyPane.widthProperty());
+        sky.heightProperty().bind(skyPane.heightProperty());
 
 
         mainStage.setScene(new Scene(borderPane));
@@ -191,6 +198,23 @@ public class Main extends Application {
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 
         return timeManagerbox;
+    }
+
+    private BorderPane informationBar(){
+        BorderPane informationPane = new BorderPane();
+        informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
+
+        Text leftText = new Text("Champ de vue : <fov>°");
+        Text centerText = new Text("BLABLA");
+        Text rightText = new Text("Azimut : <az>°, hauteur : <alt>°");
+
+        objectUnderMouse.addListener((p, o, n) -> {if (n != null) centerText.setText(n.info());});
+
+        informationPane.setLeft(leftText);
+        informationPane.setCenter(centerText);
+        informationPane.setRight(rightText);
+
+        return informationPane;
     }
 
 
