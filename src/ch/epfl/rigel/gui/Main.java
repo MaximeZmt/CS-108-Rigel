@@ -1,13 +1,19 @@
 package ch.epfl.rigel.gui;
 
+import ch.epfl.rigel.astronomy.AsterismLoader;
+import ch.epfl.rigel.astronomy.HygDatabaseLoader;
+import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
+import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
@@ -15,6 +21,7 @@ import javafx.util.converter.NumberStringConverter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -28,6 +35,11 @@ import java.util.function.UnaryOperator;
 public class Main extends Application {
 
     public static void main(String[] args) { launch(args); }
+
+    private InputStream getResourceStream(String resource) {
+        return getClass().getResourceAsStream(resource);
+    }
+
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -48,13 +60,54 @@ public class Main extends Application {
          */
 
         //
+        try (InputStream hs = getResourceStream("/hygdata_v3.csv");
+             InputStream hs2 = getResourceStream("/asterisms.txt")) {
+            StarCatalogue catalogue = new StarCatalogue.Builder()
+                    .loadFrom(hs, HygDatabaseLoader.INSTANCE)
+                    .loadFrom(hs2, AsterismLoader.INSTANCE)
+                    .build();
+
+            ZonedDateTime when =
+                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
+            DateTimeBean dateTimeBean = new DateTimeBean();
+            dateTimeBean.setZonedDateTime(when);
+
+            ObserverLocationBean observerLocationBean =
+                    new ObserverLocationBean();
+            observerLocationBean.setCoordinates(
+                    GeographicCoordinates.ofDeg(6.57, 46.52));
+
+            ViewingParametersBean viewingParametersBean =
+                    new ViewingParametersBean();
+            viewingParametersBean.setCenter(
+                    HorizontalCoordinates.ofDeg(180.000000000001, 42));
+            viewingParametersBean.setFieldOfViewDeg(70);
+
+       //
+
+
+
+
+
+
+        SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
+        Canvas sky = skyCanvas.canvas();
+        Pane skyPane = new Pane(sky);
 
         borderPane.setTop(controlBar());
+        borderPane.setCenter(skyPane);
+
+            sky.widthProperty().bind(skyPane.widthProperty());
+            sky.heightProperty().bind(skyPane.heightProperty());
 
 
         mainStage.setScene(new Scene(borderPane));
 
         mainStage.show();
+
+        sky.requestFocus();
+
+        }
     }
 
     private HBox controlBar() throws  IOException{
