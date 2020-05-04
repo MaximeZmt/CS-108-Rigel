@@ -153,6 +153,7 @@ public final class SkyCanvasManager {
 
         //objectUnderMouse
         //TODO check bc looks shitty
+        //TODO FIXME objects under mouse are not the correct ones
         objectUnderMouse = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
