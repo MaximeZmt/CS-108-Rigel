@@ -60,16 +60,23 @@ class ObservedSkyTest {
         convEcltoEqu = new EclipticToEquatorialConversion(time);
         sky = new ObservedSky(time, geoCoords, stereo, catalogue);
 
-        /*
+
         assertEquals("Tau Phe",
                 sky.objectClosestTo(stereo.apply(new EquatorialToHorizontalConversion(time,geoCoords)
                         .apply(EquatorialCoordinates.of(0.004696959812148989,-0.861893035343076))),0.1).name());
+        // 1.3724303693276385 -0.143145630755865
 
-         */
+        assertEquals("Rigel", //homemade Test from csv file
+                sky.objectClosestTo(stereo.apply(new EquatorialToHorizontalConversion(time,geoCoords)
+                        .apply(EquatorialCoordinates.of(1.3724303693276385,-0.143145630755865))),0.1).name());
 
+
+/*
         assertEquals(Optional.empty(),
                 sky.objectClosestTo(stereo.apply(new EquatorialToHorizontalConversion(time,geoCoords)
                         .apply(EquatorialCoordinates.of(0.004696959812148989,-0.8618930353430763))),0.001));
+
+ */
 
 
 

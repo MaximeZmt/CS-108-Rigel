@@ -136,7 +136,7 @@ public class ObservedSky {
     public CelestialObject objectClosestTo(CartesianCoordinates cc,double maxDist){
         double closestDist = maxDist;
         double tempoDist = 0;
-        CelestialObject co = null;
+        CelestialObject co = null; //TODO may use Option.Empty
         //sun
         tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
         if (tempoDist<closestDist){
