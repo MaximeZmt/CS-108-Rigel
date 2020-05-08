@@ -209,9 +209,9 @@ public class Main extends Application {
         BorderPane informationPane = new BorderPane();
         informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
 
-        Text leftText = new Text("Champ de vue : <fov>°");
+        Text leftText = new Text(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));
         Text centerText = new Text();
-        Text rightText = new Text("Azimut : <az>°, hauteur : <alt>°");
+        Text rightText = new Text(String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()));
 
         skyCanvas.objectUnderMouseProperty().addListener((p, o, n) -> {
             if (n != null){
@@ -223,7 +223,7 @@ public class Main extends Application {
 
         sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
         sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
-       // horizontalCoordProperty.addListener((p, o, n) -> {if (n != null) rightText.setText(String.format("Azimut : %s°, hauteur : %s°",((HorizontalCoordinates)horizontalCoordProperty.get()).az(),((HorizontalCoordinates)horizontalCoordProperty.get()).alt()))}); //TODO CHECK THAT
+        skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)->{leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));});
 
         informationPane.setLeft(leftText);
         informationPane.setCenter(centerText);

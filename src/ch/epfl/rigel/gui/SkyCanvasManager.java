@@ -237,6 +237,10 @@ public final class SkyCanvasManager {
         return objectUnderMouse.get();
     }
 
+    public double getFieldOfViewDeg() { return fieldOfViewDeg.get(); }
+
+    public DoubleProperty fieldOfViewDegProperty() { return fieldOfViewDeg; }
+
     private void drawSky(SkyCanvasPainter painter){
         System.out.println("OUI");
         painter.clear();
