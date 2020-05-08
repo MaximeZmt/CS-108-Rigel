@@ -148,9 +148,9 @@ public class Main extends Application {
         Label latiLabel = new Label("Latitude (°) :");
 
         TextField inpLongi = new TextField();
-        inpLongi.setTextFormatter(lonTextFormatter);
+        inpLongi.setTextFormatter(formater("lon"));
         TextField inpLati = new TextField();
-        inpLati.setTextFormatter(null);
+        inpLati.setTextFormatter(formater("lat"));
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
@@ -233,25 +233,42 @@ public class Main extends Application {
     }
 
 
-    NumberStringConverter stringConverter =
-            new NumberStringConverter("#0.00");
- //TODO create method
-    UnaryOperator<TextFormatter.Change> lonFilter = (change -> {
-        try {
-            String newText =
-                    change.getControlNewText();
-            double newLonDeg =
-                    stringConverter.fromString(newText).doubleValue();
-            return GeographicCoordinates.isValidLonDeg(newLonDeg) //TODO is valid lat deg ?
-                    ? change
-                    : null;
-        } catch (Exception e) {
-            return null;
-        }
-    });
 
-    TextFormatter<Number> lonTextFormatter =
-            new TextFormatter<>(stringConverter, 0, lonFilter);
+ //TODO create method
+
+    private TextFormatter<Number> formater(String type){
+        NumberStringConverter stringConverter =
+                new NumberStringConverter("#0.00");
+
+        UnaryOperator<TextFormatter.Change> lonLatFilter = (change -> {
+            try {
+                String newText =
+                        change.getControlNewText();
+                double newLonLatDeg =
+                        stringConverter.fromString(newText).doubleValue();
+                if(type.equals("lon")){
+                    System.out.println("0");
+                    return GeographicCoordinates.isValidLonDeg(newLonLatDeg)
+                            ? change
+                            : null;
+                }else if(type.equals("lat")){
+                    System.out.println("1");
+                    return GeographicCoordinates.isValidLatDeg(newLonLatDeg)
+                            ? change
+                            : null;
+                }else{
+                    return  null;
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        });
+
+        TextFormatter<Number> lonLatTextFormatter =
+                new TextFormatter<>(stringConverter, 0, lonLatFilter);
+        return lonLatTextFormatter;
+    }
+
 
 
 
