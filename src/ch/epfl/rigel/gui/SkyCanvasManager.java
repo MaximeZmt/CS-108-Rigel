@@ -64,6 +64,8 @@ public final class SkyCanvasManager {
     private final ObjectProperty<LocalDate> date;
     private final ObjectProperty<LocalTime> time;
     private final ObjectProperty<ZoneId> zone;
+    private final DoubleProperty observerLatDeg;
+    private final DoubleProperty observerLonDeg;
     private final ObjectBinding<GeographicCoordinates> observerCoordinates;
     private final ObjectBinding<ObservedSky> observedSky;
 
@@ -122,6 +124,8 @@ public final class SkyCanvasManager {
         date = dateTimeBean.dateProperty();
         time = dateTimeBean.timeProperty();
         zone = dateTimeBean.zoneProperty();
+        observerLatDeg = observerLocationBean.latDegProperty();
+        observerLonDeg = observerLocationBean.lonDegProperty();
         observerCoordinates = observerLocationBean.coordinatesProperty();
         observedSky = Bindings.createObjectBinding(()->
                 new ObservedSky(ZonedDateTime.of(date.get(),time.get(),zone.get()),
@@ -254,6 +258,22 @@ public final class SkyCanvasManager {
 
     public ObjectBinding<GeographicCoordinates> observerCoordinatesProperty() {
         return observerCoordinates;
+    }
+
+    public double getObserverLatDeg() {
+        return observerLatDeg.get();
+    }
+
+    public DoubleProperty observerLatDegProperty() {
+        return observerLatDeg;
+    }
+
+    public double getObserverLonDeg() {
+        return observerLonDeg.get();
+    }
+
+    public DoubleProperty observerLonDegProperty() {
+        return observerLonDeg;
     }
 
     private void drawSky(SkyCanvasPainter painter){

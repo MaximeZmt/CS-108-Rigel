@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
@@ -128,7 +129,7 @@ public class Main extends Application {
         sepVert.setOrientation(Orientation.VERTICAL);
         sepVert2.setOrientation(Orientation.VERTICAL);
 
-        HBox child1 = observerPos(skyCanvas.observerCoordinatesProperty());
+        HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
         HBox child2 = observInstant();
         HBox child3 = timeManager();
 
@@ -137,7 +138,7 @@ public class Main extends Application {
         return mainControlBar;
     }
 
-    private HBox observerPos(ObjectBinding<GeographicCoordinates> binding){
+    private HBox observerPos(DoubleProperty observerLonDegProperty, DoubleProperty observerLatDegProperty){
         HBox observerPosBox = new HBox();
         observerPosBox.setStyle("-fx-spacing: inherit; -fx-alignment: baseline-left;");
 
@@ -147,8 +148,10 @@ public class Main extends Application {
         TextField inpLongi = new TextField();
         inpLongi.setTextFormatter(formatter("lon"));
         
+        observerLonDegProperty.set(Double.parseDouble(inpLongi.getCharacters().toString()));
         TextField inpLati = new TextField();
         inpLati.setTextFormatter(formatter("lat"));
+        observerLatDegProperty.set(Double.parseDouble(inpLati.getCharacters().toString()));
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
