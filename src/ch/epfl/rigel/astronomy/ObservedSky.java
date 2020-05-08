@@ -133,21 +133,21 @@ public class ObservedSky {
     //asterismAccess method
     //listIndexstar asterismgiven -> both calling starcatalogue method
 
-    public CelestialObject objectClosestTo(CartesianCoordinates cc,double maxDist){
+    public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc,double maxDist){
         double closestDist = maxDist;
         double tempoDist = 0;
-        CelestialObject co = null; //TODO may use Option.Empty
+        Optional<CelestialObject> co = Optional.empty(); //TODO may use Optional.Empty or Optional.of
         //sun
         tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
         if (tempoDist<closestDist){
-            co = sunInstance;
+            co = Optional.of(sunInstance);
             closestDist = tempoDist;
         }
 
         //moon
         tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
         if(tempoDist<closestDist){
-            co = moonInstance;
+            co = Optional.of(moonInstance);
             closestDist = tempoDist;
         }
 
@@ -158,7 +158,7 @@ public class ObservedSky {
             tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
                 closestDist = tempoDist;
-                co = p;
+                co = Optional.of(p);
             }
         }
 
@@ -170,7 +170,7 @@ public class ObservedSky {
             tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
                 closestDist = tempoDist;
-                co = s;
+                co = Optional.of(s);
             }
         }
         return co;

@@ -34,7 +34,7 @@ class ObservedSkyTest {
         StereographicProjection stereoPrj = new StereographicProjection(HorizontalCoordinates.of(Angle.ofDMS(174,36,37),Angle.ofDMS(19,45,04)));
         ObservedSky os = new ObservedSky(zdt,gc,stereoPrj,catalogue);
         CartesianCoordinates cc = CartesianCoordinates.of(0,0);
-        CelestialObject co = os.objectClosestTo(cc,100);
+        CelestialObject co = os.objectClosestTo(cc,100).get();
         System.out.println(co.name());
     }
 
@@ -63,12 +63,12 @@ class ObservedSkyTest {
 
         assertEquals("Tau Phe",
                 sky.objectClosestTo(stereo.apply(new EquatorialToHorizontalConversion(time,geoCoords)
-                        .apply(EquatorialCoordinates.of(0.004696959812148989,-0.861893035343076))),0.1).name());
+                        .apply(EquatorialCoordinates.of(0.004696959812148989,-0.861893035343076))),0.1).get().name());
         // 1.3724303693276385 -0.143145630755865
 
         assertEquals("Rigel", //homemade Test from csv file
                 sky.objectClosestTo(stereo.apply(new EquatorialToHorizontalConversion(time,geoCoords)
-                        .apply(EquatorialCoordinates.of(1.3724303693276385,-0.143145630755865))),0.1).name());
+                        .apply(EquatorialCoordinates.of(1.3724303693276385,-0.143145630755865))),0.1).get().name());
 
 
 /*

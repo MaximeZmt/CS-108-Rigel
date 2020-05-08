@@ -161,7 +161,8 @@ public final class SkyCanvasManager {
             try {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y); //TODO it was inverseTransform and not inversedeltaTransform cause it is a point
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY()); //TODO now it's working
-                return observedSky.get().objectClosestTo(coordinates ,10); //TODO put '10' in a static variable
+                double dist = planeToCanvas.get().deltaTransform(10,0).getX(); //TODO check that
+                return observedSky.get().objectClosestTo(coordinates ,dist).get(); //TODO put '10' in a static variable
             } catch (NonInvertibleTransformException e){
                 return null;
             }

@@ -19,11 +19,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -109,7 +112,7 @@ public class Main extends Application {
 
         mainStage.show();
 
-        sky.requestFocus();
+        skyPane.requestFocus();
 
         }
     }
@@ -159,9 +162,17 @@ public class Main extends Application {
         Label dateLabel = new Label("Date :");
         Label timeLabel = new Label("Heure :");
 
+        DateTimeFormatter hmsFormatter =
+                DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTimeStringConverter stringConverter =
+                new LocalTimeStringConverter(hmsFormatter, hmsFormatter);
+        TextFormatter<LocalTime> timeFormatter =
+                new TextFormatter<>(stringConverter);
+
         DatePicker datePicker = new DatePicker();
         datePicker.setStyle("-fx-pref-width: 120;");
         TextField timeSelector = new TextField();
+        timeSelector.setTextFormatter(timeFormatter);
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         ComboBox zoneSelector = new ComboBox();
         //zoneSelector.setItems();
@@ -170,7 +181,7 @@ public class Main extends Application {
         observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
 
         return observInstantBox;
-    }
+    } //TODO consume keyboard event
 
     private HBox timeManager() throws IOException {
 
