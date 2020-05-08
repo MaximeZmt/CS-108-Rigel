@@ -172,7 +172,7 @@ public class Main extends Application {
         DatePicker datePicker = new DatePicker();
         datePicker.setStyle("-fx-pref-width: 120;");
         TextField timeSelector = new TextField();
-        timeSelector.setTextFormatter(timeFormatter);
+        timeSelector.setTextFormatter(timeFormatter); //TODO why doesnt work
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         ComboBox zoneSelector = new ComboBox();
         //zoneSelector.setItems();
