@@ -189,6 +189,7 @@ public final class SkyCanvasManager {
             if (30 <= newFieldOfViewDeg && newFieldOfViewDeg <= 150){
                 viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
             }
+            e.consume();
         });
         canvas.setOnKeyPressed(e->{
             //TODO put '5' in a static attribute
@@ -202,6 +203,7 @@ public final class SkyCanvasManager {
                 HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
+            e.consume();
         });
 
         //drawing listeners
