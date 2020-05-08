@@ -143,6 +143,7 @@ public class ObservedSky {
         System.out.println(tempoDist);
         if (tempoDist<closestDist){
             co = Optional.of(sunInstance);
+            System.out.println("SUUUUUUNNNNNNNNNNNNNNNNNNNNNN!");
             closestDist = tempoDist;
         }
 
@@ -150,6 +151,7 @@ public class ObservedSky {
         tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
         if(tempoDist<closestDist){
             co = Optional.of(moonInstance);
+            System.out.println("MOOOOONNNNNNNNNNNNNNNNNNNN");
             closestDist = tempoDist;
         }
 
@@ -164,8 +166,6 @@ public class ObservedSky {
                 co = Optional.of(p);
             }
         }
-
-
         //stars
         int index;
         for(Star s : starList){
