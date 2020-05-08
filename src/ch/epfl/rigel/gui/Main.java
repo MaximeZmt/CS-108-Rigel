@@ -221,7 +221,7 @@ public class Main extends Application {
             }
         }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
 
-        sb = Bindings.createStringBinding(()->String.format("Azimut : %s°, hauteur : %s°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
+        sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
         sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
        // horizontalCoordProperty.addListener((p, o, n) -> {if (n != null) rightText.setText(String.format("Azimut : %s°, hauteur : %s°",((HorizontalCoordinates)horizontalCoordProperty.get()).az(),((HorizontalCoordinates)horizontalCoordProperty.get()).alt()))}); //TODO CHECK THAT
 
