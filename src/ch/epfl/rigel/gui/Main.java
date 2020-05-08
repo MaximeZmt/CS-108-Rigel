@@ -112,7 +112,7 @@ public class Main extends Application {
 
         mainStage.show();
 
-        skyPane.requestFocus();
+        sky.requestFocus();
 
         }
     }
