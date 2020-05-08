@@ -244,6 +244,14 @@ public final class SkyCanvasManager {
 
     public DoubleProperty fieldOfViewDegProperty() { return fieldOfViewDeg; }
 
+    public GeographicCoordinates getObserverCoordinates() {
+        return observerCoordinates.get();
+    }
+
+    public ObjectBinding<GeographicCoordinates> observerCoordinatesProperty() {
+        return observerCoordinates;
+    }
+
     private void drawSky(SkyCanvasPainter painter){
         System.out.println("OUI");
         painter.clear();

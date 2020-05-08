@@ -7,7 +7,9 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -100,7 +102,7 @@ public class Main extends Application {
         Canvas sky = skyCanvas.canvas();
         Pane skyPane = new Pane(sky);
 
-        borderPane.setTop(controlBar());
+        borderPane.setTop(controlBar(skyCanvas));
         borderPane.setCenter(skyPane);
         borderPane.setBottom(informationBar(skyCanvas));
 
@@ -117,7 +119,7 @@ public class Main extends Application {
         }
     }
 
-    private HBox controlBar() throws  IOException{
+    private HBox controlBar(SkyCanvasManager skyCanvas) throws  IOException{
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
@@ -126,7 +128,7 @@ public class Main extends Application {
         sepVert.setOrientation(Orientation.VERTICAL);
         sepVert2.setOrientation(Orientation.VERTICAL);
 
-        HBox child1 = observerPos();
+        HBox child1 = observerPos(skyCanvas.observerCoordinatesProperty());
         HBox child2 = observInstant();
         HBox child3 = timeManager();
 
@@ -135,7 +137,7 @@ public class Main extends Application {
         return mainControlBar;
     }
 
-    private HBox observerPos(){
+    private HBox observerPos(ObjectBinding<GeographicCoordinates> binding){
         HBox observerPosBox = new HBox();
         observerPosBox.setStyle("-fx-spacing: inherit; -fx-alignment: baseline-left;");
 
@@ -144,6 +146,7 @@ public class Main extends Application {
 
         TextField inpLongi = new TextField();
         inpLongi.setTextFormatter(formatter("lon"));
+        
         TextField inpLati = new TextField();
         inpLati.setTextFormatter(formatter("lat"));
 
