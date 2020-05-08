@@ -3,6 +3,7 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.*;
 
+import javax.swing.text.html.Option;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -139,6 +140,7 @@ public class ObservedSky {
         Optional<CelestialObject> co = Optional.empty(); //TODO may use Optional.Empty or Optional.of
         //sun
         tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
+        System.out.println(tempoDist);
         if (tempoDist<closestDist){
             co = Optional.of(sunInstance);
             closestDist = tempoDist;
@@ -157,6 +159,7 @@ public class ObservedSky {
             int index = planetsList.indexOf(p);
             tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
+                System.out.println("PLANET : "+p);
                 closestDist = tempoDist;
                 co = Optional.of(p);
             }
@@ -164,15 +167,17 @@ public class ObservedSky {
 
 
         //stars
-
+        int index;
         for(Star s : starList){
-            int index = starList.indexOf(s);
+            index = starList.indexOf(s);
             tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
+                System.out.println("STAR :"+s);
                 closestDist = tempoDist;
                 co = Optional.of(s);
             }
         }
+        System.out.println(closestDist);
         return co;
     }
 
