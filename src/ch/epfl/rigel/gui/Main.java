@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -42,7 +43,9 @@ import java.util.function.UnaryOperator;
  */
 public class Main extends Application {
 
-    private ObjectBinding<CelestialObject> objectUnderMouse; //TODO cannot put it in final. Is ok like that ? should we put getter and setter ? dont think so
+
+    //private ObjectProperty<> horizontalCoordProperty; //TODO --
+    //private DoubleProperty fovProperty;
 
     public static void main(String[] args) { launch(args); }
 
@@ -81,11 +84,13 @@ public class Main extends Application {
             observerLocationBean.setCoordinates(
                     GeographicCoordinates.ofDeg(6.57, 46.52));
 
-            ViewingParametersBean viewingParametersBean =
+            ViewingParametersBean viewingParametersBean=
                     new ViewingParametersBean();
             viewingParametersBean.setCenter(
                     HorizontalCoordinates.ofDeg(180.000000000001, 42));
             viewingParametersBean.setFieldOfViewDeg(70);
+            //horizontalCoordProperty = viewingParametersBean.centerProperty();
+            //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
        //
 
@@ -95,14 +100,13 @@ public class Main extends Application {
 
 
         SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
-        objectUnderMouse = skyCanvas.objectUnderMouseProperty();
 
         Canvas sky = skyCanvas.canvas();
         Pane skyPane = new Pane(sky);
 
         borderPane.setTop(controlBar());
         borderPane.setCenter(skyPane);
-        borderPane.setBottom(informationBar());
+        borderPane.setBottom(informationBar(skyCanvas));
 
         sky.widthProperty().bind(skyPane.widthProperty());
         sky.heightProperty().bind(skyPane.heightProperty());
@@ -200,7 +204,7 @@ public class Main extends Application {
         return timeManagerbox;
     }
 
-    private BorderPane informationBar(){
+    private BorderPane informationBar(SkyCanvasManager skyCanvas){
         BorderPane informationPane = new BorderPane();
         informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
 
@@ -208,7 +212,14 @@ public class Main extends Application {
         Text centerText = new Text();
         Text rightText = new Text("Azimut : <az>°, hauteur : <alt>°");
 
-        objectUnderMouse.addListener((p, o, n) -> {if (n != null) centerText.setText(n.info());});
+        skyCanvas.objectUnderMouseProperty().addListener((p, o, n) -> {
+            if (n != null){
+                centerText.setText(n.info());
+            }else{
+                centerText.setText("NULL");
+            }
+        }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
+       // horizontalCoordProperty.addListener((p, o, n) -> {if (n != null) rightText.setText(String.format("Azimut : %s°, hauteur : %s°",((HorizontalCoordinates)horizontalCoordProperty.get()).az(),((HorizontalCoordinates)horizontalCoordProperty.get()).alt()))}); //TODO CHECK THAT
 
         informationPane.setLeft(leftText);
         informationPane.setCenter(centerText);
@@ -220,14 +231,14 @@ public class Main extends Application {
 
     NumberStringConverter stringConverter =
             new NumberStringConverter("#0.00");
-
+ //TODO create method
     UnaryOperator<TextFormatter.Change> lonFilter = (change -> {
         try {
             String newText =
                     change.getControlNewText();
             double newLonDeg =
                     stringConverter.fromString(newText).doubleValue();
-            return GeographicCoordinates.isValidLonDeg(newLonDeg)
+            return GeographicCoordinates.isValidLonDeg(newLonDeg) //TODO is valid lat deg ?
                     ? change
                     : null;
         } catch (Exception e) {
