@@ -196,14 +196,18 @@ public final class SkyCanvasManager {
             //TODO check for default switch
             //TODO sun and moon (maybe planets) move when changing center of projection -> modifier sunmodel pour voir d ou vient  l erreur
             //TODO use map
-            double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
-            double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
-            if (5 <= newAltDeg && newAltDeg <= 90
-            && 0 <= newAzDeg && newAzDeg < 360){
-                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
-                viewingParametersBean.setCenter(newCoordinates);
+            if (centerCoordinateChanger.get(e.getCode())!=null){
+                double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
+                double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
+                if (5 <= newAltDeg && newAltDeg <= 90
+                        && 0 <= newAzDeg && newAzDeg < 360){
+                    HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
+                    viewingParametersBean.setCenter(newCoordinates);
+                }
+                e.consume();
+
             }
-            e.consume();
+
         });
 
         //drawing listeners
