@@ -283,7 +283,6 @@ public final class SkyCanvasManager {
         painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
-        //TODO horizon doesnt seems to be cruked (tordu)
         painter.drawHorizon(projection.get(), planeToCanvas.get());
     }
 
