@@ -1,19 +1,13 @@
 package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.AsterismLoader;
-import ch.epfl.rigel.astronomy.CelestialObject;
 import ch.epfl.rigel.astronomy.HygDatabaseLoader;
 import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -29,9 +23,7 @@ import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -148,9 +140,9 @@ public class Main extends Application {
         Label latiLabel = new Label("Latitude (°) :");
 
         TextField inpLongi = new TextField();
-        inpLongi.setTextFormatter(formater("lon"));
+        inpLongi.setTextFormatter(formatter("lon"));
         TextField inpLati = new TextField();
-        inpLati.setTextFormatter(formater("lat"));
+        inpLati.setTextFormatter(formatter("lat"));
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
@@ -236,7 +228,7 @@ public class Main extends Application {
 
  //TODO create method
 
-    private TextFormatter<Number> formater(String type){
+    private TextFormatter<Number> formatter(String type){
         NumberStringConverter stringConverter =
                 new NumberStringConverter("#0.00");
 
