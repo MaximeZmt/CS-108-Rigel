@@ -42,6 +42,7 @@ import java.util.function.UnaryOperator;
  * @author Maxime Zammit (310251)
  */
 public class Main extends Application {
+    private StringBinding sb;
 
 
     //private ObjectProperty<> horizontalCoordProperty; //TODO --
@@ -219,6 +220,9 @@ public class Main extends Application {
                 centerText.setText("NULL");
             }
         }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
+
+        sb = Bindings.createStringBinding(()->String.format("Azimut : %s°, hauteur : %s°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
+        sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
        // horizontalCoordProperty.addListener((p, o, n) -> {if (n != null) rightText.setText(String.format("Azimut : %s°, hauteur : %s°",((HorizontalCoordinates)horizontalCoordProperty.get()).az(),((HorizontalCoordinates)horizontalCoordProperty.get()).alt()))}); //TODO CHECK THAT
 
         informationPane.setLeft(leftText);
