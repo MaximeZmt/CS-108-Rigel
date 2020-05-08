@@ -147,11 +147,17 @@ public class Main extends Application {
 
         TextField inpLongi = new TextField();
         inpLongi.setTextFormatter(formatter("lon"));
-        
-        observerLonDegProperty.set(Double.parseDouble(inpLongi.getCharacters().toString()));
+
+
+        inpLongi.setOnAction(e->{
+            observerLonDegProperty.set(Double.parseDouble(inpLongi.getCharacters().toString()));
+        });
+
         TextField inpLati = new TextField();
         inpLati.setTextFormatter(formatter("lat"));
-        observerLatDegProperty.set(Double.parseDouble(inpLati.getCharacters().toString()));
+        inpLati.setOnAction(e->{
+            observerLatDegProperty.set(Double.parseDouble(inpLati.getCharacters().toString()));
+        });
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
