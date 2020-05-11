@@ -249,7 +249,16 @@ public class Main extends Application {
             System.out.println(p.getValue());
         });
 
-        playPauseButton.setOnAction(e->{timeAnimator.start();});
+        playPauseButton.setOnAction(e->{
+            if(timeAnimator.isRunning()){
+                timeAnimator.stop();
+                playPauseButton.setText("\uf04b");
+
+            }else{
+                timeAnimator.start();
+                playPauseButton.setText("\uf04c");
+            }
+            });
 
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 
