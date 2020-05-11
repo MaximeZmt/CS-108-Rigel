@@ -275,6 +275,7 @@ public final class SkyCanvasManager {
         return observerLonDeg;
     }
 
+
     public LocalDate getDate() {
         return date.get();
     }

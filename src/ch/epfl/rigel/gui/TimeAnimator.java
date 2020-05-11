@@ -26,7 +26,7 @@ public final class TimeAnimator extends AnimationTimer {
     public void handle(long l) { //TODO boolean is better
         if (firstTime){
             firstTime = false;
-            timeStamp = l;
+            timeStamp = l; 
         }else{
             long deltaT = l- timeStamp;
             timeStamp = l;
