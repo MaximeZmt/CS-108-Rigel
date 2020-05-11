@@ -228,7 +228,7 @@ public final class SkyCanvasManager {
     }
 
     //TODO is it useful ?
-    public Number getMouseAzDeg() {
+    public double getMouseAzDeg() {
         return mouseAzDeg.get();
     }
 
@@ -236,7 +236,7 @@ public final class SkyCanvasManager {
         return mouseAzDeg;
     }
 
-    public Number getMouseAltDeg() {
+    public double getMouseAltDeg() {
         return mouseAltDeg.get();
     }
 

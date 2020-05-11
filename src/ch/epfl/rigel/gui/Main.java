@@ -130,7 +130,7 @@ public class Main extends Application {
         sepVert2.setOrientation(Orientation.VERTICAL);
 
         HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
-        HBox child2 = observInstant();
+        HBox child2 = observInstant(skyCanvas);
         HBox child3 = timeManager();
 
         mainControlBar.getChildren().addAll(child1,sepVert,child2,sepVert2,child3);
@@ -152,6 +152,7 @@ public class Main extends Application {
         inpLongi.setOnAction(e->{
             observerLonDegProperty.set(Double.parseDouble(inpLongi.getCharacters().toString()));
         });
+        //TODO USE WITH BINDBIDIRECTIONAL
 
         TextField inpLati = new TextField();
         inpLati.setTextFormatter(formatter("lat"));
@@ -167,7 +168,7 @@ public class Main extends Application {
         return  observerPosBox;
     }
 
-    private HBox observInstant(){
+    private HBox observInstant(SkyCanvasManager skyCanvas){
         HBox observInstantBox = new HBox();
         observInstantBox.setStyle("-fx-spacing: inherit; -fx-alignment: baseline-left;");
 
@@ -189,11 +190,14 @@ public class Main extends Application {
         ComboBox zoneSelector = new ComboBox();
         //zoneSelector.setItems();
         zoneSelector.setStyle("-fx-pref-width: 180;");
-
         observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
 
+
+
+
+
         return observInstantBox;
-    } //TODO consume keyboard event
+    }
 
     private HBox timeManager() throws IOException {
 
@@ -237,6 +241,9 @@ public class Main extends Application {
         }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
 
         sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
+
+
+
         sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
         skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)->{leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));});
 
@@ -253,7 +260,7 @@ public class Main extends Application {
 
     private TextFormatter<Number> formatter(String type){
         NumberStringConverter stringConverter =
-                new NumberStringConverter("#0.00");
+                new NumberStringConverter("#0.00"); //TODO CHANGE FOR ,. see on internet genre LOCALE
 
         UnaryOperator<TextFormatter.Change> lonLatFilter = (change -> {
             try {
