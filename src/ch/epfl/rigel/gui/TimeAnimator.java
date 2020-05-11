@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 public final class TimeAnimator extends AnimationTimer {
     private final DateTimeBean dateTimeBean;
     private final BooleanProperty running = new SimpleBooleanProperty(false);
-    private final ObjectProperty<TimeAccelerator> timeAccelerator = new SimpleObjectProperty<>(null);
+    private final ObjectProperty<TimeAccelerator> accelerator = new SimpleObjectProperty<>(null);
     private long timeStamp = 0;
     private boolean firstTime = true;
 
@@ -30,7 +30,7 @@ public final class TimeAnimator extends AnimationTimer {
         }else{
             long deltaT = l- timeStamp;
             timeStamp = l;
-            ZonedDateTime zdt = getTimeAccelerator().adjust(dateTimeBean.getZonedDateTime(),deltaT);
+            ZonedDateTime zdt = accelerator.get().adjust(dateTimeBean.getZonedDateTime(),deltaT);
             dateTimeBean.setZonedDateTime(zdt);
         }
     }
@@ -56,16 +56,16 @@ public final class TimeAnimator extends AnimationTimer {
         return running.get();
     }
 
-    public ObjectProperty<TimeAccelerator> timeAcceleratorProperty(){
-        return timeAccelerator;
+    public ObjectProperty<TimeAccelerator> acceleratorProperty(){
+        return accelerator;
     }
 
-    public TimeAccelerator getTimeAccelerator(){
-        return timeAccelerator.get();
+    public TimeAccelerator getAccelerator(){
+        return accelerator.get();
     }
 
-    public void setTimeAccelerator(TimeAccelerator timeAccelerator){
-        this.timeAccelerator.set(timeAccelerator);
+    public void setAccelerator(TimeAccelerator timeAccelerator){
+        this.accelerator.set(timeAccelerator);
     }
 
 

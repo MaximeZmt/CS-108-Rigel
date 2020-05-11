@@ -6,6 +6,7 @@ import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
@@ -96,6 +97,11 @@ public class Main extends Application {
             //horizontalCoordProperty = viewingParametersBean.centerProperty();
             //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
+            //TODO check if correrct
+            TimeAccelerator accelerator = NamedTimeAccelerator.TIMES_1.getAccelerator();
+            TimeAnimator timeAnimator = new TimeAnimator(dateTimeBean);
+            timeAnimator.setAccelerator(accelerator);
+
        //
 
 
@@ -108,7 +114,7 @@ public class Main extends Application {
         Canvas sky = skyCanvas.canvas();
         Pane skyPane = new Pane(sky);
 
-        borderPane.setTop(controlBar(skyCanvas));
+        borderPane.setTop(controlBar(skyCanvas, timeAnimator));
         borderPane.setCenter(skyPane);
         borderPane.setBottom(informationBar(skyCanvas));
 
@@ -125,7 +131,7 @@ public class Main extends Application {
         }
     }
 
-    private HBox controlBar(SkyCanvasManager skyCanvas) throws  IOException{
+    private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws  IOException{
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
@@ -136,7 +142,7 @@ public class Main extends Application {
 
         HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
         HBox child2 = observInstant(skyCanvas);
-        HBox child3 = timeManager();
+        HBox child3 = timeManager(timeAnimator);
 
         mainControlBar.getChildren().addAll(child1,sepVert,child2,sepVert2,child3);
 
@@ -216,7 +222,7 @@ public class Main extends Application {
         return observInstantBox;
     }
 
-    private HBox timeManager() throws IOException {
+    private HBox timeManager(TimeAnimator timeAnimator) throws IOException {
 
         InputStream fontStream = getClass()
                 .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf");
@@ -235,6 +241,10 @@ public class Main extends Application {
 
         ChoiceBox acceleratorSelector = new ChoiceBox();
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
+
+        acceleratorSelector.valueProperty().bind(Bindings.select(timeAnimator.acceleratorProperty(),"name"));
+        //Bindings.bindBidirectional(acceleratorSelector.valueProperty(), Bindings.select(timeAnimator.timeAcceleratorProperty(),"name"));
+
 
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 

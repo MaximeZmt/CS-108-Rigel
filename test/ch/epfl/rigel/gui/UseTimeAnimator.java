@@ -26,7 +26,7 @@ public final class UseTimeAnimator extends Application {
         dateTimeB.setZonedDateTime(simulatedStart);
 
         TimeAnimator timeAnimator = new TimeAnimator(dateTimeB);
-        timeAnimator.setTimeAccelerator(accelerator);
+        timeAnimator.setAccelerator(accelerator);
 
         dateTimeB.dateProperty().addListener((p, o, n) -> {
             System.out.printf(" Nouvelle date : %s%n", n);
