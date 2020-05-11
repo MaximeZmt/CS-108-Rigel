@@ -47,6 +47,9 @@ import java.util.function.UnaryOperator;
  */
 public class Main extends Application {
     private StringBinding sb;
+    private DatePicker datePicker;
+    private TextField timeSelector;
+    private ComboBox zoneSelector;
 
     private TimeAnimator timeAnimator; //TODO Checked if used
 
@@ -191,18 +194,18 @@ public class Main extends Application {
         TextFormatter<LocalTime> timeFormatter =
                 new TextFormatter<>(stringConverter);
 
-        DatePicker datePicker = new DatePicker();
+        datePicker = new DatePicker();
         datePicker.setStyle("-fx-pref-width: 120;");
 
         Bindings.bindBidirectional(datePicker.valueProperty(),skyCanvas.dateProperty());
 
-        TextField timeSelector = new TextField();
+        timeSelector = new TextField();
         timeSelector.setTextFormatter(timeFormatter); //TODO why doesnt work
 
         Bindings.bindBidirectional(timeFormatter.valueProperty(),skyCanvas.timeProperty());
 
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
-        ComboBox zoneSelector = new ComboBox();
+        zoneSelector = new ComboBox();
 
         List<ZoneId> zoneIdList = new ArrayList<>();
         for(String s :ZoneId.getAvailableZoneIds()){
@@ -254,11 +257,31 @@ public class Main extends Application {
                 timeAnimator.stop();
                 playPauseButton.setText("\uf04b");
 
+                //unblock
+                resetButton.setDisable(false);
+                acceleratorSelector.setDisable(false);
+                datePicker.setDisable(false);
+                timeSelector.setDisable(false);
+                zoneSelector.setDisable(false);
+
             }else{
                 timeAnimator.start();
                 playPauseButton.setText("\uf04c");
+
+                //block
+                resetButton.setDisable(true);
+                acceleratorSelector.setDisable(true);
+                datePicker.setDisable(true);
+                timeSelector.setDisable(true);
+                zoneSelector.setDisable(true);
+
+
             }
             });
+
+        resetButton.setOnAction(e->{
+            timeAnimator.
+        });
 
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 
