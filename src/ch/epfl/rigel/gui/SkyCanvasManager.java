@@ -275,8 +275,31 @@ public final class SkyCanvasManager {
         return observerLonDeg;
     }
 
+    public LocalDate getDate() {
+        return date.get();
+    }
+
+    public ObjectProperty<LocalDate> dateProperty() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time.get();
+    }
+
+    public ObjectProperty<LocalTime> timeProperty() {
+        return time;
+    }
+
+    public ZoneId getZone() {
+        return zone.get();
+    }
+
+    public ObjectProperty<ZoneId> zoneProperty() {
+        return zone;
+    }
+
     private void drawSky(SkyCanvasPainter painter){
-        System.out.println("OUI");
         painter.clear();
         painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());

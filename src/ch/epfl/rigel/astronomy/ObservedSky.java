@@ -42,10 +42,13 @@ public class ObservedSky {
          //TODO ask if ETEC is a good name or not
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
+        System.out.println("DEBUG:"+zdt.toString());
 
         //sun
         sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt),etec);
         sunCartCoordinates = stereoProj.apply(ethc.apply(sunInstance.equatorialPos()));
+        System.out.println("SUNCOORD :"+sunInstance.equatorialPos().toString()+";"+sunInstance.eclipticPos().toString());
+        System.out.println("SUNCOORD :"+sunCartCoordinates.x()+";"+sunCartCoordinates.y());
 
         //moon
         moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt),etec);
@@ -140,10 +143,10 @@ public class ObservedSky {
         Optional<CelestialObject> co = Optional.empty(); //TODO may use Optional.Empty or Optional.of
         //sun
         tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
-        System.out.println(tempoDist);
+        //System.out.println(tempoDist);
         if (tempoDist<closestDist){
             co = Optional.of(sunInstance);
-            System.out.println("SUUUUUUNNNNNNNNNNNNNNNNNNNNNN!");
+            //System.out.println("SUUUUUUNNNNNNNNNNNNNNNNNNNNNN!");
             closestDist = tempoDist;
         }
 
@@ -151,7 +154,7 @@ public class ObservedSky {
         tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
         if(tempoDist<closestDist){
             co = Optional.of(moonInstance);
-            System.out.println("MOOOOONNNNNNNNNNNNNNNNNNNN");
+            //System.out.println("MOOOOONNNNNNNNNNNNNNNNNNNN");
             closestDist = tempoDist;
         }
 
@@ -161,7 +164,7 @@ public class ObservedSky {
             int index = planetsList.indexOf(p);
             tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
-                System.out.println("PLANET : "+p);
+                //System.out.println("PLANET : "+p);
                 closestDist = tempoDist;
                 co = Optional.of(p);
             }
@@ -172,12 +175,12 @@ public class ObservedSky {
             index = starList.indexOf(s);
             tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
-                System.out.println("STAR :"+s);
+                //System.out.println("STAR :"+s);
                 closestDist = tempoDist;
                 co = Optional.of(s);
             }
         }
-        System.out.println(closestDist);
+        //System.out.println(closestDist);
         return co;
     }
 

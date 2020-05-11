@@ -29,8 +29,10 @@ import javafx.util.converter.NumberStringConverter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -147,16 +149,17 @@ public class Main extends Application {
         Label latiLabel = new Label("Latitude (°) :");
 
         TextField inpLongi = new TextField();
-        inpLongi.setTextFormatter(formatter("lon"));
-        Bindings.bindBidirectional(inpLongi.getTextFormatter().valueProperty(),observerLonDegProperty);
-        inpLongi.getTextFormatter().valueProperty().bindBidirectional(observerLonDegProperty);
-        observerLonDegProperty.bindBidirectional(inpLongi.getTextFormatter().valueProperty());
+        TextFormatter<Number> formatterLon = formatter("lon");
+        inpLongi.setTextFormatter(formatterLon);
+        Bindings.bindBidirectional(formatterLon.valueProperty(),observerLonDegProperty);
+
 
         //TODO USE WITH BINDBIDIRECTIONAL
 
         TextField inpLati = new TextField();
-        inpLati.setTextFormatter(formatter("lat"));
-        inpLati.getTextFormatter().valueProperty().bindBidirectional(observerLatDegProperty);
+        TextFormatter<Number> formatterLat = formatter("lat");
+        inpLati.setTextFormatter(formatterLat);
+        Bindings.bindBidirectional(formatterLat.valueProperty(),observerLatDegProperty);
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
@@ -182,10 +185,17 @@ public class Main extends Application {
 
         DatePicker datePicker = new DatePicker();
         datePicker.setStyle("-fx-pref-width: 120;");
+
+        Bindings.bindBidirectional(datePicker.valueProperty(),skyCanvas.dateProperty());
+
         TextField timeSelector = new TextField();
         timeSelector.setTextFormatter(timeFormatter); //TODO why doesnt work
+
+        Bindings.bindBidirectional(timeFormatter.valueProperty(),skyCanvas.timeProperty());
+
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         ComboBox zoneSelector = new ComboBox();
+        //List.of(ZoneId.getAvailableZoneIds()).sort();
         //zoneSelector.setItems();
         zoneSelector.setStyle("-fx-pref-width: 180;");
         observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
