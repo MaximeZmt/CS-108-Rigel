@@ -48,6 +48,8 @@ import java.util.function.UnaryOperator;
 public class Main extends Application {
     private StringBinding sb;
 
+    private TimeAnimator timeAnimator; //TODO Checked if used
+
 
     //private ObjectProperty<> horizontalCoordProperty; //TODO --
     //private DoubleProperty fovProperty;
@@ -98,9 +100,7 @@ public class Main extends Application {
             //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
             //TODO check if correrct
-            TimeAccelerator accelerator = NamedTimeAccelerator.TIMES_1.getAccelerator();
-            TimeAnimator timeAnimator = new TimeAnimator(dateTimeBean);
-            timeAnimator.setAccelerator(accelerator);
+            timeAnimator = new TimeAnimator(dateTimeBean);
 
        //
 
@@ -234,6 +234,7 @@ public class Main extends Application {
         playPauseButton.setFont(fontAwesome);
 
 
+
         fontStream.close();
 
         HBox timeManagerbox = new HBox();
@@ -242,9 +243,13 @@ public class Main extends Application {
         ChoiceBox acceleratorSelector = new ChoiceBox();
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
 
-        acceleratorSelector.valueProperty().bind(Bindings.select(timeAnimator.acceleratorProperty(),"name"));
-        //Bindings.bindBidirectional(acceleratorSelector.valueProperty(), Bindings.select(timeAnimator.timeAcceleratorProperty(),"name"));
+        timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
+        acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_1);
+        timeAnimator.acceleratorProperty().addListener((p,o,n)->{
+            System.out.println(p.getValue());
+        });
 
+        playPauseButton.setOnAction(e->{timeAnimator.start();});
 
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
 
