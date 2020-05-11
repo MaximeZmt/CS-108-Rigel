@@ -139,7 +139,6 @@ public final class SkyCanvasManager {
 
 
         //mouseHorizontalPosition
-        //TODO check bc looks shitty
         mouseHorizontalPosition = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
@@ -149,7 +148,8 @@ public final class SkyCanvasManager {
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 return projection.get().inverseApply(coordinates);
             } catch (NonInvertibleTransformException e){
-                return null;
+                //TODO works like this but check if there is better
+                return HorizontalCoordinates.ofDeg(0,0);
             }
         }, mousePosition, planeToCanvas, projection);
         mouseAzDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
@@ -157,7 +157,6 @@ public final class SkyCanvasManager {
 
         //objectUnderMouse
         //TODO check bc looks shitty
-        //TODO FIXME objects under mouse are not the correct ones
         objectUnderMouse = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
