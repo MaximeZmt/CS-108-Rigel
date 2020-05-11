@@ -90,7 +90,7 @@ public class Main extends Application {
                     new ViewingParametersBean();
             viewingParametersBean.setCenter(
                     HorizontalCoordinates.ofDeg(180.000000000001, 42));
-            viewingParametersBean.setFieldOfViewDeg(90);
+            viewingParametersBean.setFieldOfViewDeg(100);
             //horizontalCoordProperty = viewingParametersBean.centerProperty();
             //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
