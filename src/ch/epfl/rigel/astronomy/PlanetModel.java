@@ -91,12 +91,15 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         //data needed to compute the position of all planets
         double meanAnomaly = ANGULAR_SPEED*(daysSinceJ2010/tropicalYear)+lonJ2010-lonPerigee;
         double realAnomaly = meanAnomaly+2*orbitalEccentricity*Math.sin(meanAnomaly);
+
         double r = (semiMajorAxis*(1-orbitalEccentricity*orbitalEccentricity))/
                 (1+orbitalEccentricity*Math.cos(realAnomaly));
         double l = realAnomaly+lonPerigee;
-        double psi = Math.asin(Math.sin(l-lonAscendingNode)*sinOrbitalInclination);
+        double sinLMinusLAscendingNode = Math.sin(l-lonAscendingNode);
+
+        double psi = Math.asin(sinLMinusLAscendingNode*sinOrbitalInclination);
         double rPrime = r*Math.cos(psi);
-        double lPrime = Math.atan2(Math.sin(l-lonAscendingNode)*cosOrbitalInclination,
+        double lPrime = Math.atan2(sinLMinusLAscendingNode*cosOrbitalInclination,
                 Math.cos(l-lonAscendingNode))+lonAscendingNode;
 
         //data for the position of the earth
@@ -135,12 +138,12 @@ public enum PlanetModel implements CelestialObjectModel<Planet> {
         //angular size of the given planet
         double rho = Math.sqrt(rEarth*rEarth+r*r-2*rEarth*r*Math.cos(l-lEarth)*Math.cos(psi));
         double angularSizeArcSec = angularSize/rho;
-        double angularSize = Angle.ofArcsec(angularSizeArcSec);
+        double angularSizeOfPlanet= Angle.ofArcsec(angularSizeArcSec);
 
         //magnitude of the given planet (magn)
         double phase = (1+Math.cos(lambda-l))/2;
         double magn = magnitude+5*Math.log10((r*rho)/Math.sqrt(phase));
 
-        return new Planet(nameFr, equatorialCoordinates, (float)angularSize, (float)magn);
+        return new Planet(nameFr, equatorialCoordinates, (float)angularSizeOfPlanet, (float)magn);
     }
 }
