@@ -300,6 +300,14 @@ public final class SkyCanvasManager {
         return zone;
     }
 
+    public void setDate(LocalDate date) {
+        this.date.set(date);
+    }
+
+    public void setTime(LocalTime time) {
+        this.time.set(time);
+    }
+
     private void drawSky(SkyCanvasPainter painter){
         painter.clear();
         painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());

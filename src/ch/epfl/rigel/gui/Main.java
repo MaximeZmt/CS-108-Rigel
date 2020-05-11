@@ -29,6 +29,7 @@ import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -145,7 +146,7 @@ public class Main extends Application {
 
         HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
         HBox child2 = observInstant(skyCanvas);
-        HBox child3 = timeManager(timeAnimator);
+        HBox child3 = timeManager(skyCanvas, timeAnimator);
 
         mainControlBar.getChildren().addAll(child1,sepVert,child2,sepVert2,child3);
 
@@ -225,7 +226,7 @@ public class Main extends Application {
         return observInstantBox;
     }
 
-    private HBox timeManager(TimeAnimator timeAnimator) throws IOException {
+    private HBox timeManager(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
 
         InputStream fontStream = getClass()
                 .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf");
@@ -277,10 +278,11 @@ public class Main extends Application {
 
 
             }
-            });
+        });
 
         resetButton.setOnAction(e->{
-            timeAnimator.
+            skyCanvas.setTime(LocalTime.now());
+            skyCanvas.setDate(LocalDate.now());
         });
 
         timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
