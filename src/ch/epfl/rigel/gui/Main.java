@@ -11,6 +11,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -87,7 +88,7 @@ public class Main extends Application {
                     new ViewingParametersBean();
             viewingParametersBean.setCenter(
                     HorizontalCoordinates.ofDeg(180.000000000001, 42));
-            viewingParametersBean.setFieldOfViewDeg(70);
+            viewingParametersBean.setFieldOfViewDeg(90);
             //horizontalCoordProperty = viewingParametersBean.centerProperty();
             //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
@@ -147,18 +148,15 @@ public class Main extends Application {
 
         TextField inpLongi = new TextField();
         inpLongi.setTextFormatter(formatter("lon"));
+        Bindings.bindBidirectional(inpLongi.getTextFormatter().valueProperty(),observerLonDegProperty);
+        inpLongi.getTextFormatter().valueProperty().bindBidirectional(observerLonDegProperty);
+        observerLonDegProperty.bindBidirectional(inpLongi.getTextFormatter().valueProperty());
 
-
-        inpLongi.setOnAction(e->{
-            observerLonDegProperty.set(Double.parseDouble(inpLongi.getCharacters().toString()));
-        });
         //TODO USE WITH BINDBIDIRECTIONAL
 
         TextField inpLati = new TextField();
         inpLati.setTextFormatter(formatter("lat"));
-        inpLati.setOnAction(e->{
-            observerLatDegProperty.set(Double.parseDouble(inpLati.getCharacters().toString()));
-        });
+        inpLati.getTextFormatter().valueProperty().bindBidirectional(observerLatDegProperty);
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
