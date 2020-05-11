@@ -32,7 +32,9 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -195,11 +197,18 @@ public class Main extends Application {
 
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         ComboBox zoneSelector = new ComboBox();
-        //List.of(ZoneId.getAvailableZoneIds()).sort();
-        //zoneSelector.setItems();
+
+        List<ZoneId> zoneIdList = new ArrayList<>();
+        for(String s :ZoneId.getAvailableZoneIds()){
+            zoneIdList.add(ZoneId.of(s));
+        }
+
+        zoneSelector.setItems(FXCollections.observableList(zoneIdList).sorted());
+
+        Bindings.bindBidirectional(zoneSelector.valueProperty(),skyCanvas.zoneProperty());
+
         zoneSelector.setStyle("-fx-pref-width: 180;");
         observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
-
 
 
 
