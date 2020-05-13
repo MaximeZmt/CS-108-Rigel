@@ -85,10 +85,8 @@ public class Main extends Application {
                     .loadFrom(hs2, AsterismLoader.INSTANCE)
                     .build();
 
-            ZonedDateTime when =
-                    ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
             DateTimeBean dateTimeBean = new DateTimeBean();
-            dateTimeBean.setZonedDateTime(when);
+            dateTimeBean.setZonedDateTime(ZonedDateTime.now());
 
             ObserverLocationBean observerLocationBean =
                     new ObserverLocationBean();
