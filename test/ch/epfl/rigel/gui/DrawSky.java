@@ -44,7 +44,7 @@ public final class DrawSky extends Application {
             GeographicCoordinates where =
                     GeographicCoordinates.ofDeg(6.57, 46.52);
             HorizontalCoordinates projCenter =
-                    HorizontalCoordinates.ofDeg(186, 35);
+                    HorizontalCoordinates.ofDeg(0,90);
                     //HorizontalCoordinates.ofDeg(180, 45); //WE LOOK AT 180(=South) and 45 degrée alt
             StereographicProjection projection;
             projection = new StereographicProjection(projCenter);
@@ -52,10 +52,11 @@ public final class DrawSky extends Application {
                     new ObservedSky(when, where, projection, catalogue);
 
             Canvas canvas =
-                    //new Canvas(800, 600);
-                    new Canvas(1000, 800);
+                    new Canvas(800, 600);
+                    //new Canvas(1000, 800);
             Transform planeToCanvas =
-                    Transform.affine(1300, 0, 0, -1300, 400, 300);
+                    //Transform.affine(1300, 0, 0, -1300, 400, 300);
+                    Transform.affine(260, 0, 0, -260, 400, 300);
             SkyCanvasPainter painter =
                     new SkyCanvasPainter(canvas);
 

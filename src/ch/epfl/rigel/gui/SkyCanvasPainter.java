@@ -151,8 +151,9 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double diameter = objectDiameter(planetMagn,multiplyFactor);
             ctx.setFill(Color.LIGHTGRAY);
             double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
-            double x = planetCoord[(2*counter)];
-            double y = planetCoord[(2*counter)+1];
+            double x = planetCoord[(2*counter)] - 0.5*diam2;
+            double y = planetCoord[(2*counter)+1] - 0.5*diam2;
+            ctx.fillOval(x, y, diam2, diam2);
             counter++;
             //System.out.println("Planet: "+p.name()+" created");
         }
@@ -168,7 +169,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
 
         Sun sun = sky.sun();
         CartesianCoordinates sunPos = sky.sunPosition();
-        Point2D planeCoord = planeToCanvas.deltaTransform(sunPos.x(),sunPos.y());
+        Point2D planeCoord = planeToCanvas.transform(sunPos.x(),sunPos.y());
         double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5));
 
         double sunDiamTransformed = planeToCanvas.deltaTransform(sunDiam,0).getX();
@@ -206,7 +207,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         CartesianCoordinates moonPos = sky.moonPosition();
         double moonDiam = projection.applyToAngle(moon.angularSize());
         double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
-        Point2D coordTransformed = planeToCanvas.deltaTransform(moonPos.x(),moonPos.y());
+        Point2D coordTransformed = planeToCanvas.transform(moonPos.x(),moonPos.y());
         double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
         double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
         //System.out.println("x:"+x);
@@ -222,12 +223,14 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
      */
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
 
+        System.out.println("pltoc(h): "+planeToCanvas.toString());
+
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
         //System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
         Point2D centerTransformed = planeToCanvas.transform(center.x(), center.y());
-        double diam = projection.circleRadiusForParallel(parallel);
-        double diamTransformed = 2*planeToCanvas.deltaTransform(diam,0).getX();
+        double radius = projection.circleRadiusForParallel(parallel);
+        double diamTransformed = 2*planeToCanvas.deltaTransform(radius,0).getX();
         double x = centerTransformed.getX()-diamTransformed*0.5;
         double y =  centerTransformed.getY()-diamTransformed*0.5;
         ctx.setStroke(Color.RED);

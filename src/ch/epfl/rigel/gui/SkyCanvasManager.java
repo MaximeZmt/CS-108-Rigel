@@ -120,6 +120,7 @@ public final class SkyCanvasManager {
                 dilatationFactor, canvas.widthProperty(), canvas.heightProperty()
         );
 
+
         //observedSky
         date = dateTimeBean.dateProperty();
         time = dateTimeBean.timeProperty();
@@ -144,7 +145,8 @@ public final class SkyCanvasManager {
             double y = mousePosition.get().y();
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
-                Point2D canvasToPlane = planeToCanvas.get().inverseDeltaTransform(x,y);
+                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
+                System.out.println("pltoc(m): "+planeToCanvas.toString());
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 return projection.get().inverseApply(coordinates);
             } catch (NonInvertibleTransformException e){
@@ -164,7 +166,7 @@ public final class SkyCanvasManager {
             try {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y); //TODO it was inverseTransform and not inversedeltaTransform cause it is a point
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY()); //TODO now it's working
-                double dist = planeToCanvas.get().deltaTransform(10,0).getX(); //TODO check that
+                double dist = planeToCanvas.get().inverseDeltaTransform(10,0).getX(); //TODO check that
                 return observedSky.get().objectClosestTo(coordinates ,dist).get(); //TODO put '10' in a static variable
             } catch (NonInvertibleTransformException e){
                 return null;
