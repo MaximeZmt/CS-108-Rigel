@@ -246,11 +246,8 @@ public class Main extends Application {
 
         ChoiceBox acceleratorSelector = new ChoiceBox();
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
-
-        timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
         acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_1);
-        timeAnimator.acceleratorProperty().addListener((p,o,n)->{
-        });
+        timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
 
         playPauseButton.setOnAction(e->{
             if(timeAnimator.isRunning()){
