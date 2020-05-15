@@ -42,13 +42,10 @@ public class ObservedSky {
          //TODO ask if ETEC is a good name or not
         EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
-        System.out.println("DEBUG:"+zdt.toString());
 
         //sun
         sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt),etec);
         sunCartCoordinates = stereoProj.apply(ethc.apply(sunInstance.equatorialPos()));
-        System.out.println("SUNCOORD :"+sunInstance.equatorialPos().toString()+";"+sunInstance.eclipticPos().toString());
-        System.out.println("SUNCOORD :"+sunCartCoordinates.x()+";"+sunCartCoordinates.y());
 
         //moon
         moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt),etec);

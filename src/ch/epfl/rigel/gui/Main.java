@@ -250,7 +250,6 @@ public class Main extends Application {
         timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
         acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_1);
         timeAnimator.acceleratorProperty().addListener((p,o,n)->{
-            System.out.println(p.getValue());
         });
 
         playPauseButton.setOnAction(e->{
@@ -302,7 +301,7 @@ public class Main extends Application {
             if (n != null){
                 centerText.setText(n.info());
             }else{
-                centerText.setText("NULL");
+                centerText.setText("");
             }
         }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
 
@@ -335,12 +334,10 @@ public class Main extends Application {
                 double newLonLatDeg =
                         stringConverter.fromString(newText).doubleValue();
                 if(type.equals("lon")){
-                    System.out.println("0");
                     return GeographicCoordinates.isValidLonDeg(newLonLatDeg)
                             ? change
                             : null;
                 }else if(type.equals("lat")){
-                    System.out.println("1");
                     return GeographicCoordinates.isValidLatDeg(newLonLatDeg)
                             ? change
                             : null;

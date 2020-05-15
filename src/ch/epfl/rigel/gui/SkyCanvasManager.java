@@ -1,6 +1,7 @@
 package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.CelestialObject;
+import ch.epfl.rigel.astronomy.CelestialObjectModel;
 import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.CartesianCoordinates;
@@ -146,7 +147,6 @@ public final class SkyCanvasManager {
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
-                System.out.println("pltoc(m): "+planeToCanvas.toString());
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 return projection.get().inverseApply(coordinates);
             } catch (NonInvertibleTransformException e){
@@ -167,7 +167,7 @@ public final class SkyCanvasManager {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y); //TODO it was inverseTransform and not inversedeltaTransform cause it is a point
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY()); //TODO now it's working
                 double dist = planeToCanvas.get().inverseDeltaTransform(10,0).getX(); //TODO check that
-                return observedSky.get().objectClosestTo(coordinates ,dist).get(); //TODO put '10' in a static variable
+                return observedSky.get().objectClosestTo(coordinates ,dist).orElse(null); //TODO put '10' in a static variable
             } catch (NonInvertibleTransformException e){
                 return null;
             }

@@ -223,7 +223,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
      */
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
 
-        System.out.println("pltoc(h): "+planeToCanvas.toString());
 
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
         //System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
