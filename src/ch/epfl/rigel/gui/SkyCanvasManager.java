@@ -1,7 +1,6 @@
 package ch.epfl.rigel.gui;
 
 import ch.epfl.rigel.astronomy.CelestialObject;
-import ch.epfl.rigel.astronomy.CelestialObjectModel;
 import ch.epfl.rigel.astronomy.ObservedSky;
 import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.CartesianCoordinates;
@@ -14,7 +13,6 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -22,25 +20,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Transform;
 
-import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * [description text]
+ * Represents the manager of the observed sky of the canvas
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
-
-
-
-
     //canvas and mousePosition
     private final Canvas canvas;
     private final ObjectProperty<CartesianCoordinates> mousePosition;
@@ -49,14 +41,10 @@ public final class SkyCanvasManager {
 
     private final Map<KeyCode,int[]> centerCoordinateChanger;
 
-
     //projection
-    //private final ObjectProperty<HorizontalCoordinates> center;
     private final ObjectBinding<StereographicProjection> projection;
 
     //planeToCanvas
-    //private final DoubleProperty canvasWidth;
-    //private final DoubleProperty canvasHeight;
     private final DoubleProperty fieldOfViewDeg;
     private final DoubleBinding dilatationFactor;
     private final ObjectBinding<Transform> planeToCanvas;
@@ -73,10 +61,18 @@ public final class SkyCanvasManager {
     //mouseHorizontalPosition
     private final ObjectBinding<HorizontalCoordinates> mouseHorizontalPosition;
     private final DoubleBinding mouseAzDeg;
-    private final DoubleBinding mouseAltDeg; //TODO check if public as online -> privé mais accesseur
+    private final DoubleBinding mouseAltDeg;
 
-    private final ObjectBinding<CelestialObject> objectUnderMouse; //TODO check if public as online
+    private final ObjectBinding<CelestialObject> objectUnderMouse;
 
+    /**
+     * Constructor
+     *
+     * @param catalogue star catalogue
+     * @param dateTimeBean date time bean
+     * @param observerLocationBean observer location bean
+     * @param viewingParametersBean viewing parameters bean
+     */
     public SkyCanvasManager(StarCatalogue catalogue,
                             DateTimeBean dateTimeBean,
                             ObserverLocationBean observerLocationBean,
@@ -88,16 +84,10 @@ public final class SkyCanvasManager {
                 KeyCode.DOWN, new int[]{0,-5},
                 KeyCode.LEFT, new int[]{-10,0});
 
-        //TODO check for initial value
-        //canvas and painter
         canvas = new Canvas();
-        //canvas.setHeight(500);
-        //canvas.setWidth(500);
         painter = new SkyCanvasPainter(canvas);
         mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0,0));
 
-        //projection
-        //center = viewingParametersBean.centerProperty();
         projection = Bindings.createObjectBinding(()->
                 new StereographicProjection(viewingParametersBean.getCenter()),
                 viewingParametersBean.centerProperty()
@@ -121,7 +111,6 @@ public final class SkyCanvasManager {
                 dilatationFactor, canvas.widthProperty(), canvas.heightProperty()
         );
 
-
         //observedSky
         date = dateTimeBean.dateProperty();
         time = dateTimeBean.timeProperty();
@@ -137,8 +126,6 @@ public final class SkyCanvasManager {
                 ),
                 date, time, zone, observerCoordinates, projection
         );
-
-
 
         //mouseHorizontalPosition
         mouseHorizontalPosition = Bindings.createObjectBinding(()-> {
@@ -158,15 +145,14 @@ public final class SkyCanvasManager {
         mouseAltDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
 
         //objectUnderMouse
-        //TODO check bc looks shitty
         objectUnderMouse = Bindings.createObjectBinding(()-> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
-                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y); //TODO it was inverseTransform and not inversedeltaTransform cause it is a point
-                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY()); //TODO now it's working
-                double dist = planeToCanvas.get().inverseDeltaTransform(10,0).getX(); //TODO check that
+                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
+                CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+                double dist = planeToCanvas.get().inverseDeltaTransform(10,0).getX();
                 return observedSky.get().objectClosestTo(coordinates ,dist).orElse(null); //TODO put '10' in a static variable
             } catch (NonInvertibleTransformException e){
                 return null;
@@ -182,7 +168,6 @@ public final class SkyCanvasManager {
             }
         });
         //it is normal if scroll is inverted
-        //TODO add limit for zoom
         canvas.setOnScroll(e->{
             double newFieldOfViewDeg;
             if (Math.abs(e.getDeltaX()) >= Math.abs(e.getDeltaY())){
@@ -198,9 +183,6 @@ public final class SkyCanvasManager {
         });
         canvas.setOnKeyPressed(e->{
             //TODO put '5' in a static attribute
-            //TODO check for default switch
-            //TODO sun and moon (maybe planets) move when changing center of projection -> modifier sunmodel pour voir d ou vient  l erreur
-            //TODO use map
             if (centerCoordinateChanger.get(e.getCode())!=null){
                 double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
                 double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
@@ -218,94 +200,135 @@ public final class SkyCanvasManager {
         //drawing listeners
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
         planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));
-
     }
 
-    //TODO check if private setters are ok or if we just have to make the set within the code
-
-
+    /**
+     * Getter for the object under mouse property
+     *
+     * @return object under mouse property
+     */
     public ObjectBinding<CelestialObject> objectUnderMouseProperty() {
         return objectUnderMouse;
     }
 
-    //TODO is it useful ?
+    /**
+     * Getter for the azimuth in degrees of the mouse
+     *
+     * @return azimuth
+     */
     public double getMouseAzDeg() {
         return mouseAzDeg.get();
     }
 
+    /**
+     * Getter for the property of the azimuth of the mouse
+     *
+     * @return azimuth of mouse property
+     */
     public DoubleBinding mouseAzDegProperty() {
         return mouseAzDeg;
     }
 
+    /**
+     * Getter for the altitude in degrees of the mouse
+     *
+     * @return altitude
+     */
     public double getMouseAltDeg() {
         return mouseAltDeg.get();
     }
 
+    /**
+     * Getter for the property of the altitude of the mouse
+     *
+     * @return altitude of the mouse
+     */
     public DoubleBinding mouseAltDegProperty() {
         return mouseAltDeg;
     }
 
-    public CelestialObject getObjectUnderMouse() {
-        return objectUnderMouse.get();
-    }
-
+    /**
+     * Getter for the field of view in degrees
+     *
+     * @return field of view
+     */
     public double getFieldOfViewDeg() { return fieldOfViewDeg.get(); }
 
+    /**
+     * Getter for the property of the field of view
+     *
+     * @return field of view property
+     */
     public DoubleProperty fieldOfViewDegProperty() { return fieldOfViewDeg; }
 
-    public GeographicCoordinates getObserverCoordinates() {
-        return observerCoordinates.get();
-    }
-
-    public ObjectBinding<GeographicCoordinates> observerCoordinatesProperty() {
-        return observerCoordinates;
-    }
-
-    public double getObserverLatDeg() {
-        return observerLatDeg.get();
-    }
-
+    /**
+     * Getter for the property of the observer latitude
+     *
+     * @return observer latitude property
+     */
     public DoubleProperty observerLatDegProperty() {
         return observerLatDeg;
     }
 
-    public double getObserverLonDeg() {
-        return observerLonDeg.get();
-    }
-
+    /**
+     * Getter for the property of the observer longitude
+     *
+     * @return observer longitude property
+     */
     public DoubleProperty observerLonDegProperty() {
         return observerLonDeg;
     }
 
-
-    public LocalDate getDate() {
-        return date.get();
-    }
-
+    /**
+     * Getter for the date property
+     *
+     * @return date property
+     */
     public ObjectProperty<LocalDate> dateProperty() {
         return date;
     }
 
+    /**
+     * Getter for the time
+     *
+     * @return time
+     */
     public LocalTime getTime() {
         return time.get();
     }
 
+    /**
+     * Getter for the time property
+     *
+     * @return time property
+     */
     public ObjectProperty<LocalTime> timeProperty() {
         return time;
     }
 
-    public ZoneId getZone() {
-        return zone.get();
-    }
-
+    /**
+     * Getter for the zone property
+     *
+     * @return zone property
+     */
     public ObjectProperty<ZoneId> zoneProperty() {
         return zone;
     }
 
+    /**
+     * Setter for the date
+     *
+     * @param date date
+     */
     public void setDate(LocalDate date) {
         this.date.set(date);
     }
 
+    /**
+     * Setter for the time
+     *
+     * @param time time
+     */
     public void setTime(LocalTime time) {
         this.time.set(time);
     }
@@ -319,6 +342,11 @@ public final class SkyCanvasManager {
         painter.drawHorizon(projection.get(), planeToCanvas.get());
     }
 
+    /**
+     * returns the current canvas
+     *
+     * @return canvas
+     */
     public Canvas canvas(){
         return canvas;
     }
