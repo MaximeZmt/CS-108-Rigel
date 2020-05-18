@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 /**
- * [fillTxt]
+ * Main class of the project
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -50,14 +50,13 @@ public class Main extends Application {
     private StringBinding sb;
     private DatePicker datePicker;
     private TextField timeSelector;
-    private ComboBox zoneSelector;
+    private ComboBox<ZoneId> zoneSelector;
 
-    private TimeAnimator timeAnimator; //TODO Checked if used
-
-
-    //private ObjectProperty<> horizontalCoordProperty; //TODO --
-    //private DoubleProperty fovProperty;
-
+    /**
+     * Main method of the project
+     *
+     * @param args string
+     */
     public static void main(String[] args) { launch(args); }
 
     private InputStream getResourceStream(String resource) {
@@ -69,75 +68,62 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage mainStage) throws Exception {
-
         //WINDOWS
         mainStage.setTitle("Rigel");
         mainStage.setMinHeight(600);
         mainStage.setMinWidth(800);
-        //END WINDOWS
 
         //MAIN BP
         BorderPane borderPane = new BorderPane();
-        //
 
         try (InputStream hs = getResourceStream("/hygdata_v3.csv");
              InputStream hs2 = getResourceStream("/asterisms.txt")) {
+
+            //star catalogue
             StarCatalogue catalogue = new StarCatalogue.Builder()
                     .loadFrom(hs, HygDatabaseLoader.INSTANCE)
                     .loadFrom(hs2, AsterismLoader.INSTANCE)
                     .build();
 
+            //zone date time
             DateTimeBean dateTimeBean = new DateTimeBean();
             dateTimeBean.setZonedDateTime(ZonedDateTime.now());
 
+            //observer location
             ObserverLocationBean observerLocationBean =
                     new ObserverLocationBean();
             observerLocationBean.setCoordinates(
                     GeographicCoordinates.ofDeg(6.57, 46.52));
 
+            //viewing parameters
             ViewingParametersBean viewingParametersBean=
                     new ViewingParametersBean();
             viewingParametersBean.setCenter(
                     HorizontalCoordinates.ofDeg(180.000000000001, 42));
-                    //HorizontalCoordinates.ofDeg(0, 90)); //TODO DEBUG
             viewingParametersBean.setFieldOfViewDeg(100);
-            //viewingParametersBean.setFieldOfViewDeg(250);
-            //horizontalCoordProperty = viewingParametersBean.centerProperty();
-            //fovProperty = viewingParametersBean.fieldOfViewDegProperty();
 
-            //TODO check if correrct
-            timeAnimator = new TimeAnimator(dateTimeBean);
+            TimeAnimator timeAnimator = new TimeAnimator(dateTimeBean);
+            SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
 
-       //
+            Canvas sky = skyCanvas.canvas();
+            Pane skyPane = new Pane(sky);
 
+            borderPane.setTop(controlBar(skyCanvas, timeAnimator));
+            borderPane.setCenter(skyPane);
+            borderPane.setBottom(informationBar(skyCanvas));
 
+            sky.widthProperty().bind(skyPane.widthProperty());
+            sky.heightProperty().bind(skyPane.heightProperty());
 
+            mainStage.setScene(new Scene(borderPane));
 
+            mainStage.show();
 
-
-        SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
-
-        Canvas sky = skyCanvas.canvas();
-        Pane skyPane = new Pane(sky);
-
-        borderPane.setTop(controlBar(skyCanvas, timeAnimator));
-        borderPane.setCenter(skyPane);
-        borderPane.setBottom(informationBar(skyCanvas));
-
-        sky.widthProperty().bind(skyPane.widthProperty());
-        sky.heightProperty().bind(skyPane.heightProperty());
-
-
-        mainStage.setScene(new Scene(borderPane));
-
-        mainStage.show();
-
-        sky.requestFocus();
-
+            sky.requestFocus();
         }
     }
 
-    private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws  IOException{
+    private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
@@ -155,7 +141,7 @@ public class Main extends Application {
         return mainControlBar;
     }
 
-    private HBox observerPos(DoubleProperty observerLonDegProperty, DoubleProperty observerLatDegProperty){
+    private HBox observerPos(DoubleProperty observerLonDegProperty, DoubleProperty observerLatDegProperty) {
         HBox observerPosBox = new HBox();
         observerPosBox.setStyle("-fx-spacing: inherit; -fx-alignment: baseline-left;");
 
@@ -166,9 +152,6 @@ public class Main extends Application {
         TextFormatter<Number> formatterLon = formatter("lon");
         inpLongi.setTextFormatter(formatterLon);
         Bindings.bindBidirectional(formatterLon.valueProperty(),observerLonDegProperty);
-
-
-        //TODO USE WITH BINDBIDIRECTIONAL
 
         TextField inpLati = new TextField();
         TextFormatter<Number> formatterLat = formatter("lat");
@@ -208,7 +191,7 @@ public class Main extends Application {
         Bindings.bindBidirectional(timeFormatter.valueProperty(),skyCanvas.timeProperty());
 
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
-        zoneSelector = new ComboBox();
+        zoneSelector = new ComboBox<>();
 
         List<ZoneId> zoneIdList = new ArrayList<>();
         for(String s :ZoneId.getAvailableZoneIds()){
@@ -221,9 +204,6 @@ public class Main extends Application {
 
         zoneSelector.setStyle("-fx-pref-width: 180;");
         observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
-
-
-
 
         return observInstantBox;
     }
@@ -239,14 +219,12 @@ public class Main extends Application {
         Button playPauseButton = new Button("\uf04b"); // "\uf04c" change play to pause
         playPauseButton.setFont(fontAwesome);
 
-
-
         fontStream.close();
 
         HBox timeManagerbox = new HBox();
         timeManagerbox.setStyle("-fx-spacing: inherit;");
 
-        ChoiceBox acceleratorSelector = new ChoiceBox();
+        ChoiceBox<NamedTimeAccelerator> acceleratorSelector = new ChoiceBox<>();
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
         acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_1);
         timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
@@ -262,7 +240,6 @@ public class Main extends Application {
                 datePicker.setDisable(false);
                 timeSelector.setDisable(false);
                 zoneSelector.setDisable(false);
-
             }else{
                 timeAnimator.start();
                 playPauseButton.setText("\uf04c");
@@ -273,8 +250,6 @@ public class Main extends Application {
                 datePicker.setDisable(true);
                 timeSelector.setDisable(true);
                 zoneSelector.setDisable(true);
-
-
             }
         });
 
@@ -302,7 +277,7 @@ public class Main extends Application {
             }else{
                 centerText.setText("");
             }
-        }); //TODO CHECK THAT -- see when null PROBLEM VALUE STAY SAME EVEN IF SHOULD BE NULL
+        });
 
         sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
 
@@ -317,10 +292,6 @@ public class Main extends Application {
 
         return informationPane;
     }
-
-
-
- //TODO create method
 
     private TextFormatter<Number> formatter(String type){
         NumberStringConverter stringConverter =
@@ -348,12 +319,6 @@ public class Main extends Application {
             }
         });
 
-        TextFormatter<Number> lonLatTextFormatter =
-                new TextFormatter<>(stringConverter, 0, lonLatFilter);
-        return lonLatTextFormatter;
+        return new TextFormatter<>(stringConverter, 0, lonLatFilter);
     }
-
-
-
-
 }
