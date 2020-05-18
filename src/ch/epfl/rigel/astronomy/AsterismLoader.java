@@ -34,18 +34,22 @@ public enum AsterismLoader implements StarCatalogue.Loader{
         for (Star starFiller: starList){
             mapHipparcosStar.put(starFiller.hipparcosId(),starFiller);
         }
+        try {
 
-        while ((line = br.readLine())!=null){
-            String[] hipparcosIdListString = line.split(",");
-            List<Star> starListAsterism = new ArrayList<>();
-            List<Integer> hipparcosIdListInt = new ArrayList<>();
+            while ((line = br.readLine()) != null) {
+                String[] hipparcosIdListString = line.split(",");
+                List<Star> starListAsterism = new ArrayList<>();
 
-            //converts the hipparcos Id list from String to Integer
-            for (String s : hipparcosIdListString){
-                starListAsterism.add(mapHipparcosStar.get(Integer.valueOf(s)));
+                //converts the hipparcos Id list from String to Integer
+                for (String s : hipparcosIdListString) {
+                    starListAsterism.add(mapHipparcosStar.get(Integer.valueOf(s)));
+                }
+                builder.addAsterism(new Asterism(starListAsterism));
             }
-            builder.addAsterism(new Asterism(starListAsterism));
+        }catch(IOException e){
+            throw e;
+        }finally {
+            isr.close(); //TODO SEE CLOSING STREAM
         }
-        isr.close();
     }
 }
