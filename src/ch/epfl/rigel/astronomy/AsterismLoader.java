@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an asterism catalogue loader
@@ -27,6 +29,12 @@ public enum AsterismLoader implements StarCatalogue.Loader{
 
         List<Star> starList = builder.stars();
         String line;
+        Map<Integer,Star> mapHipparcosStar = new HashMap<>();
+
+        for (Star starFiller: starList){
+            mapHipparcosStar.put(starFiller.hipparcosId(),starFiller);
+        }
+
         while ((line = br.readLine())!=null){
             String[] hipparcosIdListString = line.split(",");
             List<Star> starListAsterism = new ArrayList<>();
@@ -34,15 +42,7 @@ public enum AsterismLoader implements StarCatalogue.Loader{
 
             //converts the hipparcos Id list from String to Integer
             for (String s : hipparcosIdListString){
-                hipparcosIdListInt.add(Integer.valueOf(s));
-            }
-
-            for (int hipparcosId : hipparcosIdListInt){
-                for (Star star : starList){
-                    if (star.hipparcosId()==hipparcosId){
-                        starListAsterism.add(star);
-                    }
-                }
+                starListAsterism.add(mapHipparcosStar.get(Integer.valueOf(s)));
             }
             builder.addAsterism(new Asterism(starListAsterism));
         }
