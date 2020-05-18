@@ -25,10 +25,11 @@ public final class StarCatalogue {
      * @throws IllegalArgumentException if one of the asterisms contains a star that is not in the given list of stars
      */
     public StarCatalogue(List<Star> stars, List<Asterism> asterisms){
-        for (Asterism a : asterisms){
-            for (Star s : a.stars()){
-                Preconditions.checkArgument(stars.contains(s));
-            }
+        Map<Star, Integer> mapStar = new HashMap<>();
+        int counter = 0;
+        for(Star starFiller : stars){
+            mapStar.put(starFiller,counter);
+            counter++;
         }
 
         this.stars = List.copyOf(stars);
@@ -38,7 +39,9 @@ public final class StarCatalogue {
         for (Asterism a : asterisms){
             List<Integer> indexList = new ArrayList<>();
             for (Star s : a.stars()){
-                indexList.add(stars.indexOf(s));
+                Integer starIndex = mapStar.get(s);
+                Preconditions.checkArgument(starIndex!=null);
+                indexList.add(starIndex);
             }
             map.put(a, indexList);
         }
@@ -72,7 +75,7 @@ public final class StarCatalogue {
      */
     public List<Integer> asterismIndices(Asterism asterism){
         Preconditions.checkArgument(this.asterisms.contains(asterism));
-        return List.copyOf(map.get(asterism));
+        return Collections.unmodifiableList(map.get(asterism));
     }
 
     /**
