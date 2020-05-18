@@ -25,6 +25,7 @@ public class BlackBodyColor {
 
     /**
      * Get the color of a BlackBody given it's temperature
+     *
      * @param temp temperature of a BlackBody in kelvin degrees
      * @return Color of the BlackBody
      */
