@@ -64,7 +64,9 @@ public class Main extends Application {
         return getClass().getResourceAsStream(resource);
     }
 
-
+    /**
+     * @see Application#start(Stage)
+     */
     @Override
     public void start(Stage mainStage) throws Exception {
 
