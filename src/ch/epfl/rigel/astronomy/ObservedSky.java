@@ -29,27 +29,27 @@ public class ObservedSky {
     private final double[] starPosArray;
 
     private final StarCatalogue starCatalogue;
-    //TODO Finish javadoc
+
+
     /**
-     *
-     * @param zdt
-     * @param observPos
-     * @param stereoProj
-     * @param starCatalogue
+     * Constructor Which receive information to simulate the sky
+     * @param zdt A ZonedDateTime, is the object containing the time zone, the date and the time.
+     * @param observPos The position of the observer around the earth (in latitude and longitude)
+     * @param stereoProj The stereographic projection that translate 3d to 2d.
+     * @param starCatalogue Object that is containing a list of all the stars and asterism
      */
     public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){
         this.starCatalogue = starCatalogue;
-         //TODO ask if ETEC is a good name or not
-        EclipticToEquatorialConversion etec = new EclipticToEquatorialConversion(zdt);
-        EquatorialToHorizontalConversion ethc = new EquatorialToHorizontalConversion(zdt,observPos);
+        EclipticToEquatorialConversion eclipToEquatC = new EclipticToEquatorialConversion(zdt);
+        EquatorialToHorizontalConversion equatToHorizonC = new EquatorialToHorizontalConversion(zdt,observPos);
 
         //sun
-        sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt),etec);
-        sunCartCoordinates = stereoProj.apply(ethc.apply(sunInstance.equatorialPos()));
+        sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt),eclipToEquatC);
+        sunCartCoordinates = stereoProj.apply(equatToHorizonC.apply(sunInstance.equatorialPos()));
 
         //moon
-        moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt),etec);
-        moonCartCoordinates = stereoProj.apply(ethc.apply(moonInstance.equatorialPos()));
+        moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt),eclipToEquatC);
+        moonCartCoordinates = stereoProj.apply(equatToHorizonC.apply(moonInstance.equatorialPos()));
 
         //planet
         planetsList = new ArrayList<>();
@@ -59,9 +59,9 @@ public class ObservedSky {
         while(pIterator.hasNext()){
             PlanetModel pmodel = (PlanetModel)pIterator.next();
             if(!pmodel.equals(PlanetModel.EARTH)) {
-                Planet p = pmodel.at(Epoch.J2010.daysUntil(zdt), etec);
+                Planet p = pmodel.at(Epoch.J2010.daysUntil(zdt), eclipToEquatC);
                 planetsList.add(p);
-                CartesianCoordinates planetTempoCartesianCoord = stereoProj.apply(ethc.apply(p.equatorialPos()));
+                CartesianCoordinates planetTempoCartesianCoord = stereoProj.apply(equatToHorizonC.apply(p.equatorialPos()));
                 planetPosArray[(counter * 2)] = planetTempoCartesianCoord.x();
                 planetPosArray[(counter * 2) + 1] = planetTempoCartesianCoord.y();
                 counter++;
@@ -75,7 +75,7 @@ public class ObservedSky {
         Iterator starIterator = starList.iterator();
         while(starIterator.hasNext()){
             Star s = (Star)starIterator.next();
-            CartesianCoordinates starCartCoord = stereoProj.apply(ethc.apply(s.equatorialPos()));
+            CartesianCoordinates starCartCoord = stereoProj.apply(equatToHorizonC.apply(s.equatorialPos()));
             starPosArray[(counter*2)] = starCartCoord.x();
             starPosArray[(counter*2)+1] = starCartCoord.y();
             counter++;
@@ -83,50 +83,85 @@ public class ObservedSky {
 
     }
 
-
-    //should be public ? methode d'acces
+    /**
+     * Getter for the sun Instance at a given time, with a given observer
+     * @return an instance of the sun
+     */
     public Sun sun(){
         return sunInstance;
     }
 
+    /**
+     * Getter for the sun position
+     * @return CartesianCoordinates that represent the Sun Position
+     */
     public CartesianCoordinates sunPosition(){
         return sunCartCoordinates;
     }
 
+    /**
+     * Getter for the Moon instance at a given time, with a given observer.
+     * @return an instance of the moon
+     */
     public Moon moon(){
         return moonInstance;
     }
 
+    /**
+     * Getter for the moon position
+     * @return CartesianCoordinates that represent the moon Position
+     */
     public CartesianCoordinates moonPosition(){
         return moonCartCoordinates;
     }
 
+    /**
+     * Getter for the list containing the Planet List Instance
+     * @return a List of Planet Instance
+     */
     public List<Planet> planets(){
         return List.copyOf(planetsList);
     }
 
+    /**
+     * Getter for the planetPosition
+     * @return an array of cartesian Coordinates
+     */
     public double[] planetPositions(){
-        return Arrays.copyOf(planetPosArray,planetPosArray.length); // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
+        return Arrays.copyOf(planetPosArray,planetPosArray.length);
+        // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
     }
 
+    /**
+     * Getter for the List of Star Instance
+     * @return a List of Star Instance
+     */
     public List<Star> stars(){
         return List.copyOf(starList);
     }
 
+    /**
+     * Getter for the starPosition
+     * @return an array of cartesian Coordinates containing the pos of the star
+     */
     public double[] starsPosition(){
         return Arrays.copyOf(starPosArray,starPosArray.length);
     }
 
-    /*
-    La classe ObservedSky offre également des méthodes donnant accès aux astérismes du catalogue utilisé, ainsi qu'à la
-    liste des index des étoiles d'un astérisme donné. Ces méthodes ne font rien d'autre qu'appeler les méthodes
-    correspondantes du catalogue d'étoiles utilisé.
-     */
 
-    public Set<Asterism> getAsterism(){ //TODO add get
+    /**
+     * Getter for a set that is containing Asterisms instance
+     * @return a set of Asterisms instance
+     */
+    public Set<Asterism> getAsterism(){
         return starCatalogue.asterisms();
     }
 
+    /**
+     * Getter that return given an Asterism the Hipparcosid of the stars that are contained
+     * @param asterism An instance of an Asterism
+     * @return a List of HipparcosId of the stars
+     */
     public List<Integer> getAsterismIndices(Asterism asterism){
         return starCatalogue.asterismIndices(asterism);
     }
@@ -134,6 +169,12 @@ public class ObservedSky {
     //asterismAccess method
     //listIndexstar asterismgiven -> both calling starcatalogue method
 
+    /**
+     * Given cartesian coordinates and a max distance, return the closest celestial object
+     * @param cc The cartesian coordinates where we want the object
+     * @param maxDist the maximum distance
+     * @return An Optional of a CelestialObject that may containing one.
+     */
     public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc,double maxDist){
         double closestDist = maxDist;
         double tempoDist = 0;
@@ -181,7 +222,7 @@ public class ObservedSky {
         return co;
     }
 
-    private double dist(double x1, double x2, double y1, double y2){ //TODO Math.hypot()
+    private double dist(double x1, double x2, double y1, double y2){
         return Math.hypot(x1-x2,y1-y2);
     }
 
