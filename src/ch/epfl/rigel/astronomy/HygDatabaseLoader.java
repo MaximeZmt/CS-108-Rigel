@@ -22,19 +22,19 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader {
      */
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
-        InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
-        BufferedReader br = new BufferedReader(isr);
-        br.readLine(); //ignore first line
-        String line;
-        while ((line = br.readLine())!=null){
-            String[] starArray = line.split(",");
+        try(InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII)) {
+            BufferedReader br = new BufferedReader(isr);
+            br.readLine(); //ignore first line
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] starArray = line.split(",");
 
-            int hipId;
-            if(starArray[1].equals("")){
-                hipId = 0;
-            }else{
-                hipId = Integer.parseInt(starArray[1]);
-            }
+                int hipId;
+                if (starArray[1].equals("")) {
+                    hipId = 0;
+                } else {
+                    hipId = Integer.parseInt(starArray[1]);
+                }
 
             /*
             to determine the name
@@ -43,32 +43,32 @@ public enum HygDatabaseLoader implements StarCatalogue.Loader {
             we fill it with bayer index (or ? by default), a blank
             space and the con index
              */
-            String sName = starArray[6];
-            if (sName.equals("")){
-                if (starArray[27].equals("")){
-                    sName = "?";
+                String sName = starArray[6];
+                if (sName.equals("")) {
+                    if (starArray[27].equals("")) {
+                        sName = "?";
+                    }
+                    sName = sName + starArray[27] + " " + starArray[29];
                 }
-                sName = sName+starArray[27]+" "+starArray[29];
-            }
 
-            float magnitude;
-            if (!starArray[13].equals("")){
-                magnitude = Float.parseFloat(starArray[13]);
-            }else{
-                magnitude = 0;
-            }
+                float magnitude;
+                if (!starArray[13].equals("")) {
+                    magnitude = Float.parseFloat(starArray[13]);
+                } else {
+                    magnitude = 0;
+                }
 
-            float colorIndex;
-            if (!starArray[16].equals("")){
-                colorIndex = Float.parseFloat(starArray[16]);
-            }else{
-                colorIndex = 0;
-            }
+                float colorIndex;
+                if (!starArray[16].equals("")) {
+                    colorIndex = Float.parseFloat(starArray[16]);
+                } else {
+                    colorIndex = 0;
+                }
 
-            Star star = new Star(hipId,sName, EquatorialCoordinates.of(Double.parseDouble(starArray[23]),Double.parseDouble(starArray[24])),magnitude,colorIndex);
-            builder.addStar(star);
+                Star star = new Star(hipId, sName, EquatorialCoordinates.of(Double.parseDouble(starArray[23]), Double.parseDouble(starArray[24])), magnitude, colorIndex);
+                builder.addStar(star);
+            }
         }
-        isr.close();
 
     }
 }

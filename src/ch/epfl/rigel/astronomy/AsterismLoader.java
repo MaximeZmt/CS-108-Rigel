@@ -24,17 +24,19 @@ public enum AsterismLoader implements StarCatalogue.Loader{
      */
     @Override
     public void load(InputStream inputStream, StarCatalogue.Builder builder) throws IOException {
-        InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
-        BufferedReader br = new BufferedReader(isr);
 
-        List<Star> starList = builder.stars();
-        String line;
-        Map<Integer,Star> mapHipparcosStar = new HashMap<>();
+        try(InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.US_ASCII)) {
 
-        for (Star starFiller: starList){
-            mapHipparcosStar.put(starFiller.hipparcosId(),starFiller);
-        }
-        try {
+            BufferedReader br = new BufferedReader(isr);
+
+            List<Star> starList = builder.stars();
+            String line;
+            Map<Integer,Star> mapHipparcosStar = new HashMap<>();
+
+            for (Star starFiller: starList){
+                mapHipparcosStar.put(starFiller.hipparcosId(),starFiller);
+            }
+
 
             while ((line = br.readLine()) != null) {
                 String[] hipparcosIdListString = line.split(",");
@@ -46,10 +48,6 @@ public enum AsterismLoader implements StarCatalogue.Loader{
                 }
                 builder.addAsterism(new Asterism(starListAsterism));
             }
-        }catch(IOException e){
-            throw e;
-        }finally {
-            isr.close(); //TODO SEE CLOSING STREAM
         }
     }
 }
