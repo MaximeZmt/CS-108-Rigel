@@ -186,7 +186,6 @@ public class ObservedSky {
         }
 
         //planet
-
         for(Planet p : planetsList){
             int index = planetsList.indexOf(p);
             tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
@@ -195,6 +194,7 @@ public class ObservedSky {
                 co = Optional.of(p);
             }
         }
+        
         //stars
         int index;
         for(Star s : starList){
