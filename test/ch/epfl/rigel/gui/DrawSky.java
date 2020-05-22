@@ -37,7 +37,7 @@ public final class DrawSky extends Application {
 
             ZonedDateTime when =
                     ZonedDateTime.parse("2020-02-17T20:17:08+01:00");
-                    //ZonedDateTime.parse("2020-02-17T20:15:00+01:00"); //TODO ask why and if normal that we do not see the sun with that time or at noon
+                    //ZonedDateTime.parse("2020-02-17T20:15:00+01:00");
                     //ZonedDateTime.parse("2020-02-17T20:17:08+01:00");
                     //ZonedDateTime.parse("2020-02-17T14:15:00+01:00"); //time where we see the sun
                     //ZonedDateTime.parse("2020-02-17T09:15:00+01:00"); //time where we see the moon

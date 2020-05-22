@@ -33,13 +33,22 @@ import java.util.Map;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
+    private final static int CENTER_VERTICAL_CHANGER = 5;
+    private final static int CENTER_HORIZONTAL_CHANGER = 10;
+    private final static double MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE = 10;
+    private final static double MAX_FIELD_OF_VIEW = 150;
+    private final static double MIN_FIELD_OF_VIEW = 30;
+    private final static double MIN_ALTITUDE = 5;
+    private final static double MAX_ALTITUDE = 90;
+    private final static double MIN_AZIMUTH = 0;
+    private final static double MAX_AZIMUTH = 360;
+
+    private final SkyCanvasPainter painter;
+    private final Map<KeyCode,int[]> centerCoordinateChanger;
+
     //canvas and mousePosition
     private final Canvas canvas;
     private final ObjectProperty<CartesianCoordinates> mousePosition;
-
-    private final SkyCanvasPainter painter;
-
-    private final Map<KeyCode,int[]> centerCoordinateChanger;
 
     //projection
     private final ObjectBinding<StereographicProjection> projection;
@@ -79,10 +88,10 @@ public final class SkyCanvasManager {
                             ViewingParametersBean viewingParametersBean
     ){
         centerCoordinateChanger = Map.of(
-                KeyCode.UP, new int[]{0,5},
-                KeyCode.RIGHT, new int[]{10,0},
-                KeyCode.DOWN, new int[]{0,-5},
-                KeyCode.LEFT, new int[]{-10,0});
+                KeyCode.UP, new int[]{0,CENTER_VERTICAL_CHANGER},
+                KeyCode.RIGHT, new int[]{CENTER_HORIZONTAL_CHANGER,0},
+                KeyCode.DOWN, new int[]{0,-CENTER_VERTICAL_CHANGER},
+                KeyCode.LEFT, new int[]{-CENTER_HORIZONTAL_CHANGER,0});
 
         canvas = new Canvas();
         painter = new SkyCanvasPainter(canvas);
@@ -137,7 +146,7 @@ public final class SkyCanvasManager {
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 return projection.get().inverseApply(coordinates);
             } catch (NonInvertibleTransformException e){
-                //TODO works like this but check if there is better
+                //initial value assignment
                 return HorizontalCoordinates.ofDeg(0,0);
             }
         }, mousePosition, planeToCanvas, projection);
@@ -152,8 +161,8 @@ public final class SkyCanvasManager {
             try {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
-                double dist = planeToCanvas.get().inverseDeltaTransform(10,0).getX();
-                return observedSky.get().objectClosestTo(coordinates ,dist).orElse(null); //TODO put '10' in a static variable
+                double dist = planeToCanvas.get().inverseDeltaTransform(MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE,0).getX();
+                return observedSky.get().objectClosestTo(coordinates ,dist).orElse(null);
             } catch (NonInvertibleTransformException e){
                 return null;
             }
@@ -176,25 +185,22 @@ public final class SkyCanvasManager {
                 newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaY();
             }
 
-            if (30 <= newFieldOfViewDeg && newFieldOfViewDeg <= 150){
+            if (MIN_FIELD_OF_VIEW <= newFieldOfViewDeg && newFieldOfViewDeg <= MAX_FIELD_OF_VIEW){
                 viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
             }
             e.consume();
         });
         canvas.setOnKeyPressed(e->{
-            //TODO put '5' in a static attribute
             if (centerCoordinateChanger.get(e.getCode())!=null){
                 double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
                 double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
-                if (5 <= newAltDeg && newAltDeg <= 90
-                        && 0 <= newAzDeg && newAzDeg < 360){
+                if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE
+                        && MIN_AZIMUTH <= newAzDeg && newAzDeg < MAX_AZIMUTH){
                     HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
                     viewingParametersBean.setCenter(newCoordinates);
                 }
                 e.consume();
-
             }
-
         });
 
         //drawing listeners
@@ -350,5 +356,4 @@ public final class SkyCanvasManager {
     public Canvas canvas(){
         return canvas;
     }
-
 }

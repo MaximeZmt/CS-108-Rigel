@@ -23,7 +23,18 @@ import java.util.Set;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Finale:check in project, same as static = CAPS
+public class SkyCanvasPainter { //TODO Instanciable = Finale:check in project, same as static = CAPS
+    private final static double NORTH_AZIMUTH = 0;
+    private final static double NORTH_EAST_AZIMUTH = 45;
+    private final static double EAST_AZIMUTH = 90;
+    private final static double SOUTH_EAST_AZIMUTH = 135;
+    private final static double SOUTH_AZIMUTH = 180;
+    private final static double SOUTH_WEST_AZIMUTH = 225;
+    private final static double WEST_AZIMUTH = 270;
+    private final static double NORTH_WEST_AZIMUTH = 315;
+    private final static double LETTER_ALTITUDE = -0.5;
+
+
 
     private final Canvas canvas;
     private final GraphicsContext ctx;
@@ -33,7 +44,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
      * Public constructor to create a painter
      * @param canvas Canvas that will be edited.
      */
-    public SkyCanvasPainter(Canvas canvas){ //suppose public cause instanciable
+    public SkyCanvasPainter(Canvas canvas){
         this.canvas = canvas;
         ctx = canvas.getGraphicsContext2D();
     }
@@ -73,7 +84,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Star> starList = sky.stars();
         double[] starPos = sky.starsPosition();
-        //double[] newStarPos = new double[starPos.length];
         planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size()); //peut être remis dans star pos
 
 
@@ -95,7 +105,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
                 double x2 = starPos[2*nextIndice];
                 double y2 = starPos[2*nextIndice+1];
 
-                //TODO not sure if working bc test context (time and place) is not propice for check
                 if (canvas.getBoundsInLocal().contains(x1,y1) || canvas.getBoundsInLocal().contains(x2,y2)){
                     ctx.lineTo(x2, y2);
                 } else {
@@ -119,17 +128,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double x = starPos[2 * index] - (0.5 * diam2);
             double y = starPos[(2 * index) + 1] - (0.5 * diam2);
             ctx.fillOval(x, y, diam2, diam2);
-            /*
-            if(s.name().equals("Betelgeuse")){
-                System.out.println("Test");
-                System.out.println("Temperature: "+s.colorTemperature());
-                System.out.println("Color: "+BlackBodyColor.colorForTemperature(s.colorTemperature()));
-                System.out.printf("X: %.15f \n",x);
-                System.out.printf("Y: %.15f \n",y);
-                System.out.printf("diam: %.15f \n",diam2);
-            }
-
-             */
         }
     }
 
@@ -142,7 +140,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     public void drawPlanets(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Planet> planetList = sky.planets();
         double[] planetCoord = sky.planetPositions();
-        //double[] newPlanetCoord = new double[planetCoord.length];
         planeToCanvas.transform2DPoints(planetCoord, 0, planetCoord, 0, planetList.size());
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
         int counter = 0;
@@ -155,7 +152,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
             double y = planetCoord[(2*counter)+1] - 0.5*diam2;
             ctx.fillOval(x, y, diam2, diam2);
             counter++;
-            //System.out.println("Planet: "+p.name()+" created");
         }
     }
 
@@ -167,7 +163,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
      */
     public void drawSun(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
 
-        Sun sun = sky.sun();
         CartesianCoordinates sunPos = sky.sunPosition();
         Point2D planeCoord = planeToCanvas.transform(sunPos.x(),sunPos.y());
         double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5));
@@ -178,8 +173,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double diam1 = sunDiamTransformed *2.2;
         double x1 = planeCoord.getX() - (0.5*diam1);
         double y1 = planeCoord.getY()  - (0.5*diam1);
-        //System.out.println("x:"+x1);
-        //System.out.println("y:"+y1);
         ctx.fillOval(x1,y1,diam1,diam1);
 
         ctx.setFill(Color.YELLOW);
@@ -192,9 +185,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         double x3 = planeCoord.getX() - (0.5*sunDiamTransformed);
         double y3 = planeCoord.getY()  - (0.5*sunDiamTransformed);
         ctx.fillOval(x3,y3,sunDiamTransformed,sunDiamTransformed);
-
     }
-
 
     /**
      * Draw on the canvas of the painter: The moon
@@ -210,8 +201,6 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         Point2D coordTransformed = planeToCanvas.transform(moonPos.x(),moonPos.y());
         double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
         double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
-        //System.out.println("x:"+x);
-        //System.out.println("y:"+y);
         ctx.setFill(Color.WHITE);
         ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
     }
@@ -222,10 +211,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
      * @param planeToCanvas Change from projection coordinate system to Canvas
      */
     public void drawHorizon(StereographicProjection projection, Transform planeToCanvas){
-
-
         HorizontalCoordinates parallel = HorizontalCoordinates.of(0,0);
-        //System.out.println("modif (x,y)=("+centerModif.getX()+","+centerModif.getY()+")");
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
         Point2D centerTransformed = planeToCanvas.transform(center.x(), center.y());
         double radius = projection.circleRadiusForParallel(parallel);
@@ -237,14 +223,14 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
         ctx.strokeOval(x,y, diamTransformed, diamTransformed);
         ctx.setTextBaseline(VPos.TOP);
 
-        HorizontalCoordinates north = HorizontalCoordinates.ofDeg(0,-0.5);
-        HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(45, -0.5);
-        HorizontalCoordinates east = HorizontalCoordinates.ofDeg(90,-0.5);
-        HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(135,-0.5);
-        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(180,-0.5);
-        HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(225,-0.5);
-        HorizontalCoordinates west = HorizontalCoordinates.ofDeg(270,-0.5);
-        HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(315,-0.5);
+        HorizontalCoordinates north = HorizontalCoordinates.ofDeg(NORTH_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates northEast = HorizontalCoordinates.ofDeg(NORTH_EAST_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates east = HorizontalCoordinates.ofDeg(EAST_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates southEast = HorizontalCoordinates.ofDeg(SOUTH_EAST_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates south = HorizontalCoordinates.ofDeg(SOUTH_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates southWest = HorizontalCoordinates.ofDeg(SOUTH_WEST_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates west = HorizontalCoordinates.ofDeg(WEST_AZIMUTH, LETTER_ALTITUDE);
+        HorizontalCoordinates northWest = HorizontalCoordinates.ofDeg(NORTH_WEST_AZIMUTH, LETTER_ALTITUDE);
 
         HorizontalCoordinates[] cardinalList = {north, northEast, east, southEast, south, southWest, west, northWest};
 
@@ -263,8 +249,7 @@ public class SkyCanvasPainter { //classe instanciable //TODO Instanciable = Fina
     private static double objectDiameter(double magn, double multiplyFactor){
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
         double sizeFactor = (99-17*clipMagn)/140;
-        double diameter = sizeFactor*multiplyFactor;
-        return diameter;
+        return sizeFactor*multiplyFactor;
     }
 
 }

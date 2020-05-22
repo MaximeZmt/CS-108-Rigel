@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
  * Represents a Time animator
  *
  * @author Michael Freeman (313215)
- * @author Maxime Zammit (310251) //TODO Check cause in average it is 50/2
+ * @author Maxime Zammit (310251)
  */
 public final class TimeAnimator extends AnimationTimer {
     private final DateTimeBean dateTimeBean;
@@ -32,7 +32,7 @@ public final class TimeAnimator extends AnimationTimer {
      * @param l time
      */
     @Override
-    public void handle(long l) { //TODO boolean is better
+    public void handle(long l) {
         if (firstTime){
             firstTime = false;
             timeStamp = l; 

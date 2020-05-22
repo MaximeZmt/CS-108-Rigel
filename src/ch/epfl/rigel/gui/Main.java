@@ -52,6 +52,15 @@ public class Main extends Application {
     private TextField timeSelector;
     private ComboBox<ZoneId> zoneSelector;
 
+    private final static double MAIN_STAGE_MIN_HEIGHT = 600;
+    private final static double MAIN_STAGE_MIN_WIDTH = 800;
+    private final static double OBSERVER_LONGITUDE = 6.57;
+    private final static double OBSERVER_LATITUDE = 46.52;
+    private final static double VIEWING_PARAMETER_CENTER_AZIMUTH = 180.000000000001;
+    private final static double VIEWING_PARAMETER_CENTER_ALTITUDE = 42;
+    private final static double VIEWING_PARAMETER_FIELD_OF_VIEW = 100;
+    private final static double FONT_SIZE = 15;
+
     /**
      * Main method of the project
      *
@@ -70,8 +79,8 @@ public class Main extends Application {
     public void start(Stage mainStage) throws Exception {
         //WINDOWS
         mainStage.setTitle("Rigel");
-        mainStage.setMinHeight(600);
-        mainStage.setMinWidth(800);
+        mainStage.setMinHeight(MAIN_STAGE_MIN_HEIGHT);
+        mainStage.setMinWidth(MAIN_STAGE_MIN_WIDTH);
 
         //MAIN BP
         BorderPane borderPane = new BorderPane();
@@ -93,14 +102,14 @@ public class Main extends Application {
             ObserverLocationBean observerLocationBean =
                     new ObserverLocationBean();
             observerLocationBean.setCoordinates(
-                    GeographicCoordinates.ofDeg(6.57, 46.52));
+                    GeographicCoordinates.ofDeg(OBSERVER_LONGITUDE, OBSERVER_LATITUDE));
 
             //viewing parameters
             ViewingParametersBean viewingParametersBean=
                     new ViewingParametersBean();
             viewingParametersBean.setCenter(
-                    HorizontalCoordinates.ofDeg(180.000000000001, 42));
-            viewingParametersBean.setFieldOfViewDeg(100);
+                    HorizontalCoordinates.ofDeg(VIEWING_PARAMETER_CENTER_AZIMUTH, VIEWING_PARAMETER_CENTER_ALTITUDE));
+            viewingParametersBean.setFieldOfViewDeg(VIEWING_PARAMETER_FIELD_OF_VIEW);
 
             TimeAnimator timeAnimator = new TimeAnimator(dateTimeBean);
             SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
@@ -212,7 +221,7 @@ public class Main extends Application {
 
         InputStream fontStream = getClass()
                 .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf");
-        Font fontAwesome = Font.loadFont(fontStream, 15);
+        Font fontAwesome = Font.loadFont(fontStream, FONT_SIZE);
 
         Button resetButton = new Button("\uf0e2");
         resetButton.setFont(fontAwesome);
