@@ -34,7 +34,6 @@ public class BlackBodyColor {
 
         temp = temp/100.;
         temp = Math.round(temp);
-        int temp2 = (int)(temp-10);
         temp = temp*100;
 
         return TEMP_COLOR_MAP.get((int)temp);

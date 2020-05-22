@@ -186,7 +186,7 @@ public class Main extends Application {
         Bindings.bindBidirectional(datePicker.valueProperty(),skyCanvas.dateProperty());
 
         timeSelector = new TextField();
-        timeSelector.setTextFormatter(timeFormatter); //TODO why doesnt work
+        timeSelector.setTextFormatter(timeFormatter);
 
         Bindings.bindBidirectional(timeFormatter.valueProperty(),skyCanvas.timeProperty());
 
@@ -280,9 +280,6 @@ public class Main extends Application {
         });
 
         sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
-
-
-
         sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
         skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)->{leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));});
 
@@ -295,7 +292,7 @@ public class Main extends Application {
 
     private TextFormatter<Number> formatter(String type){
         NumberStringConverter stringConverter =
-                new NumberStringConverter("#0.00"); //TODO CHANGE FOR ,. see on internet genre LOCALE
+                new NumberStringConverter("#0.00");
 
         UnaryOperator<TextFormatter.Change> lonLatFilter = (change -> {
             try {
