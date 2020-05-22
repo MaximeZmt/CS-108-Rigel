@@ -72,9 +72,9 @@ public class ObservedSky {
         starList = starCatalogue.stars();
         starPosArray = new double[starList.size()*2]; //2* cause coord x and y.
         counter = 0;
-        Iterator starIterator = starList.iterator();
+        Iterator<Star> starIterator = starList.iterator();
         while(starIterator.hasNext()){
-            Star s = (Star)starIterator.next();
+            Star s = starIterator.next();
             CartesianCoordinates starCartCoord = stereoProj.apply(equatToHorizonC.apply(s.equatorialPos()));
             starPosArray[(counter*2)] = starCartCoord.x();
             starPosArray[(counter*2)+1] = starCartCoord.y();
