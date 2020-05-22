@@ -3,7 +3,6 @@ package ch.epfl.rigel.astronomy;
 
 import ch.epfl.rigel.coordinates.*;
 
-import javax.swing.text.html.Option;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -53,12 +52,10 @@ public class ObservedSky {
 
         //planet
         planetsList = new ArrayList<>();
-        planetPosArray = new double[14]; //only 7 planet, earth does'nt count
-        Iterator pIterator = PlanetModel.ALL.iterator();
+        planetPosArray = new double[14]; //only 7 planet, earth doesn't count
         int counter = 0;
-        while(pIterator.hasNext()){
-            PlanetModel pmodel = (PlanetModel)pIterator.next();
-            if(!pmodel.equals(PlanetModel.EARTH)) {
+        for (PlanetModel pmodel : PlanetModel.ALL) {
+            if (!pmodel.equals(PlanetModel.EARTH)) {
                 Planet p = pmodel.at(Epoch.J2010.daysUntil(zdt), eclipToEquatC);
                 planetsList.add(p);
                 CartesianCoordinates planetTempoCartesianCoord = stereoProj.apply(equatToHorizonC.apply(p.equatorialPos()));
@@ -72,15 +69,12 @@ public class ObservedSky {
         starList = starCatalogue.stars();
         starPosArray = new double[starList.size()*2]; //2* cause coord x and y.
         counter = 0;
-        Iterator<Star> starIterator = starList.iterator();
-        while(starIterator.hasNext()){
-            Star s = starIterator.next();
+        for (Star s : starList) {
             CartesianCoordinates starCartCoord = stereoProj.apply(equatToHorizonC.apply(s.equatorialPos()));
-            starPosArray[(counter*2)] = starCartCoord.x();
-            starPosArray[(counter*2)+1] = starCartCoord.y();
+            starPosArray[(counter * 2)] = starCartCoord.x();
+            starPosArray[(counter * 2) + 1] = starCartCoord.y();
             counter++;
         }
-
     }
 
     /**
@@ -129,7 +123,7 @@ public class ObservedSky {
      */
     public double[] planetPositions(){
         return Arrays.copyOf(planetPosArray,planetPosArray.length);
-        // list de 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
+        // list of 14 coord pos 0: x planet 1, pos 1: y planet 1, ...
     }
 
     /**
@@ -166,9 +160,6 @@ public class ObservedSky {
         return starCatalogue.asterismIndices(asterism);
     }
 
-    //asterismAccess method
-    //listIndexstar asterismgiven -> both calling starcatalogue method
-
     /**
      * Given cartesian coordinates and a max distance, return the closest celestial object
      * @param cc The cartesian coordinates where we want the object
@@ -177,14 +168,13 @@ public class ObservedSky {
      */
     public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc,double maxDist){
         double closestDist = maxDist;
-        double tempoDist = 0;
-        Optional<CelestialObject> co = Optional.empty(); //TODO may use Optional.Empty or Optional.of
+        double tempoDist;
+        Optional<CelestialObject> co = Optional.empty();
+
         //sun
         tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
-        //System.out.println(tempoDist);
         if (tempoDist<closestDist){
             co = Optional.of(sunInstance);
-            //System.out.println("SUUUUUUNNNNNNNNNNNNNNNNNNNNNN!");
             closestDist = tempoDist;
         }
 
@@ -192,7 +182,6 @@ public class ObservedSky {
         tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
         if(tempoDist<closestDist){
             co = Optional.of(moonInstance);
-            //System.out.println("MOOOOONNNNNNNNNNNNNNNNNNNN");
             closestDist = tempoDist;
         }
 
@@ -202,7 +191,6 @@ public class ObservedSky {
             int index = planetsList.indexOf(p);
             tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
-                //System.out.println("PLANET : "+p);
                 closestDist = tempoDist;
                 co = Optional.of(p);
             }
@@ -213,12 +201,10 @@ public class ObservedSky {
             index = starList.indexOf(s);
             tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
             if(tempoDist<closestDist){
-                //System.out.println("STAR :"+s);
                 closestDist = tempoDist;
                 co = Optional.of(s);
             }
         }
-        //System.out.println(closestDist);
         return co;
     }
 
