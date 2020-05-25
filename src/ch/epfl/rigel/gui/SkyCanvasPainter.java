@@ -195,6 +195,7 @@ public class SkyCanvasPainter { //TODO Instanciable = Finale:check in project, s
      */
     public void drawMoon(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         Moon moon = sky.moon();
+
         CartesianCoordinates moonPos = sky.moonPosition();
         double moonDiam = projection.applyToAngle(moon.angularSize());
         double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
