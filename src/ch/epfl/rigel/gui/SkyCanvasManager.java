@@ -202,6 +202,32 @@ public final class SkyCanvasManager {
                 e.consume();
             }
         });
+        canvas.setOnMouseDragged(e -> {
+            CartesianCoordinates mp = mousePosition.get();
+            double ex = e.getX();
+            double ey = e.getY();
+            Point2D canvasToPlane = null;
+            try {
+                canvasToPlane = planeToCanvas.get().inverseTransform(ex,ey);
+            } catch (NonInvertibleTransformException nonInvertibleTransformException) {
+                nonInvertibleTransformException.printStackTrace();
+            }
+            assert canvasToPlane != null;
+            CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+            HorizontalCoordinates hc = projection.get().inverseApply(coordinates);
+
+            double newAzDeg = viewingParametersBean.getCenter().azDeg()-hc.azDeg()+mouseAzDegProperty().get();
+            double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
+
+            if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE
+                    && MIN_AZIMUTH <= newAzDeg && newAzDeg < MAX_AZIMUTH){
+                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
+                viewingParametersBean.setCenter(newCoordinates);
+            }
+            mousePosition.setValue(CartesianCoordinates.of(e.getX(),e.getY()));
+            e.consume();
+
+        });
 
         //drawing listeners
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
