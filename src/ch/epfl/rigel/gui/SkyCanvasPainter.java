@@ -204,6 +204,21 @@ public class SkyCanvasPainter { //TODO Instanciable = Finale:check in project, s
         double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
         ctx.setFill(Color.WHITE);
         ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
+
+        //Quart Lune
+        //ctx.setFill(Color.BLACK);
+        //ctx.fillOval(x,y,moonDiamTransformed*0.75,moonDiamTransformed);
+
+        //demi lune
+        ctx.setFill(Color.BLACK);
+        ctx.fillRect(x,y,moonDiamTransformed/2,moonDiamTransformed);
+
+        //3/4Lune
+        //ctx.setFill(Color.BLACK);
+        //ctx.fillRect(x,y,moonDiamTransformed/2,moonDiamTransformed);
+        //ctx.setFill(Color.WHITE);
+        //ctx.fillOval(x+(moonDiamTransformed/5),y,moonDiamTransformed/2,moonDiamTransformed);
+
     }
 
     /**
