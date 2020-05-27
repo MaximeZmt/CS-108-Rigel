@@ -6,13 +6,9 @@ import ch.epfl.rigel.astronomy.StarCatalogue;
 import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -35,8 +31,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -60,6 +54,8 @@ public class Main extends Application {
     private final static double VIEWING_PARAMETER_CENTER_ALTITUDE = 42;
     private final static double VIEWING_PARAMETER_FIELD_OF_VIEW = 100;
     private final static double FONT_SIZE = 15;
+    private final static String FILE_NAME_ASTERISM = "/asterisms.txt";
+    private final static String FILE_NAME_HYGDATA = "/hygdata_v3.csv";
 
     /**
      * Main method of the project
@@ -67,6 +63,8 @@ public class Main extends Application {
      * @param args string
      */
     public static void main(String[] args) { launch(args); }
+
+    //TODO ASK FOR BEAN: SHOULD WE PUT A GETTER AND A PROPERTY EVEN IF NOT NEEDED
 
     private InputStream getResourceStream(String resource) {
         return getClass().getResourceAsStream(resource);
@@ -85,8 +83,8 @@ public class Main extends Application {
         //MAIN BP
         BorderPane borderPane = new BorderPane();
 
-        try (InputStream hs = getResourceStream("/hygdata_v3.csv");
-             InputStream hs2 = getResourceStream("/asterisms.txt")) {
+        try (InputStream hs = getResourceStream(FILE_NAME_HYGDATA);
+             InputStream hs2 = getResourceStream(FILE_NAME_ASTERISM)) {
 
             //star catalogue
             StarCatalogue catalogue = new StarCatalogue.Builder()
@@ -220,7 +218,7 @@ public class Main extends Application {
     private HBox timeManager(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
 
         InputStream fontStream = getClass()
-                .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf");
+                .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf"); //TODO magic var
         Font fontAwesome = Font.loadFont(fontStream, FONT_SIZE);
 
         Button resetButton = new Button("\uf0e2");
@@ -289,8 +287,8 @@ public class Main extends Application {
         });
 
         sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
-        sb.addListener((p, o, n)->{rightText.setText(sb.getValue());});
-        skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)->{leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));});
+        sb.addListener((p, o, n)-> rightText.setText(sb.getValue()));
+        skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)-> leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg())));
 
         informationPane.setLeft(leftText);
         informationPane.setCenter(centerText);

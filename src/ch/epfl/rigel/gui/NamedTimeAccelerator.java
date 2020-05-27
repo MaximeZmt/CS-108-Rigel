@@ -52,6 +52,7 @@ public enum NamedTimeAccelerator {
      *
      * @return name
      */
+
     @Override
     public String toString() {
         return name;
