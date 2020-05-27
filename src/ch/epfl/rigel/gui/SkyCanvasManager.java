@@ -8,6 +8,7 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.RightOpenInterval;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
@@ -33,6 +34,7 @@ import java.util.Map;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
+    private final static RightOpenInterval INTERVAL = RightOpenInterval.of(0,360);
     private final static int CENTER_VERTICAL_CHANGER = 5;
     private final static int CENTER_HORIZONTAL_CHANGER = 10;
     private final static double MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE = 10;
@@ -219,7 +221,7 @@ public final class SkyCanvasManager {
             double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
 
             if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
-                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
+                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(INTERVAL.reduce(newAzDeg), newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
             mousePosition.setValue(CartesianCoordinates.of(e.getX(),e.getY()));
