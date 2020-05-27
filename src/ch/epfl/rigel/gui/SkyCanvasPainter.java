@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-public class SkyCanvasPainter { //TODO Instanciable = Finale:check in project, same as static = CAPS
+public final class SkyCanvasPainter {
     private final static double NORTH_AZIMUTH = 0;
     private final static double NORTH_EAST_AZIMUTH = 45;
     private final static double EAST_AZIMUTH = 90;
