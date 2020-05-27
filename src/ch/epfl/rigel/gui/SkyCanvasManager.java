@@ -203,7 +203,6 @@ public final class SkyCanvasManager {
             }
         });
         canvas.setOnMouseDragged(e -> {
-            CartesianCoordinates mp = mousePosition.get();
             double ex = e.getX();
             double ey = e.getY();
             Point2D canvasToPlane = null;
@@ -219,8 +218,7 @@ public final class SkyCanvasManager {
             double newAzDeg = viewingParametersBean.getCenter().azDeg()-hc.azDeg()+mouseAzDegProperty().get();
             double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
 
-            if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE
-                    && MIN_AZIMUTH <= newAzDeg && newAzDeg < MAX_AZIMUTH){
+            if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
                 HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
