@@ -30,11 +30,11 @@ public class BlackBodyColor {
      * @return Color of the BlackBody
      */
     public static Color colorForTemperature(double temp) {
-        Preconditions.checkInInterval(ClosedInterval.of(1000,40000),temp);
+        Preconditions.checkInInterval(ClosedInterval.of(1000,40000), temp);
 
-        temp = temp/100.;
+        temp = temp / 100.;
         temp = Math.round(temp);
-        temp = temp*100;
+        temp = temp * 100;
 
         return TEMP_COLOR_MAP.get((int)temp);
     }
@@ -49,7 +49,7 @@ public class BlackBodyColor {
         try {
             String line;
             int temperature = 1000;
-            while ((line = br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 if (line.charAt(0) != '#') {
                     if (line.charAt(10) == '1') { //Equivalent to 10deg
                         integerColorMap.put(temperature, Color.web(line.substring(80)));

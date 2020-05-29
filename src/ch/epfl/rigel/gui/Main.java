@@ -63,7 +63,9 @@ public class Main extends Application {
      *
      * @param args string
      */
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     //TODO ASK FOR BEAN: SHOULD WE PUT A GETTER AND A PROPERTY EVEN IF NOT NEEDED
 
@@ -111,7 +113,7 @@ public class Main extends Application {
             viewingParametersBean.setFieldOfViewDeg(VIEWING_PARAMETER_FIELD_OF_VIEW);
 
             TimeAnimator timeAnimator = new TimeAnimator(dateTimeBean);
-            SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue,dateTimeBean,observerLocationBean,viewingParametersBean);
+            SkyCanvasManager skyCanvas = new SkyCanvasManager(catalogue, dateTimeBean, observerLocationBean, viewingParametersBean);
 
             Canvas sky = skyCanvas.canvas();
             Pane skyPane = new Pane(sky);
@@ -144,7 +146,7 @@ public class Main extends Application {
         HBox child2 = observInstant(skyCanvas);
         HBox child3 = timeManager(skyCanvas, timeAnimator);
 
-        mainControlBar.getChildren().addAll(child1,sepVert,child2,sepVert2,child3);
+        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3);
 
         return mainControlBar;
     }
@@ -159,17 +161,17 @@ public class Main extends Application {
         TextField inpLongi = new TextField();
         TextFormatter<Number> formatterLon = formatter("lon");
         inpLongi.setTextFormatter(formatterLon);
-        Bindings.bindBidirectional(formatterLon.valueProperty(),observerLonDegProperty);
+        Bindings.bindBidirectional(formatterLon.valueProperty(), observerLonDegProperty);
 
         TextField inpLati = new TextField();
         TextFormatter<Number> formatterLat = formatter("lat");
         inpLati.setTextFormatter(formatterLat);
-        Bindings.bindBidirectional(formatterLat.valueProperty(),observerLatDegProperty);
+        Bindings.bindBidirectional(formatterLat.valueProperty(), observerLatDegProperty);
 
         inpLongi.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
         inpLati.setStyle("-fx-pref-width: 60; -fx-alignment: baseline-right;");
 
-        observerPosBox.getChildren().setAll(longiLabel,inpLongi,latiLabel,inpLati);
+        observerPosBox.getChildren().setAll(longiLabel, inpLongi, latiLabel, inpLati);
 
         return  observerPosBox;
     }
@@ -191,27 +193,27 @@ public class Main extends Application {
         datePicker = new DatePicker();
         datePicker.setStyle("-fx-pref-width: 120;");
 
-        Bindings.bindBidirectional(datePicker.valueProperty(),skyCanvas.dateProperty());
+        Bindings.bindBidirectional(datePicker.valueProperty(), skyCanvas.dateProperty());
 
         timeSelector = new TextField();
         timeSelector.setTextFormatter(timeFormatter);
 
-        Bindings.bindBidirectional(timeFormatter.valueProperty(),skyCanvas.timeProperty());
+        Bindings.bindBidirectional(timeFormatter.valueProperty(), skyCanvas.timeProperty());
 
         timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         zoneSelector = new ComboBox<>();
 
         List<ZoneId> zoneIdList = new ArrayList<>();
-        for(String s :ZoneId.getAvailableZoneIds()){
+        for(String s : ZoneId.getAvailableZoneIds()){
             zoneIdList.add(ZoneId.of(s));
         }
 
         zoneSelector.setItems(FXCollections.observableList(zoneIdList).sorted());
 
-        Bindings.bindBidirectional(zoneSelector.valueProperty(),skyCanvas.zoneProperty());
+        Bindings.bindBidirectional(zoneSelector.valueProperty(), skyCanvas.zoneProperty());
 
         zoneSelector.setStyle("-fx-pref-width: 180;");
-        observInstantBox.getChildren().addAll(dateLabel,datePicker,timeLabel, timeSelector,zoneSelector);
+        observInstantBox.getChildren().addAll(dateLabel, datePicker, timeLabel, timeSelector, zoneSelector);
 
         return observInstantBox;
     }
@@ -237,7 +239,7 @@ public class Main extends Application {
         acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_1);
         timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
 
-        playPauseButton.setOnAction(e->{
+        playPauseButton.setOnAction(e -> {
             if(timeAnimator.isRunning()){
                 timeAnimator.stop();
                 playPauseButton.setText("\uf04b");
@@ -248,7 +250,7 @@ public class Main extends Application {
                 datePicker.setDisable(false);
                 timeSelector.setDisable(false);
                 zoneSelector.setDisable(false);
-            }else{
+            } else {
                 timeAnimator.start();
                 playPauseButton.setText("\uf04c");
 
@@ -261,12 +263,12 @@ public class Main extends Application {
             }
         });
 
-        resetButton.setOnAction(e->{
+        resetButton.setOnAction(e -> {
             skyCanvas.setTime(LocalTime.now());
             skyCanvas.setDate(LocalDate.now());
         });
 
-        timeManagerbox.getChildren().addAll(acceleratorSelector,resetButton,playPauseButton);
+        timeManagerbox.getChildren().addAll(acceleratorSelector, resetButton, playPauseButton);
 
         return timeManagerbox;
     }
@@ -275,21 +277,27 @@ public class Main extends Application {
         BorderPane informationPane = new BorderPane();
         informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
 
-        Text leftText = new Text(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg()));
+        Text leftText = new Text(String.format("Champ de vue : %.1f°", skyCanvas.getFieldOfViewDeg()));
         Text centerText = new Text();
-        Text rightText = new Text(String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()));
+        Text rightText = new Text(String.format("Azimut : %.2f°, hauteur : %.2f°", skyCanvas.getMouseAzDeg(), skyCanvas.getMouseAltDeg()));
 
         skyCanvas.objectUnderMouseProperty().addListener((p, o, n) -> {
             if (n != null){
                 centerText.setText(n.info());
-            }else{
+            } else {
                 centerText.setText("");
             }
         });
 
-        sb = Bindings.createStringBinding(()->String.format("Azimut : %.2f°, hauteur : %.2f°",skyCanvas.getMouseAzDeg(),skyCanvas.getMouseAltDeg()),skyCanvas.mouseAltDegProperty(),skyCanvas.mouseAzDegProperty());
-        sb.addListener((p, o, n)-> rightText.setText(sb.getValue()));
-        skyCanvas.fieldOfViewDegProperty().addListener((p, o, n)-> leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg())));
+        sb = Bindings.createStringBinding(() ->
+                String.format("Azimut : %.2f°, hauteur : %.2f°",
+                        skyCanvas.getMouseAzDeg(),
+                        skyCanvas.getMouseAltDeg()),
+                skyCanvas.mouseAltDegProperty(),
+                skyCanvas.mouseAzDegProperty());
+        sb.addListener((p, o, n) -> rightText.setText(sb.getValue()));
+        skyCanvas.fieldOfViewDegProperty().addListener((p, o, n) ->
+                leftText.setText(String.format("Champ de vue : %.1f°",skyCanvas.getFieldOfViewDeg())));
 
         informationPane.setLeft(leftText);
         informationPane.setCenter(centerText);
@@ -312,11 +320,11 @@ public class Main extends Application {
                     return GeographicCoordinates.isValidLonDeg(newLonLatDeg)
                             ? change
                             : null;
-                }else if(type.equals("lat")){
+                } else if(type.equals("lat")){
                     return GeographicCoordinates.isValidLatDeg(newLonLatDeg)
                             ? change
                             : null;
-                }else{
+                } else {
                     return  null;
                 }
             } catch (Exception e) {
