@@ -16,7 +16,7 @@ import java.util.Locale;
 public final class EquatorialCoordinates extends SphericalCoordinates {
     //Intervals that are used to check if the given angle in of() method is valid.
     private final static RightOpenInterval RA_INTERVAL = RightOpenInterval.of(Angle.ofHr(0), Angle.ofHr(24));
-    private final static ClosedInterval DEC_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
+    private final static ClosedInterval DEC_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90), Angle.ofDeg(90));
 
     private EquatorialCoordinates(double rightAscension, double declination) {
         super(rightAscension, declination);

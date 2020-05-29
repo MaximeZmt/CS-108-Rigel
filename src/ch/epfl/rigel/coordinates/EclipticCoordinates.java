@@ -15,8 +15,8 @@ import java.util.Locale;
  */
 public final class EclipticCoordinates extends SphericalCoordinates {
     //Intervals that are used to check if the given angle in of() method is valid.
-    private final static RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
-    private final static ClosedInterval LATITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
+    private final static RightOpenInterval LONGITUDE_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0), Angle.ofDeg(360));
+    private final static ClosedInterval LATITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90), Angle.ofDeg(90));
 
     private EclipticCoordinates(double longitude, double latitude) {
         super(longitude, latitude);
@@ -35,8 +35,8 @@ public final class EclipticCoordinates extends SphericalCoordinates {
      * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
     public static EclipticCoordinates of(double lon, double lat){
-        Preconditions.checkInInterval(LONGITUDE_INTERVAL,lon);
-        Preconditions.checkInInterval(LATITUDE_INTERVAL,lat);
+        Preconditions.checkInInterval(LONGITUDE_INTERVAL, lon);
+        Preconditions.checkInInterval(LATITUDE_INTERVAL, lat);
         return new EclipticCoordinates(lon, lat);
     }
 
