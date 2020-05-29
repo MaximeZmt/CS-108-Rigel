@@ -8,6 +8,7 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.ClosedInterval;
 import ch.epfl.rigel.math.RightOpenInterval;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -34,12 +35,13 @@ import java.util.Map;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
-    private final static RightOpenInterval INTERVAL = RightOpenInterval.of(0,360);
+    private final static RightOpenInterval AZIMUTH_INTERVAL_FOR_DRAG = RightOpenInterval.of(0,360);
     private final static int CENTER_VERTICAL_CHANGER = 5;
     private final static int CENTER_HORIZONTAL_CHANGER = 10;
     private final static double MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE = 10;
     private final static double MAX_FIELD_OF_VIEW = 150;
     private final static double MIN_FIELD_OF_VIEW = 30;
+    private final static ClosedInterval FIELD_OF_VIEW_INTERVAL = ClosedInterval.of(MIN_FIELD_OF_VIEW, MAX_FIELD_OF_VIEW);
     private final static double MIN_ALTITUDE = 5;
     private final static double MAX_ALTITUDE = 90;
     private final static double MIN_AZIMUTH = 0;
@@ -187,9 +189,8 @@ public final class SkyCanvasManager {
                 newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaY();
             }
 
-            if (MIN_FIELD_OF_VIEW <= newFieldOfViewDeg && newFieldOfViewDeg <= MAX_FIELD_OF_VIEW){
-                viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
-            }
+            newFieldOfViewDeg = FIELD_OF_VIEW_INTERVAL.clip(newFieldOfViewDeg);
+            viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
             e.consume();
         });
         canvas.setOnKeyPressed(e->{
@@ -221,7 +222,7 @@ public final class SkyCanvasManager {
             double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
 
             if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
-                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(INTERVAL.reduce(newAzDeg), newAltDeg);
+                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg), newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
             mousePosition.setValue(CartesianCoordinates.of(e.getX(),e.getY()));
