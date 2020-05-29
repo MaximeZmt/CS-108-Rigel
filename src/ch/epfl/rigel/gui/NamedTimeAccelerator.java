@@ -3,7 +3,7 @@ package ch.epfl.rigel.gui;
 import java.time.Duration;
 
 /**
- * Represents a named TimeAccelerator
+ * Represents a named TimeAccelerator, i.e. an accelerator paired with it's string representation
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -21,6 +21,7 @@ public enum NamedTimeAccelerator {
 
     /**
      * Constructor
+     *
      * @param name name
      * @param accelerator TimeAccelerator
      */
@@ -52,7 +53,6 @@ public enum NamedTimeAccelerator {
      *
      * @return name
      */
-
     @Override
     public String toString() {
         return name;
