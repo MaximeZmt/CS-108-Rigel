@@ -68,7 +68,7 @@ public final class TimeAnimator extends AnimationTimer {
      *
      * @return the running property
      */
-    public BooleanProperty runningProperty() {
+    public ReadOnlyBooleanProperty runningProperty() {
         return running;
     }
 

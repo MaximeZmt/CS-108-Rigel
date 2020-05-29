@@ -7,13 +7,13 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
- * JavaFx Bean containing the viewing parameters
+ * JavaFx Bean containing the viewing parameters defining which portion of the sky is visible
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
 public final class ViewingParametersBean {
-    private final DoubleProperty fieldOfViewDeg = new SimpleDoubleProperty(68.4);
+    private final DoubleProperty fieldOfViewDeg = new SimpleDoubleProperty(0);
     private final ObjectProperty<HorizontalCoordinates> center = new SimpleObjectProperty<>(null);
 
     /**
@@ -35,21 +35,21 @@ public final class ViewingParametersBean {
     }
 
     /**
-     * Getter for the center
-     *
-     * @return center
-     */
-    public HorizontalCoordinates getCenter() {
-        return center.get();
-    }
-
-    /**
      * Getter for the center  property
      *
      * @return center property
      */
     public ObjectProperty<HorizontalCoordinates> centerProperty() {
         return center;
+    }
+
+    /**
+     * Getter for the center
+     *
+     * @return center
+     */
+    public HorizontalCoordinates getCenter() {
+        return center.get();
     }
 
     /**
