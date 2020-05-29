@@ -67,8 +67,6 @@ public class Main extends Application {
         launch(args);
     }
 
-    //TODO ASK FOR BEAN: SHOULD WE PUT A GETTER AND A PROPERTY EVEN IF NOT NEEDED
-
     private InputStream getResourceStream(String resource) {
         return getClass().getResourceAsStream(resource);
     }
