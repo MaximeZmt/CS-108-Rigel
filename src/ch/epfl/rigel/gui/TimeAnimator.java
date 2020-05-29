@@ -39,7 +39,7 @@ public final class TimeAnimator extends AnimationTimer {
         }else{
             long deltaT = l- timeStamp;
             timeStamp = l;
-            ZonedDateTime zdt = accelerator.get().adjust(dateTimeBean.getZonedDateTime(),deltaT);
+            ZonedDateTime zdt = accelerator.get().adjust(dateTimeBean.getZonedDateTime(), deltaT);
             dateTimeBean.setZonedDateTime(zdt);
         }
     }
@@ -89,6 +89,4 @@ public final class TimeAnimator extends AnimationTimer {
     public void setAccelerator(TimeAccelerator timeAccelerator){
         this.accelerator.set(timeAccelerator);
     }
-
-
 }

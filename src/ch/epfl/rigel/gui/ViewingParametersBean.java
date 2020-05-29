@@ -60,5 +60,4 @@ public final class ViewingParametersBean {
     public void setCenter(HorizontalCoordinates center) {
         this.center.set(center);
     }
-
 }
