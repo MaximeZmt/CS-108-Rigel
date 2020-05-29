@@ -64,7 +64,7 @@ public final class TimeAnimator extends AnimationTimer {
     }
 
     /**
-     * checks if running
+     * Checks if the animation is  running
      *
      * @return boolean
      */
