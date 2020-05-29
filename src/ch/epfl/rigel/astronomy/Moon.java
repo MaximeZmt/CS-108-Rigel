@@ -13,7 +13,7 @@ import java.util.Locale;
  * @author Maxime Zammit (310251)
  */
 public final class Moon extends CelestialObject {
-    private static final ClosedInterval PHASE_INTERVAL = ClosedInterval.of(0,1);
+    private static final ClosedInterval PHASE_INTERVAL = ClosedInterval.of(0, 1);
     private final double phase;
 
     /**
@@ -27,7 +27,7 @@ public final class Moon extends CelestialObject {
      */
     public Moon(EquatorialCoordinates equatorialPos, float angularSize, float magnitude, float phase) {
         super("Lune", equatorialPos, angularSize, magnitude);
-        Preconditions.checkInInterval(PHASE_INTERVAL,phase);
+        Preconditions.checkInInterval(PHASE_INTERVAL, phase);
         this.phase = phase;
     }
 
@@ -36,6 +36,6 @@ public final class Moon extends CelestialObject {
      */
     @Override
     public String info() {
-        return String.format(Locale.ROOT, "%s (%.1f%%)",name(),(phase*100)); //%% allow to escape String.format and print "%"
+        return String.format(Locale.ROOT, "%s (%.1f%%)", name(), (phase*100)); //%% allow to escape String.format and print "%"
     }
 }

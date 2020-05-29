@@ -28,7 +28,7 @@ public final class StarCatalogue {
         Map<Star, Integer> mapStar = new HashMap<>();
         int counter = 0;
         for(Star starFiller : stars){
-            mapStar.put(starFiller,counter);
+            mapStar.put(starFiller, counter);
             counter++;
         }
 
@@ -40,7 +40,7 @@ public final class StarCatalogue {
             List<Integer> indexList = new ArrayList<>();
             for (Star s : a.stars()){
                 Integer starIndex = mapStar.get(s);
-                Preconditions.checkArgument(starIndex!=null);
+                Preconditions.checkArgument(starIndex != null);
                 indexList.add(starIndex);
             }
             map.put(a, indexList);

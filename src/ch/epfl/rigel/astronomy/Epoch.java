@@ -23,7 +23,7 @@ public enum Epoch {
 
     private ZonedDateTime date;
     private final static double  MILLISEC_TO_DAY_FACTOR = 1000 * 60 * 60 * 24;
-    private final static double  NUMBER_OF_DAYS_PER_CENTURY = 365.25*100;
+    private final static double  NUMBER_OF_DAYS_PER_CENTURY = 365.25 * 100;
 
     /**
      * Basic constructor for Epoch
@@ -41,7 +41,7 @@ public enum Epoch {
      * @return number of days (can be decimal) (double)
      */
     public double daysUntil(ZonedDateTime when){
-        return date.until(when, ChronoUnit.MILLIS)/MILLISEC_TO_DAY_FACTOR;
+        return date.until(when, ChronoUnit.MILLIS) / MILLISEC_TO_DAY_FACTOR;
     }
 
     /**
@@ -51,6 +51,6 @@ public enum Epoch {
      * @return number of julian centuries (can be decimal) (double)
      */
     public double julianCenturiesUntil(ZonedDateTime when){
-        return date.until(when, ChronoUnit.MILLIS)/(MILLISEC_TO_DAY_FACTOR*NUMBER_OF_DAYS_PER_CENTURY);
+        return date.until(when, ChronoUnit.MILLIS) / (MILLISEC_TO_DAY_FACTOR * NUMBER_OF_DAYS_PER_CENTURY);
     }
 }

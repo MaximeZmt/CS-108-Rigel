@@ -12,7 +12,6 @@ import java.util.*;
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
  */
-
 public class ObservedSky {
 
     private final Sun sunInstance;
@@ -32,6 +31,7 @@ public class ObservedSky {
 
     /**
      * Constructor Which receive information to simulate the sky
+     *
      * @param zdt A ZonedDateTime, is the object containing the time zone, the date and the time.
      * @param observPos The position of the observer around the earth (in latitude and longitude)
      * @param stereoProj The stereographic projection that translate 3d to 2d.
@@ -40,14 +40,14 @@ public class ObservedSky {
     public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){
         this.starCatalogue = starCatalogue;
         EclipticToEquatorialConversion eclipToEquatC = new EclipticToEquatorialConversion(zdt);
-        EquatorialToHorizontalConversion equatToHorizonC = new EquatorialToHorizontalConversion(zdt,observPos);
+        EquatorialToHorizontalConversion equatToHorizonC = new EquatorialToHorizontalConversion(zdt, observPos);
 
         //sun
-        sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt),eclipToEquatC);
+        sunInstance = SunModel.SUN.at(Epoch.J2010.daysUntil(zdt), eclipToEquatC);
         sunCartCoordinates = stereoProj.apply(equatToHorizonC.apply(sunInstance.equatorialPos()));
 
         //moon
-        moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt),eclipToEquatC);
+        moonInstance = MoonModel.MOON.at(Epoch.J2010.daysUntil(zdt), eclipToEquatC);
         moonCartCoordinates = stereoProj.apply(equatToHorizonC.apply(moonInstance.equatorialPos()));
 
         //planet
@@ -67,7 +67,7 @@ public class ObservedSky {
 
         //stars
         starList = starCatalogue.stars();
-        starPosArray = new double[starList.size()*2]; //2* cause coord x and y.
+        starPosArray = new double[starList.size() * 2]; //2* cause coord x and y.
         counter = 0;
         for (Star s : starList) {
             CartesianCoordinates starCartCoord = stereoProj.apply(equatToHorizonC.apply(s.equatorialPos()));
@@ -79,6 +79,7 @@ public class ObservedSky {
 
     /**
      * Getter for the sun Instance at a given time, with a given observer
+     *
      * @return an instance of the sun
      */
     public Sun sun(){
@@ -87,6 +88,7 @@ public class ObservedSky {
 
     /**
      * Getter for the sun position
+     *
      * @return CartesianCoordinates that represent the Sun Position
      */
     public CartesianCoordinates sunPosition(){
@@ -95,6 +97,7 @@ public class ObservedSky {
 
     /**
      * Getter for the Moon instance at a given time, with a given observer.
+     *
      * @return an instance of the moon
      */
     public Moon moon(){
@@ -103,6 +106,7 @@ public class ObservedSky {
 
     /**
      * Getter for the moon position
+     *
      * @return CartesianCoordinates that represent the moon Position
      */
     public CartesianCoordinates moonPosition(){
@@ -111,6 +115,7 @@ public class ObservedSky {
 
     /**
      * Getter for the list containing the Planet List Instance
+     *
      * @return a List of Planet Instance
      */
     public List<Planet> planets(){
@@ -119,6 +124,7 @@ public class ObservedSky {
 
     /**
      * Getter for the planetPosition
+     *
      * @return an array of cartesian Coordinates
      */
     public double[] planetPositions(){
@@ -128,6 +134,7 @@ public class ObservedSky {
 
     /**
      * Getter for the List of Star Instance
+     *
      * @return a List of Star Instance
      */
     public List<Star> stars(){
@@ -136,6 +143,7 @@ public class ObservedSky {
 
     /**
      * Getter for the starPosition
+     *
      * @return an array of cartesian Coordinates containing the pos of the star
      */
     public double[] starsPosition(){
@@ -145,6 +153,7 @@ public class ObservedSky {
 
     /**
      * Getter for a set that is containing Asterisms instance
+     *
      * @return a set of Asterisms instance
      */
     public Set<Asterism> getAsterism(){
@@ -153,6 +162,7 @@ public class ObservedSky {
 
     /**
      * Getter that return given an Asterism the Hipparcosid of the stars that are contained
+     *
      * @param asterism An instance of an Asterism
      * @return a List of HipparcosId of the stars
      */
@@ -162,25 +172,26 @@ public class ObservedSky {
 
     /**
      * Given cartesian coordinates and a max distance, return the closest celestial object
+     *
      * @param cc The cartesian coordinates where we want the object
      * @param maxDist the maximum distance
      * @return An Optional of a CelestialObject that may containing one.
      */
-    public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc,double maxDist){
+    public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc, double maxDist){
         double closestDist = maxDist;
         double tempoDist;
         Optional<CelestialObject> co = Optional.empty();
 
         //sun
-        tempoDist = dist(sunPosition().x(),cc.x(),sunPosition().y(),cc.y());
-        if (tempoDist<closestDist){
+        tempoDist = dist(sunPosition().x(), cc.x(), sunPosition().y(), cc.y());
+        if (tempoDist < closestDist){
             co = Optional.of(sunInstance);
             closestDist = tempoDist;
         }
 
         //moon
-        tempoDist = dist(moonPosition().x(),cc.x(),moonPosition().y(),cc.y());
-        if(tempoDist<closestDist){
+        tempoDist = dist(moonPosition().x(), cc.x(), moonPosition().y(), cc.y());
+        if(tempoDist < closestDist){
             co = Optional.of(moonInstance);
             closestDist = tempoDist;
         }
@@ -188,8 +199,8 @@ public class ObservedSky {
         //planet
         for(Planet p : planetsList){
             int index = planetsList.indexOf(p);
-            tempoDist = dist(planetPosArray[index*2],cc.x(),planetPosArray[(index*2)+1],cc.y());
-            if(tempoDist<closestDist){
+            tempoDist = dist(planetPosArray[index * 2], cc.x(), planetPosArray[(index*2) + 1], cc.y());
+            if(tempoDist < closestDist){
                 closestDist = tempoDist;
                 co = Optional.of(p);
             }
@@ -199,8 +210,8 @@ public class ObservedSky {
         int index;
         for(Star s : starList){
             index = starList.indexOf(s);
-            tempoDist = dist(starPosArray[index*2],cc.x(),starPosArray[(index*2)+1],cc.y());
-            if(tempoDist<closestDist){
+            tempoDist = dist(starPosArray[index * 2], cc.x(), starPosArray[(index * 2) + 1], cc.y());
+            if(tempoDist < closestDist){
                 closestDist = tempoDist;
                 co = Optional.of(s);
             }
@@ -209,7 +220,6 @@ public class ObservedSky {
     }
 
     private double dist(double x1, double x2, double y1, double y2){
-        return Math.hypot(x1-x2,y1-y2);
+        return Math.hypot(x1 - x2, y1 - y2);
     }
-
 }

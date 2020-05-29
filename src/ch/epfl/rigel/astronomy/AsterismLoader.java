@@ -33,8 +33,8 @@ public enum AsterismLoader implements StarCatalogue.Loader{
             String line;
             Map<Integer,Star> mapHipparcosStar = new HashMap<>();
 
-            for (Star starFiller: starList){
-                mapHipparcosStar.put(starFiller.hipparcosId(),starFiller);
+            for (Star starFiller : starList){
+                mapHipparcosStar.put(starFiller.hipparcosId(), starFiller);
             }
 
 

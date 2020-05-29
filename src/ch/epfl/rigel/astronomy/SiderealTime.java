@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
  * @author Maxime Zammit (310251)
  */
 public final class SiderealTime {
-    private final static Polynomial S0 = Polynomial.of(0.000025862,2400.051336,6.697374558);
+    private final static Polynomial S0 = Polynomial.of(0.000025862,2400.051336, 6.697374558);
     private final static double S1 = 1.002737909;
     private final static double MILLISEC_PER_HOURS_FACTOR = 3600000;
 
@@ -36,9 +36,9 @@ public final class SiderealTime {
         when = when.withZoneSameInstant(ZoneOffset.UTC);
         ZonedDateTime truncatedDays = when.truncatedTo(ChronoUnit.DAYS);
         double centuriesUntil = Epoch.J2000.julianCenturiesUntil(truncatedDays);
-        double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS)/MILLISEC_PER_HOURS_FACTOR;
+        double deltaHours = truncatedDays.until(when, ChronoUnit.MILLIS) / MILLISEC_PER_HOURS_FACTOR;
 
-        double s = S0.at(centuriesUntil)+S1*deltaHours;
+        double s = S0.at(centuriesUntil) + S1 * deltaHours;
         return Angle.normalizePositive(Angle.ofHr(s));
     }
 
@@ -50,6 +50,6 @@ public final class SiderealTime {
      * @return SiderealTime in radian in [0;2Pi[ (double)
      */
     public static double local(ZonedDateTime when, GeographicCoordinates where){
-        return Angle.normalizePositive(greenwich(when)+where.lon());
+        return Angle.normalizePositive(greenwich(when) + where.lon());
     }
 }
