@@ -7,7 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 /**
- * JavaFx bean containing the observer location
+ * JavaFx bean containing the observer location in degrees
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -19,21 +19,21 @@ public final class ObserverLocationBean {
             GeographicCoordinates.ofDeg(lonDeg.get(), latDeg.get()), lonDeg, latDeg);
 
     /**
-     * Getter for the longitude in degrees
-     *
-     * @return longitude
-     */
-    public double getLonDeg() {
-        return lonDeg.get();
-    }
-
-    /**
      * Getter for the longitude property
      *
      * @return longitude property
      */
     public DoubleProperty lonDegProperty() {
         return lonDeg;
+    }
+
+    /**
+     * Getter for the longitude in degrees
+     *
+     * @return longitude in degrees
+     */
+    public double getLonDeg() {
+        return lonDeg.get();
     }
 
     /**
@@ -46,21 +46,21 @@ public final class ObserverLocationBean {
     }
 
     /**
-     * Getter for the latitude in degrees
-     *
-     * @return latitude
-     */
-    public double getLatDeg() {
-        return latDeg.get();
-    }
-
-    /**
      * Getter for the latitude property
      *
      * @return latitude property
      */
     public DoubleProperty latDegProperty() {
         return latDeg;
+    }
+
+    /**
+     * Getter for the latitude in degrees
+     *
+     * @return latitude in degrees
+     */
+    public double getLatDeg() {
+        return latDeg.get();
     }
 
     /**
@@ -73,21 +73,21 @@ public final class ObserverLocationBean {
     }
 
     /**
-     * Getter for the geographic coordinates
-     *
-     * @return geographic coordinates
-     */
-    public GeographicCoordinates getCoordinates() {
-        return coordinates.get();
-    }
-
-    /**
      * Getter for the geographic coordinates property
      *
      * @return geographic coordinates property
      */
     public ObjectBinding<GeographicCoordinates> coordinatesProperty() {
         return coordinates;
+    }
+
+    /**
+     * Getter for the geographic coordinates
+     *
+     * @return geographic coordinates
+     */
+    public GeographicCoordinates getCoordinates() {
+        return coordinates.get();
     }
 
     /**
