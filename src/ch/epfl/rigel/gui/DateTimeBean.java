@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
- * JavaFx bean containing the zone, date and time in wich the observer is
+ * JavaFx bean containing date, time and the zone in which the observer is
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -102,7 +102,7 @@ public final class DateTimeBean {
     }
 
     /**
-     * Gets a ZonedDateTime constituted of the zone, date and time of the bean
+     * Getter for a ZonedDateTime constituted of the zone, date and time of the bean
      *
      * @return a ZonedDateTime
      */
@@ -111,7 +111,7 @@ public final class DateTimeBean {
     }
 
     /**
-     * Sets the zone, date and time of the bean with the given ZonedDateTime
+     * Setter for the zone, date and time of the bean with the given ZonedDateTime
      *
      * @param zdt given ZonedDateTime
      */
