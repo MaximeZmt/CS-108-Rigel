@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Instantiable class that represent a "skyPainter",
- * An object that is able to paint the sky
+ * Instantiable class that represent a sky painter,
+ * an object that is able to paint the sky
  *
  * @author Michael Freeman (313215)
  * @author Maxime Zammit (310251)
@@ -34,14 +34,13 @@ public final class SkyCanvasPainter {
     private final static double NORTH_WEST_AZIMUTH = 315;
     private final static double LETTER_ALTITUDE = -0.5;
 
-
-
     private final Canvas canvas;
     private final GraphicsContext ctx;
     private final static ClosedInterval MAGNITUDE_INTERVAL = ClosedInterval.of(-2,5);
 
     /**
      * Public constructor to create a painter
+     *
      * @param canvas Canvas that will be edited.
      */
     public SkyCanvasPainter(Canvas canvas){
@@ -49,34 +48,17 @@ public final class SkyCanvasPainter {
         ctx = canvas.getGraphicsContext2D();
     }
 
-    /*
-    pour les étoiles : la couleur obtenue via BlackBodyColor,
-    pour les astérismes : Color.BLUE,
-    pour les planètes : Color.LIGHTGRAY,
-    pour le Soleil : voir ci-dessous,
-    pour la Lune : Color.WHITE,
-    pour l'horizon et les points intercardinaux : Color.RED.
-
-    --
-     le Soleil est représenté au moyen des trois disques concentriques suivants :
-
-        un disque dont le diamètre est celui du Soleil et la couleur Color.WHITE,
-        un disque dont le diamètre est celui du Soleil plus 2 et la couleur Color.YELLOW,
-        un disque dont le diamètre est celui du Soleil multiplié par 2.2 et dont la couleur est Color.YELLOW mais avec une opacité de 25% seulement, représentant un halo autour du Soleil.
-    Ces trois disques doivent bien entendu être dessinés du plus grand au plus petit.
-
-     */
-
     /**
      * Clear the Canvas of the painter
      */
     public void clear(){
         ctx.setFill(Color.BLACK);
-        ctx.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+        ctx.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
     }
 
     /**
      * Draw on the canvas of the painter: Asterism and Stars
+     *
      * @param sky The sky which the painter will paint
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
@@ -84,47 +66,45 @@ public final class SkyCanvasPainter {
     public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
         List<Star> starList = sky.stars();
         double[] starPos = sky.starsPosition();
-        planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size()); //peut être remis dans star pos
-
+        planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size());
 
         //asterism
         Set<Asterism> asterismSet = sky.getAsterism();
         ctx.setStroke(Color.BLUE);
         for (Asterism asterism : asterismSet){
             List<Integer> indiceList = sky.getAsterismIndices(asterism);
-            double x0 = starPos[2*indiceList.get(0)];
-            double y0 = starPos[2*indiceList.get(0)+1];
+            double x0 = starPos[2 * indiceList.get(0)];
+            double y0 = starPos[2 * indiceList.get(0) + 1];
             ctx.beginPath();
             ctx.moveTo(x0, y0);
 
             int counter = 0;
-            for (int indice : indiceList.subList(0,indiceList.size()-1)){
+            for (int indice : indiceList.subList(0,indiceList.size() - 1)){
                 int nextIndice = indiceList.get(counter+1);
-                double x1 = starPos[2*indice];
-                double y1 = starPos[2*indice+1];
-                double x2 = starPos[2*nextIndice];
-                double y2 = starPos[2*nextIndice+1];
+                double x1 = starPos[2 * indice];
+                double y1 = starPos[2 * indice + 1];
+                double x2 = starPos[2 * nextIndice];
+                double y2 = starPos[2 * nextIndice + 1];
 
-                if (canvas.getBoundsInLocal().contains(x1,y1) || canvas.getBoundsInLocal().contains(x2,y2)){
+                if (canvas.getBoundsInLocal().contains(x1, y1) || canvas.getBoundsInLocal().contains(x2, y2)){
                     ctx.lineTo(x2, y2);
                 } else {
-                    ctx.moveTo(x2,y2);
+                    ctx.moveTo(x2, y2);
                 }
                 counter++;
             }
             ctx.stroke();
         }
 
-
         //stars
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
 
         for (Star s : starList) {
             double starMagn = s.magnitude();
-            double diameter = objectDiameter(starMagn, multiplyFactor); //min method
+            double diameter = objectDiameter(starMagn, multiplyFactor);
             int index = starList.indexOf(s);
             ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
-            double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX(); //not sure to understand why deltaTransform and not transform
+            double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
             double x = starPos[2 * index] - (0.5 * diam2);
             double y = starPos[(2 * index) + 1] - (0.5 * diam2);
             ctx.fillOval(x, y, diam2, diam2);
@@ -133,6 +113,7 @@ public final class SkyCanvasPainter {
 
     /**
      * Draw on the canvas of the painter: planets
+     *
      * @param sky The sky which the painter will paint
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
@@ -145,11 +126,11 @@ public final class SkyCanvasPainter {
         int counter = 0;
         for(Planet p: planetList){
             double planetMagn = p.magnitude();
-            double diameter = objectDiameter(planetMagn,multiplyFactor);
+            double diameter = objectDiameter(planetMagn, multiplyFactor);
             ctx.setFill(Color.LIGHTGRAY);
             double diam2 = planeToCanvas.deltaTransform(diameter,0).getX();
-            double x = planetCoord[(2*counter)] - 0.5*diam2;
-            double y = planetCoord[(2*counter)+1] - 0.5*diam2;
+            double x = planetCoord[(2 * counter)] - 0.5 * diam2;
+            double y = planetCoord[(2 * counter) + 1] - 0.5 * diam2;
             ctx.fillOval(x, y, diam2, diam2);
             counter++;
         }
@@ -157,6 +138,7 @@ public final class SkyCanvasPainter {
 
     /**
      * Draw on the canvas of the painter: The sun
+     *
      * @param sky The sky which the painter will paint
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
@@ -189,6 +171,7 @@ public final class SkyCanvasPainter {
 
     /**
      * Draw on the canvas of the painter: The moon
+     *
      * @param sky The sky which the painter will paint
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
@@ -207,6 +190,7 @@ public final class SkyCanvasPainter {
 
     /**
      * Draw on the canvas of the painter: The Horizon and the octant name
+     *
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
      */
