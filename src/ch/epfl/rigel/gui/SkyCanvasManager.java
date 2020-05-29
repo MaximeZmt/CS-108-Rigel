@@ -327,6 +327,15 @@ public final class SkyCanvasManager {
     }
 
     /**
+     * Setter for the zone
+     *
+     * @param zone
+     */
+    public void setZone(ZoneId zone) {
+        this.zone.set(zone);
+    }
+
+    /**
      * Setter for the date
      *
      * @param date date

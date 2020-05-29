@@ -264,8 +264,10 @@ public class Main extends Application {
         });
 
         resetButton.setOnAction(e -> {
-            skyCanvas.setTime(LocalTime.now());
-            skyCanvas.setDate(LocalDate.now());
+            ZonedDateTime currentTime = ZonedDateTime.now();
+            skyCanvas.setTime(currentTime.toLocalTime());
+            skyCanvas.setDate(currentTime.toLocalDate());
+            skyCanvas.setZone(currentTime.getZone());
         });
 
         timeManagerbox.getChildren().addAll(acceleratorSelector, resetButton, playPauseButton);
