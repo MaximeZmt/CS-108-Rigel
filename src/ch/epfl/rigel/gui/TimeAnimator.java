@@ -19,7 +19,7 @@ public final class TimeAnimator extends AnimationTimer {
     private boolean firstTime = true;
 
     /**
-     * Constructor
+     * Constructor which receive a date time bean that will be animated
      *
      * @param dateTimeBean date time bean
      */
@@ -64,7 +64,7 @@ public final class TimeAnimator extends AnimationTimer {
     }
 
     /**
-     * Checks if the animation is  running
+     * Checks if the animation is running
      *
      * @return boolean
      */
@@ -82,7 +82,7 @@ public final class TimeAnimator extends AnimationTimer {
     }
 
     /**
-     * Setter for for the accelerator
+     * Setter for the accelerator
      *
      * @param timeAccelerator time accelerator
      */
