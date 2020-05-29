@@ -20,7 +20,7 @@ public final class ClosedInterval extends Interval {
      */
     @Override
     public boolean contains(double v) {
-        return low()<=v&&v<=high();
+        return low() <= v && v <= high();
     }
 
     /**
@@ -34,7 +34,7 @@ public final class ClosedInterval extends Interval {
      * @throws IllegalArgumentException if low is bigger or equal to high
      */
     public static ClosedInterval of(double low, double high) {
-        Preconditions.checkArgument(low<high);
+        Preconditions.checkArgument(low < high);
         return new ClosedInterval(low, high);
     }
 
@@ -46,8 +46,8 @@ public final class ClosedInterval extends Interval {
      * @throws IllegalArgumentException if size is smaller or equal to 0
      */
     public static ClosedInterval symmetric(double size) {
-        Preconditions.checkArgument(size>0);
-        return new ClosedInterval(-size/2, size/2);
+        Preconditions.checkArgument(size > 0);
+        return new ClosedInterval(-size / 2, size / 2);
     }
 
     /**
@@ -57,7 +57,7 @@ public final class ClosedInterval extends Interval {
      * @return the clipped value (double)
      */
     public double clip(double v) {
-        if(v<= low()) {
+        if(v <= low()) {
             return low();
         }
         else return Math.min(v, high());

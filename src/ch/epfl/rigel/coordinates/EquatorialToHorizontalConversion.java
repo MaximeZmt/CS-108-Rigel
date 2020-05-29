@@ -25,7 +25,7 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      * @param where geographic location
      */
     public EquatorialToHorizontalConversion(ZonedDateTime when, GeographicCoordinates where){
-        siderealTimeResult = SiderealTime.local(when,where);
+        siderealTimeResult = SiderealTime.local(when, where);
         double phi = where.lat();
 
         cosPhi = Math.cos(phi);
@@ -38,13 +38,13 @@ public final class EquatorialToHorizontalConversion implements Function<Equatori
      */
     @Override
     public HorizontalCoordinates apply(EquatorialCoordinates equatorialCoordinates) {
-        double hourAngle =  siderealTimeResult - equatorialCoordinates.ra();
+        double hourAngle = siderealTimeResult - equatorialCoordinates.ra();
         double cosHourAngle = Math.cos(hourAngle);
         double sinHourAngle = Math.sin(hourAngle);
         double delta = equatorialCoordinates.dec();
-        double h = Math.asin(Math.sin(delta)*sinPhi+Math.cos(delta)*cosPhi*cosHourAngle);
-        double azimuth = Math.atan2((-Math.cos(delta)*cosPhi*sinHourAngle),(Math.sin(delta)-(sinPhi*Math.sin(h))));
-        return HorizontalCoordinates.of(Angle.normalizePositive(azimuth),h);
+        double h = Math.asin(Math.sin(delta) * sinPhi + Math.cos(delta) * cosPhi * cosHourAngle);
+        double azimuth = Math.atan2((-Math.cos(delta) * cosPhi * sinHourAngle), (Math.sin(delta) - (sinPhi * Math.sin(h))));
+        return HorizontalCoordinates.of(Angle.normalizePositive(azimuth), h);
     }
 
     /**

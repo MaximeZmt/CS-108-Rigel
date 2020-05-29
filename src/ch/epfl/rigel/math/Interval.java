@@ -7,7 +7,6 @@ package ch.epfl.rigel.math;
  * @author Maxime Zammit (310251)
  */
 public abstract class Interval {
-
     private final double a;
     private final double b;
 
@@ -46,7 +45,7 @@ public abstract class Interval {
      * @return the size of the interval (double)
      */
     public double size() {
-        return b-a;
+        return b - a;
     }
 
     /**

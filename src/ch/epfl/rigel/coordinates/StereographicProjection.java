@@ -40,8 +40,8 @@ public final class StereographicProjection implements Function<HorizontalCoordin
      */
     public CartesianCoordinates circleCenterForParallel(HorizontalCoordinates hor){
         double phi = hor.alt();
-        double y = cosPhi1/(Math.sin(phi)+sinPhi1);
-        return CartesianCoordinates.of(0,y);
+        double y = cosPhi1/(Math.sin(phi) + sinPhi1);
+        return CartesianCoordinates.of(0, y);
     }
 
     /**
@@ -52,7 +52,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
      */
     public double circleRadiusForParallel(HorizontalCoordinates parallel){
         double phi = parallel.alt();
-        return Math.cos(phi)/(Math.sin(phi)+sinPhi1);
+        return Math.cos(phi) / (Math.sin(phi) + sinPhi1);
     }
 
     /**
@@ -63,7 +63,7 @@ public final class StereographicProjection implements Function<HorizontalCoordin
      * @return the projected diameter (double)
      */
     public double applyToAngle(double rad){
-        return 2*Math.tan(rad/4);
+        return 2 * Math.tan(rad / 4);
     }
 
     /**
@@ -77,18 +77,18 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         double y = xy.y();
         double lambda;
         double phi;
-        if(x==0&&y==0){
+        if(x == 0 && y == 0){
             lambda = lambda0;
             phi = phi1;
-        }else{
-            double rho = Math.sqrt(x*x+y*y);
-            double rhoSquared = rho*rho;
-            double sinc = 2*rho/(rhoSquared+1);
-            double cosc = (1-rhoSquared)/(rhoSquared+1);
-            lambda = Math.atan2(x*sinc,rho*cosPhi1*cosc-y*sinPhi1*sinc)+lambda0;
-            phi = Math.asin(cosc*sinPhi1+(y*sinc*cosPhi1)/rho);
+        } else {
+            double rho = Math.sqrt(x * x + y * y);
+            double rhoSquared = rho * rho;
+            double sinc = 2 * rho / (rhoSquared + 1);
+            double cosc = (1 - rhoSquared) / (rhoSquared + 1);
+            lambda = Math.atan2(x * sinc, rho * cosPhi1 * cosc - y * sinPhi1 * sinc) + lambda0;
+            phi = Math.asin(cosc * sinPhi1 + (y * sinc * cosPhi1) / rho);
         }
-        return HorizontalCoordinates.of(Angle.normalizePositive(lambda),phi);
+        return HorizontalCoordinates.of(Angle.normalizePositive(lambda), phi);
     }
 
     /**
@@ -99,13 +99,13 @@ public final class StereographicProjection implements Function<HorizontalCoordin
         double phi = horizontalCoordinates.alt();
         double sinPhi = Math.sin(phi);
         double cosPhi = Math.cos(phi);
-        double deltaLambda = horizontalCoordinates.az()-lambda0;
+        double deltaLambda = horizontalCoordinates.az() - lambda0;
         double sinDeltaLambda = Math.sin(deltaLambda);
         double cosDeltaLambda = Math.cos(deltaLambda);
-        double d = 1/(1+sinPhi*sinPhi1+cosPhi*cosPhi1*cosDeltaLambda);
-        double x = d*cosPhi*sinDeltaLambda;
-        double y = d*(sinPhi*cosPhi1-cosPhi*sinPhi1*cosDeltaLambda);
-        return CartesianCoordinates.of(x,y);
+        double d = 1 / (1 + sinPhi * sinPhi1 + cosPhi * cosPhi1 * cosDeltaLambda);
+        double x = d * cosPhi * sinDeltaLambda;
+        double y = d * (sinPhi * cosPhi1 - cosPhi * sinPhi1 *cosDeltaLambda);
+        return CartesianCoordinates.of(x, y);
     }
 
     /**

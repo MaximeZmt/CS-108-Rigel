@@ -67,6 +67,7 @@ public final class DateTimeBean {
 
     /**
      * Setter for the time
+     *
      * @param time given time
      */
     public void setTime(LocalTime time){
@@ -106,7 +107,7 @@ public final class DateTimeBean {
      * @return a ZonedDateTime
      */
     public ZonedDateTime getZonedDateTime(){
-        return ZonedDateTime.of(getDate(),getTime(),getZone());
+        return ZonedDateTime.of(getDate(), getTime(), getZone());
     }
 
     /**
@@ -119,5 +120,4 @@ public final class DateTimeBean {
         setTime(zdt.toLocalTime());
         setZone(zdt.getZone());
     }
-
 }

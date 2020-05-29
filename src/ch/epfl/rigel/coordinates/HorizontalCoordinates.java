@@ -15,8 +15,8 @@ import java.util.Locale;
  */
 public final class HorizontalCoordinates extends SphericalCoordinates {
     //Intervals that are used to check if the given angle in of() method is valid.
-    private final static RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0),Angle.ofDeg(360));
-    private final static ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90),Angle.ofDeg(90));
+    private final static RightOpenInterval AZIMUTH_INTERVAL = RightOpenInterval.of(Angle.ofDeg(0), Angle.ofDeg(360));
+    private final static ClosedInterval ALTITUDE_INTERVAL = ClosedInterval.of(Angle.ofDeg(-90), Angle.ofDeg(90));
 
     private HorizontalCoordinates(double azimuth, double altitude) {
         super(azimuth, altitude);
@@ -35,8 +35,8 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
     public static HorizontalCoordinates of(double az, double alt){
-        Preconditions.checkInInterval(AZIMUTH_INTERVAL,az);
-        Preconditions.checkInInterval(ALTITUDE_INTERVAL,alt);
+        Preconditions.checkInInterval(AZIMUTH_INTERVAL, az);
+        Preconditions.checkInInterval(ALTITUDE_INTERVAL, alt);
         return new HorizontalCoordinates(az, alt);
     }
 
@@ -52,12 +52,12 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @return a horizontal coordinate (HorizontalCoordinates)
      * @throws IllegalArgumentException if the inputs are not in the correct interval
      */
-    public static HorizontalCoordinates ofDeg(double azDeg, double altDeg){ //with deg
+    public static HorizontalCoordinates ofDeg(double azDeg, double altDeg){
         double az = Angle.ofDeg(azDeg);
         double alt = Angle.ofDeg(altDeg);
-        Preconditions.checkInInterval(AZIMUTH_INTERVAL,az);
-        Preconditions.checkInInterval(ALTITUDE_INTERVAL,alt);
-        return new HorizontalCoordinates(az,alt);
+        Preconditions.checkInInterval(AZIMUTH_INTERVAL, az);
+        Preconditions.checkInInterval(ALTITUDE_INTERVAL, alt);
+        return new HorizontalCoordinates(az, alt);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @throws IllegalStateException if fails
      */
     public String azOctantName(String n, String e, String s, String w){
-        int octantPosition = ((int) (azDeg()+22.5)/45)%8;
+        int octantPosition = ((int) (azDeg() + 22.5) / 45) % 8;
         switch(octantPosition){
             case 0:
                 return n;
@@ -137,7 +137,7 @@ public final class HorizontalCoordinates extends SphericalCoordinates {
      * @return distance between that and this in radians (two Horizontal coordinates) (double)
      */
     public double angularDistanceTo(HorizontalCoordinates that){
-        return Math.acos( Math.sin(this.alt()) * Math.sin(that.alt()) + Math.cos(this.alt()) * Math.cos(that.alt()) * Math.cos(this.az()-that.az())   );
+        return Math.acos(Math.sin(this.alt()) * Math.sin(that.alt()) + Math.cos(this.alt()) * Math.cos(that.alt()) * Math.cos(this.az() - that.az()));
     }
 
     /**

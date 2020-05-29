@@ -25,7 +25,7 @@ public final class CartesianCoordinates {
      * @return a cartesian coordinate with the given x and y (CartesianCoordinates)
      */
     public static CartesianCoordinates of(double x, double y){
-        return new CartesianCoordinates(x,y);
+        return new CartesianCoordinates(x, y);
     }
 
     /**
@@ -67,6 +67,6 @@ public final class CartesianCoordinates {
      */
     @Override
     public String toString() {
-        return String.format(Locale.ROOT,"(x=%.4f ; y=%.4f)",x,y);
+        return String.format(Locale.ROOT,"(x=%.4f ; y=%.4f)", x, y);
     }
 }
