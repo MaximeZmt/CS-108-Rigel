@@ -8,6 +8,7 @@ import ch.epfl.rigel.coordinates.GeographicCoordinates;
 import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
+import ch.epfl.rigel.math.ClosedInterval;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
@@ -38,6 +39,7 @@ public final class SkyCanvasManager {
     private final static double MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE = 10;
     private final static double MAX_FIELD_OF_VIEW = 150;
     private final static double MIN_FIELD_OF_VIEW = 30;
+    private final static ClosedInterval FIELD_OF_VIEW_INTERVAL = ClosedInterval.of(MIN_FIELD_OF_VIEW, MAX_FIELD_OF_VIEW);
     private final static double MIN_ALTITUDE = 5;
     private final static double MAX_ALTITUDE = 90;
     private final static double MIN_AZIMUTH = 0;
@@ -185,9 +187,8 @@ public final class SkyCanvasManager {
                 newFieldOfViewDeg = fieldOfViewDeg.get() + e.getDeltaY();
             }
 
-            if (MIN_FIELD_OF_VIEW <= newFieldOfViewDeg && newFieldOfViewDeg <= MAX_FIELD_OF_VIEW){
-                viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
-            }
+            newFieldOfViewDeg = FIELD_OF_VIEW_INTERVAL.clip(newFieldOfViewDeg);
+            viewingParametersBean.setFieldOfViewDeg(newFieldOfViewDeg);
             e.consume();
         });
         canvas.setOnKeyPressed(e -> {
