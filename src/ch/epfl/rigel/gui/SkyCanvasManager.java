@@ -44,7 +44,7 @@ public final class SkyCanvasManager {
     private final static double MAX_AZIMUTH = 360;
 
     private final SkyCanvasPainter painter;
-    private final Map<KeyCode,int[]> centerCoordinateChanger;
+    private final Map<KeyCode, int[]> centerCoordinateChanger;
 
     //canvas and mousePosition
     private final Canvas canvas;
@@ -88,34 +88,34 @@ public final class SkyCanvasManager {
                             ViewingParametersBean viewingParametersBean
     ){
         centerCoordinateChanger = Map.of(
-                KeyCode.UP, new int[]{0,CENTER_VERTICAL_CHANGER},
-                KeyCode.RIGHT, new int[]{CENTER_HORIZONTAL_CHANGER,0},
-                KeyCode.DOWN, new int[]{0,-CENTER_VERTICAL_CHANGER},
-                KeyCode.LEFT, new int[]{-CENTER_HORIZONTAL_CHANGER,0});
+                KeyCode.UP, new int[]{0, CENTER_VERTICAL_CHANGER},
+                KeyCode.RIGHT, new int[]{CENTER_HORIZONTAL_CHANGER, 0},
+                KeyCode.DOWN, new int[]{0, -CENTER_VERTICAL_CHANGER},
+                KeyCode.LEFT, new int[]{-CENTER_HORIZONTAL_CHANGER, 0});
 
         canvas = new Canvas();
         painter = new SkyCanvasPainter(canvas);
-        mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0,0));
+        mousePosition = new SimpleObjectProperty<>(CartesianCoordinates.of(0, 0));
 
-        projection = Bindings.createObjectBinding(()->
+        projection = Bindings.createObjectBinding(() ->
                 new StereographicProjection(viewingParametersBean.getCenter()),
                 viewingParametersBean.centerProperty()
         );
 
         //planeToCanvas
         fieldOfViewDeg = viewingParametersBean.fieldOfViewDegProperty();
-        dilatationFactor = Bindings.createDoubleBinding(()->
-                canvas.widthProperty().get()/(projection.get().applyToAngle(Angle.ofDeg(fieldOfViewDeg.get()))),
+        dilatationFactor = Bindings.createDoubleBinding(() ->
+                canvas.widthProperty().get() / (projection.get().applyToAngle(Angle.ofDeg(fieldOfViewDeg.get()))),
                 canvas.widthProperty(), projection, fieldOfViewDeg
         );
-        planeToCanvas = Bindings.createObjectBinding(()->
+        planeToCanvas = Bindings.createObjectBinding(() ->
                 Transform.affine(
                         dilatationFactor.get(),
                         0,
                         0,
                         -dilatationFactor.get(),
-                        canvas.widthProperty().get()/2,
-                        canvas.heightProperty().get()/2
+                        canvas.widthProperty().get() / 2,
+                        canvas.heightProperty().get() / 2
                 ),
                 dilatationFactor, canvas.widthProperty(), canvas.heightProperty()
         );
@@ -128,7 +128,7 @@ public final class SkyCanvasManager {
         observerLonDeg = observerLocationBean.lonDegProperty();
         observerCoordinates = observerLocationBean.coordinatesProperty();
         observedSky = Bindings.createObjectBinding(()->
-                new ObservedSky(ZonedDateTime.of(date.get(),time.get(),zone.get()),
+                new ObservedSky(ZonedDateTime.of(date.get(), time.get(), zone.get()),
                         observerCoordinates.get(),
                         projection.get(),
                         catalogue
@@ -137,32 +137,32 @@ public final class SkyCanvasManager {
         );
 
         //mouseHorizontalPosition
-        mouseHorizontalPosition = Bindings.createObjectBinding(()-> {
+        mouseHorizontalPosition = Bindings.createObjectBinding(() -> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
-                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
+                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x, y);
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 return projection.get().inverseApply(coordinates);
             } catch (NonInvertibleTransformException e){
                 //initial value assignment
-                return HorizontalCoordinates.ofDeg(0,0);
+                return HorizontalCoordinates.ofDeg(0, 0);
             }
         }, mousePosition, planeToCanvas, projection);
-        mouseAzDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
-        mouseAltDeg = Bindings.createDoubleBinding(()->mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
+        mouseAzDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().azDeg(), mouseHorizontalPosition);
+        mouseAltDeg = Bindings.createDoubleBinding(() -> mouseHorizontalPosition.get().altDeg(), mouseHorizontalPosition);
 
         //objectUnderMouse
-        objectUnderMouse = Bindings.createObjectBinding(()-> {
+        objectUnderMouse = Bindings.createObjectBinding(() -> {
             double x = mousePosition.get().x();
             double y = mousePosition.get().y();
             //try catch because height and width of canvas are 0 and inverseDeltaTransform is impossible
             try {
-                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x,y);
+                Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x, y);
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
-                double dist = planeToCanvas.get().inverseDeltaTransform(MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE,0).getX();
-                return observedSky.get().objectClosestTo(coordinates ,dist).orElse(null);
+                double dist = planeToCanvas.get().inverseDeltaTransform(MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE, 0).getX();
+                return observedSky.get().objectClosestTo(coordinates, dist).orElse(null);
             } catch (NonInvertibleTransformException e){
                 return null;
             }
@@ -170,19 +170,19 @@ public final class SkyCanvasManager {
         }, mousePosition, planeToCanvas, observedSky);
 
         //listeners
-        canvas.setOnMouseMoved(e -> mousePosition.set(CartesianCoordinates.of(e.getX(),e.getY())));
-        canvas.setOnMousePressed(e->{
+        canvas.setOnMouseMoved(e -> mousePosition.set(CartesianCoordinates.of(e.getX(), e.getY())));
+        canvas.setOnMousePressed(e -> {
             if (e.isPrimaryButtonDown()){
                 canvas.requestFocus();
             }
         });
         //it is normal if scroll is inverted
-        canvas.setOnScroll(e->{
+        canvas.setOnScroll(e -> {
             double newFieldOfViewDeg;
             if (Math.abs(e.getDeltaX()) >= Math.abs(e.getDeltaY())){
-                newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaX();
+                newFieldOfViewDeg = fieldOfViewDeg.get() + e.getDeltaX();
             } else {
-                newFieldOfViewDeg = fieldOfViewDeg.get()+e.getDeltaY();
+                newFieldOfViewDeg = fieldOfViewDeg.get() + e.getDeltaY();
             }
 
             if (MIN_FIELD_OF_VIEW <= newFieldOfViewDeg && newFieldOfViewDeg <= MAX_FIELD_OF_VIEW){
@@ -190,10 +190,10 @@ public final class SkyCanvasManager {
             }
             e.consume();
         });
-        canvas.setOnKeyPressed(e->{
-            if (centerCoordinateChanger.get(e.getCode())!=null){
-                double newAzDeg = viewingParametersBean.getCenter().azDeg()+centerCoordinateChanger.get(e.getCode())[0];
-                double newAltDeg = viewingParametersBean.getCenter().altDeg()+centerCoordinateChanger.get(e.getCode())[1];
+        canvas.setOnKeyPressed(e -> {
+            if (centerCoordinateChanger.get(e.getCode()) != null){
+                double newAzDeg = viewingParametersBean.getCenter().azDeg() + centerCoordinateChanger.get(e.getCode())[0];
+                double newAltDeg = viewingParametersBean.getCenter().altDeg() + centerCoordinateChanger.get(e.getCode())[1];
                 if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE
                         && MIN_AZIMUTH <= newAzDeg && newAzDeg < MAX_AZIMUTH){
                     HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
@@ -258,14 +258,18 @@ public final class SkyCanvasManager {
      *
      * @return field of view
      */
-    public double getFieldOfViewDeg() { return fieldOfViewDeg.get(); }
+    public double getFieldOfViewDeg() {
+        return fieldOfViewDeg.get();
+    }
 
     /**
      * Getter for the property of the field of view
      *
      * @return field of view property
      */
-    public DoubleProperty fieldOfViewDegProperty() { return fieldOfViewDeg; }
+    public DoubleProperty fieldOfViewDegProperty() {
+        return fieldOfViewDeg;
+    }
 
     /**
      * Getter for the property of the observer latitude

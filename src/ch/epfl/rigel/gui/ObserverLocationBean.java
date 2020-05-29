@@ -15,8 +15,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 public final class ObserverLocationBean {
     private final DoubleProperty lonDeg = new SimpleDoubleProperty(0);
     private final DoubleProperty latDeg = new SimpleDoubleProperty(0);
-    private final ObjectBinding<GeographicCoordinates> coordinates = Bindings.createObjectBinding(()->
-            GeographicCoordinates.ofDeg(lonDeg.get(),latDeg.get()),lonDeg,latDeg);
+    private final ObjectBinding<GeographicCoordinates> coordinates = Bindings.createObjectBinding(() ->
+            GeographicCoordinates.ofDeg(lonDeg.get(), latDeg.get()), lonDeg, latDeg);
 
     /**
      * Getter for the longitude in degrees
