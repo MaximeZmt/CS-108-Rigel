@@ -219,15 +219,6 @@ public final class SkyCanvasManager {
     }
 
     /**
-     * Getter for the azimuth in degrees of the mouse
-     *
-     * @return azimuth
-     */
-    public double getMouseAzDeg() {
-        return mouseAzDeg.get();
-    }
-
-    /**
      * Getter for the property of the azimuth of the mouse
      *
      * @return azimuth of mouse property
@@ -237,12 +228,12 @@ public final class SkyCanvasManager {
     }
 
     /**
-     * Getter for the altitude in degrees of the mouse
+     * Getter for the azimuth in degrees of the mouse
      *
-     * @return altitude
+     * @return azimuth
      */
-    public double getMouseAltDeg() {
-        return mouseAltDeg.get();
+    public double getMouseAzDeg() {
+        return mouseAzDeg.get();
     }
 
     /**
@@ -255,12 +246,12 @@ public final class SkyCanvasManager {
     }
 
     /**
-     * Getter for the field of view in degrees
+     * Getter for the altitude in degrees of the mouse
      *
-     * @return field of view
+     * @return altitude
      */
-    public double getFieldOfViewDeg() {
-        return fieldOfViewDeg.get();
+    public double getMouseAltDeg() {
+        return mouseAltDeg.get();
     }
 
     /**
@@ -270,6 +261,15 @@ public final class SkyCanvasManager {
      */
     public DoubleProperty fieldOfViewDegProperty() {
         return fieldOfViewDeg;
+    }
+
+    /**
+     * Getter for the field of view in degrees
+     *
+     * @return field of view
+     */
+    public double getFieldOfViewDeg() {
+        return fieldOfViewDeg.get();
     }
 
     /**
@@ -291,33 +291,6 @@ public final class SkyCanvasManager {
     }
 
     /**
-     * Getter for the date property
-     *
-     * @return date property
-     */
-    public ObjectProperty<LocalDate> dateProperty() {
-        return date;
-    }
-
-    /**
-     * Getter for the time
-     *
-     * @return time
-     */
-    public LocalTime getTime() {
-        return time.get();
-    }
-
-    /**
-     * Getter for the time property
-     *
-     * @return time property
-     */
-    public ObjectProperty<LocalTime> timeProperty() {
-        return time;
-    }
-
-    /**
      * Getter for the zone property
      *
      * @return zone property
@@ -336,12 +309,39 @@ public final class SkyCanvasManager {
     }
 
     /**
+     * Getter for the date property
+     *
+     * @return date property
+     */
+    public ObjectProperty<LocalDate> dateProperty() {
+        return date;
+    }
+
+    /**
      * Setter for the date
      *
      * @param date date
      */
     public void setDate(LocalDate date) {
         this.date.set(date);
+    }
+
+    /**
+     * Getter for the time property
+     *
+     * @return time property
+     */
+    public ObjectProperty<LocalTime> timeProperty() {
+        return time;
+    }
+
+    /**
+     * Getter for the time
+     *
+     * @return time
+     */
+    public LocalTime getTime() {
+        return time.get();
     }
 
     /**
