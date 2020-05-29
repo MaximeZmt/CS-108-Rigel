@@ -64,6 +64,15 @@ public final class TimeAnimator extends AnimationTimer {
     }
 
     /**
+     * Getter for the running property
+     *
+     * @return the running property
+     */
+    public BooleanProperty runningProperty() {
+        return running;
+    }
+
+    /**
      * Checks if the animation is running
      *
      * @return boolean
