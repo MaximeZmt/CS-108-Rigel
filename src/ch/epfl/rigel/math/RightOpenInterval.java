@@ -20,7 +20,7 @@ public final class RightOpenInterval extends Interval{
      */
     @Override
     public boolean contains(double v) {
-        return low()<=v&&v<high();
+        return low() <= v && v < high();
     }
 
     /**
@@ -32,7 +32,7 @@ public final class RightOpenInterval extends Interval{
      * @throws IllegalArgumentException if low is bigger or equal to high
      */
     public static RightOpenInterval of(double low, double high) {
-        Preconditions.checkArgument(low<high);
+        Preconditions.checkArgument(low < high);
         return new RightOpenInterval (low, high);
     }
 
@@ -44,8 +44,8 @@ public final class RightOpenInterval extends Interval{
      * @throws IllegalArgumentException if size is smaller or equal to 0
      */
     public static RightOpenInterval symmetric(double size) {
-        Preconditions.checkArgument(size>0);
-        return new RightOpenInterval(-size/2, size/2);
+        Preconditions.checkArgument(size > 0);
+        return new RightOpenInterval(-size / 2, size / 2);
     }
 
     /**
@@ -55,11 +55,11 @@ public final class RightOpenInterval extends Interval{
      * @return the reduced value (double)
      */
     public double reduce(double v){
-        return low()+ floorMod(v-low(),high()-low());
+        return low() + floorMod(v - low(), high() - low());
     }
 
     private static double floorMod(double x, double y){
-        return x- (y * Math.floor(x/y));
+        return x - (y * Math.floor(x / y));
     }
 
 
@@ -70,7 +70,5 @@ public final class RightOpenInterval extends Interval{
     public String toString() {
         return String.format(Locale.ROOT, "[%.2f,%.2f[", low(), high());
     }
-
-
 }
 

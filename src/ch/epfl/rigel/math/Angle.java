@@ -9,13 +9,13 @@ import ch.epfl.rigel.Preconditions;
  * @author Maxime Zammit (310251)
  */
 public final class Angle {
-    public final static double TAU = 2*Math.PI;
-    public final static double RAD_PER_ARCSEC = TAU/(360*3600);
-    public final static double RAD_PER_HR = TAU/24.0;
-    public final static double HR_PER_RAD = 24.0/TAU;
+    public final static double TAU = 2 * Math.PI;
+    public final static double RAD_PER_ARCSEC = TAU / (360 * 3600);
+    public final static double RAD_PER_HR = TAU / 24.0;
+    public final static double HR_PER_RAD = 24.0 / TAU;
     public final static double SEC_PER_DEG = 3600;
     public final static double SEC_PER_MIN = 60;
-    public final static RightOpenInterval ANGLE_INTERVAL = RightOpenInterval.of(0,TAU);
+    public final static RightOpenInterval ANGLE_INTERVAL = RightOpenInterval.of(0, TAU);
     public final static RightOpenInterval BASIS_60 = RightOpenInterval.of(0,60);
 
     private Angle(){}
@@ -37,7 +37,7 @@ public final class Angle {
      * @return the transformed angle in radians (double)
      */
     public static double ofArcsec(double sec){ // transform second to rad
-        return sec*RAD_PER_ARCSEC;
+        return sec * RAD_PER_ARCSEC;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class Angle {
     public static double ofDMS(int deg, int min, double sec){
         Preconditions.checkInInterval(BASIS_60, min);
         Preconditions.checkInInterval(BASIS_60, sec);
-        Preconditions.checkArgument(deg>=0);
+        Preconditions.checkArgument(deg >= 0);
         sec = sec + min*SEC_PER_MIN + deg * SEC_PER_DEG;
         return ofArcsec(sec);
     }
@@ -84,7 +84,7 @@ public final class Angle {
      * @return the transformed angle in radians (double)
      */
     public static double ofHr(double hr){
-        return hr*RAD_PER_HR;
+        return hr * RAD_PER_HR;
     }
 
     /**
@@ -96,6 +96,4 @@ public final class Angle {
     public static double toHr(double rad){
         return rad * HR_PER_RAD;
     }
-
-
 }
