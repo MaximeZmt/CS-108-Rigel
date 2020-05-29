@@ -146,27 +146,27 @@ public final class SkyCanvasPainter {
     public void drawSun(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
 
         CartesianCoordinates sunPos = sky.sunPosition();
-        Point2D planeCoord = planeToCanvas.transform(sunPos.x(),sunPos.y());
+        Point2D planeCoord = planeToCanvas.transform(sunPos.x(), sunPos.y());
         double sunDiam = projection.applyToAngle(Angle.ofDeg(0.5));
 
         double sunDiamTransformed = planeToCanvas.deltaTransform(sunDiam,0).getX();
         Color c = Color.YELLOW.deriveColor(0,1,1,0.25);
         ctx.setFill(c);
-        double diam1 = sunDiamTransformed *2.2;
-        double x1 = planeCoord.getX() - (0.5*diam1);
-        double y1 = planeCoord.getY()  - (0.5*diam1);
-        ctx.fillOval(x1,y1,diam1,diam1);
+        double diam1 = sunDiamTransformed * 2.2;
+        double x1 = planeCoord.getX() - (0.5 * diam1);
+        double y1 = planeCoord.getY()  - (0.5 * diam1);
+        ctx.fillOval(x1, y1, diam1, diam1);
 
         ctx.setFill(Color.YELLOW);
-        double diam2 = sunDiamTransformed+2;
-        double x2 = planeCoord.getX() - (0.5*diam2);
-        double y2 = planeCoord.getY()  - (0.5*diam2);
-        ctx.fillOval(x2,y2,diam2,diam2);
+        double diam2 = sunDiamTransformed + 2;
+        double x2 = planeCoord.getX() - (0.5 * diam2);
+        double y2 = planeCoord.getY()  - (0.5 * diam2);
+        ctx.fillOval(x2, y2, diam2, diam2);
 
         ctx.setFill(Color.WHITE);
-        double x3 = planeCoord.getX() - (0.5*sunDiamTransformed);
-        double y3 = planeCoord.getY()  - (0.5*sunDiamTransformed);
-        ctx.fillOval(x3,y3,sunDiamTransformed,sunDiamTransformed);
+        double x3 = planeCoord.getX() - (0.5 * sunDiamTransformed);
+        double y3 = planeCoord.getY()  - (0.5 * sunDiamTransformed);
+        ctx.fillOval(x3, y3, sunDiamTransformed, sunDiamTransformed);
     }
 
     /**
@@ -181,11 +181,11 @@ public final class SkyCanvasPainter {
         CartesianCoordinates moonPos = sky.moonPosition();
         double moonDiam = projection.applyToAngle(moon.angularSize());
         double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
-        Point2D coordTransformed = planeToCanvas.transform(moonPos.x(),moonPos.y());
-        double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
-        double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
+        Point2D coordTransformed = planeToCanvas.transform(moonPos.x(), moonPos.y());
+        double x = coordTransformed.getX() - (0.5 * moonDiamTransformed);
+        double y = coordTransformed.getY() - (0.5 * moonDiamTransformed);
         ctx.setFill(Color.WHITE);
-        ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
+        ctx.fillOval(x, y, moonDiamTransformed, moonDiamTransformed);
     }
 
     /**
@@ -199,12 +199,12 @@ public final class SkyCanvasPainter {
         CartesianCoordinates center = projection.circleCenterForParallel(parallel);
         Point2D centerTransformed = planeToCanvas.transform(center.x(), center.y());
         double radius = projection.circleRadiusForParallel(parallel);
-        double diamTransformed = 2*planeToCanvas.deltaTransform(radius,0).getX();
-        double x = centerTransformed.getX()-diamTransformed*0.5;
-        double y =  centerTransformed.getY()-diamTransformed*0.5;
+        double diamTransformed = 2 * planeToCanvas.deltaTransform(radius,0).getX();
+        double x = centerTransformed.getX() - diamTransformed * 0.5;
+        double y =  centerTransformed.getY() - diamTransformed * 0.5;
         ctx.setStroke(Color.RED);
         ctx.setLineWidth(2);
-        ctx.strokeOval(x,y, diamTransformed, diamTransformed);
+        ctx.strokeOval(x, y, diamTransformed, diamTransformed);
         ctx.setTextBaseline(VPos.TOP);
 
         HorizontalCoordinates north = HorizontalCoordinates.ofDeg(NORTH_AZIMUTH, LETTER_ALTITUDE);
@@ -220,7 +220,7 @@ public final class SkyCanvasPainter {
 
         for (HorizontalCoordinates cardinalPoint : cardinalList){
             CartesianCoordinates cardinalProjection = projection.apply(cardinalPoint);
-            Point2D cardinalProjectionTransformed = planeToCanvas.transform(cardinalProjection.x(),cardinalProjection.y());
+            Point2D cardinalProjectionTransformed = planeToCanvas.transform(cardinalProjection.x(), cardinalProjection.y());
             ctx.setFill(Color.RED);
             ctx.fillText(
                     cardinalPoint.azOctantName("N","E","S","O"),
@@ -232,8 +232,8 @@ public final class SkyCanvasPainter {
 
     private static double objectDiameter(double magn, double multiplyFactor){
         double clipMagn = MAGNITUDE_INTERVAL.clip(magn);
-        double sizeFactor = (99-17*clipMagn)/140;
-        return sizeFactor*multiplyFactor;
+        double sizeFactor = (99 - 17 * clipMagn) / 140;
+        return sizeFactor * multiplyFactor;
     }
 
 }
