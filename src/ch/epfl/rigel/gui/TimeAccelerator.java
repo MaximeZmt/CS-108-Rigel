@@ -24,18 +24,18 @@ public interface TimeAccelerator {
      * Return a continuous time accelerator given an acceleration factor (Integer)
      *
      * @param alpha The acceleration factor
-     * @return a time accelerator
+     * @return a continuous time accelerator
      */
     static TimeAccelerator continuous(int alpha){
         return (t0,deltaT) -> t0.plusNanos(alpha*deltaT);
     }
 
     /**
+     * Return a discrete time accelerator given a frequency (long)
      *
-     *
-     * @param simulatedTimeFrequency
-     * @param steps
-     * @return
+     * @param simulatedTimeFrequency Frequency of step
+     * @param steps Duration of each step
+     * @return a discrete time accelerator
      */
     static TimeAccelerator discrete(long simulatedTimeFrequency, Duration steps){
         return (t0, deltaT) ->
