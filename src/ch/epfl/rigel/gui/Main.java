@@ -56,6 +56,7 @@ public class Main extends Application {
     private final static double FONT_SIZE = 15;
     private final static String FILE_NAME_ASTERISM = "/asterisms.txt";
     private final static String FILE_NAME_HYGDATA = "/hygdata_v3.csv";
+    private final static String FILE_NAME_FONT = "/Font Awesome 5 Free-Solid-900.otf";
 
     /**
      * Main method of the project
@@ -218,7 +219,7 @@ public class Main extends Application {
     private HBox timeManager(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
 
         InputStream fontStream = getClass()
-                .getResourceAsStream("/Font Awesome 5 Free-Solid-900.otf"); //TODO magic var
+                .getResourceAsStream(FILE_NAME_FONT);
         Font fontAwesome = Font.loadFont(fontStream, FONT_SIZE);
 
         Button resetButton = new Button("\uf0e2");

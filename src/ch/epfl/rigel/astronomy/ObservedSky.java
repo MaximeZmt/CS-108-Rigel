@@ -38,7 +38,7 @@ public class ObservedSky {
      * @param starCatalogue Object that is containing a list of all the stars and asterism
      */
     public ObservedSky(ZonedDateTime zdt, GeographicCoordinates observPos, StereographicProjection stereoProj, StarCatalogue starCatalogue){
-        this.starCatalogue = starCatalogue;
+        this.starCatalogue = starCatalogue; //TODO check immutability with catalogue
         EclipticToEquatorialConversion eclipToEquatC = new EclipticToEquatorialConversion(zdt);
         EquatorialToHorizontalConversion equatToHorizonC = new EquatorialToHorizontalConversion(zdt,observPos);
 
