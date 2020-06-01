@@ -210,7 +210,7 @@ public final class SkyCanvasManager {
             double ey = e.getY();
             Point2D canvasToPlane = null;
             try {
-                canvasToPlane = planeToCanvas.get().inverseTransform(ex,ey);
+                canvasToPlane = planeToCanvas.get().inverseTransform(ex, ey);
             } catch (NonInvertibleTransformException nonInvertibleTransformException) {
                 nonInvertibleTransformException.printStackTrace();
             }
@@ -218,14 +218,14 @@ public final class SkyCanvasManager {
             CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
             HorizontalCoordinates hc = projection.get().inverseApply(coordinates);
 
-            double newAzDeg = viewingParametersBean.getCenter().azDeg()-hc.azDeg()+mouseAzDegProperty().get();
-            double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
+            double newAzDeg = viewingParametersBean.getCenter().azDeg() - hc.azDeg()+mouseAzDegProperty().get();
+            double newAltDeg = viewingParametersBean.getCenter().altDeg() - hc.altDeg()+mouseAltDegProperty().get();
 
             if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
                 HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg), newAltDeg);
                 viewingParametersBean.setCenter(newCoordinates);
             }
-            mousePosition.setValue(CartesianCoordinates.of(e.getX(),e.getY()));
+            mousePosition.setValue(CartesianCoordinates.of(e.getX(), e.getY()));
             e.consume();
 
         });

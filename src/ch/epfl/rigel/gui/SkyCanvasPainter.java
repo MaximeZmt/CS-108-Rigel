@@ -183,9 +183,9 @@ public final class SkyCanvasPainter {
         CartesianCoordinates moonPos = sky.moonPosition();
         double moonDiam = projection.applyToAngle(moon.angularSize());
         double moonDiamTransformed = planeToCanvas.deltaTransform(moonDiam,0).getX();
-        Point2D coordTransformed = planeToCanvas.transform(moonPos.x(),moonPos.y());
-        double x = coordTransformed.getX() - (0.5*moonDiamTransformed);
-        double y = coordTransformed.getY() - (0.5*moonDiamTransformed);
+        Point2D coordTransformed = planeToCanvas.transform(moonPos.x(), moonPos.y());
+        double x = coordTransformed.getX() - (0.5 * moonDiamTransformed);
+        double y = coordTransformed.getY() - (0.5 * moonDiamTransformed);
 
 
         double phase = moon.getPhase();
@@ -193,25 +193,25 @@ public final class SkyCanvasPainter {
         //TODO do with rightopeninterval
 
         ctx.setFill(Color.BLACK);
-        ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
-        if(phase>=0.20 && phase < 0.40){
+        ctx.fillOval(x, y, moonDiamTransformed, moonDiamTransformed);
+        if(phase >= 0.20 && phase < 0.40){
             // crescent
             ctx.setFill(Color.WHITE);
-            ctx.fillArc(x,y,moonDiamTransformed,moonDiamTransformed,90,180, ArcType.ROUND);
+            ctx.fillArc(x, y, moonDiamTransformed, moonDiamTransformed,90,180, ArcType.ROUND);
             ctx.setFill(Color.BLACK);
-            ctx.fillArc(x+(moonDiamTransformed/3),y,(moonDiamTransformed/2),moonDiamTransformed,90,180, ArcType.ROUND);
-        }else if(phase>=0.40 && phase < 0.60){
+            ctx.fillArc(x + (moonDiamTransformed / 3), y, (moonDiamTransformed / 2), moonDiamTransformed,90,180, ArcType.ROUND);
+        }else if(phase >= 0.40 && phase < 0.60){
             // half moon
             ctx.setFill(Color.WHITE);
-            ctx.fillArc(x,y,moonDiamTransformed,moonDiamTransformed,90,180, ArcType.ROUND);
-        }else if (phase>=0.60 && phase < 0.80){
+            ctx.fillArc(x, y, moonDiamTransformed, moonDiamTransformed,90,180, ArcType.ROUND);
+        }else if (phase >= 0.60 && phase < 0.80){
             // gibbous moon
             ctx.setFill(Color.WHITE);
-            ctx.fillArc(x,y,moonDiamTransformed,moonDiamTransformed,90,180, ArcType.ROUND);
-        }else if (phase>=0.80){
+            ctx.fillArc(x, y, moonDiamTransformed, moonDiamTransformed,90,180, ArcType.ROUND);
+        }else if (phase >= 0.80){
             ctx.setFill(Color.WHITE);
-            ctx.fillOval(x,y,moonDiamTransformed,moonDiamTransformed);
-            ctx.fillArc(x+(moonDiamTransformed/5),y,(moonDiamTransformed/2),moonDiamTransformed,270,180, ArcType.ROUND);
+            ctx.fillOval(x, y, moonDiamTransformed, moonDiamTransformed);
+            ctx.fillArc(x + (moonDiamTransformed / 5), y, (moonDiamTransformed / 2), moonDiamTransformed,270,180, ArcType.ROUND);
         }
     }
 
