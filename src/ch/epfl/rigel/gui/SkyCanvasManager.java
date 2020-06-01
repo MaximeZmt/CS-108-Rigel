@@ -9,6 +9,7 @@ import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import ch.epfl.rigel.coordinates.StereographicProjection;
 import ch.epfl.rigel.math.Angle;
 import ch.epfl.rigel.math.ClosedInterval;
+import ch.epfl.rigel.math.RightOpenInterval;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @author Maxime Zammit (310251)
  */
 public final class SkyCanvasManager {
+    private final static RightOpenInterval AZIMUTH_INTERVAL_FOR_DRAG = RightOpenInterval.of(0,360);
     private final static int CENTER_VERTICAL_CHANGER = 5;
     private final static int CENTER_HORIZONTAL_CHANGER = 10;
     private final static double MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE = 10;
@@ -203,7 +205,31 @@ public final class SkyCanvasManager {
                 e.consume();
             }
         });
-        
+        canvas.setOnMouseDragged(e -> {
+            double ex = e.getX();
+            double ey = e.getY();
+            Point2D canvasToPlane = null;
+            try {
+                canvasToPlane = planeToCanvas.get().inverseTransform(ex,ey);
+            } catch (NonInvertibleTransformException nonInvertibleTransformException) {
+                nonInvertibleTransformException.printStackTrace();
+            }
+            assert canvasToPlane != null;
+            CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
+            HorizontalCoordinates hc = projection.get().inverseApply(coordinates);
+
+            double newAzDeg = viewingParametersBean.getCenter().azDeg()-hc.azDeg()+mouseAzDegProperty().get();
+            double newAltDeg = viewingParametersBean.getCenter().altDeg()-hc.altDeg()+mouseAltDegProperty().get();
+
+            if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
+                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg), newAltDeg);
+                viewingParametersBean.setCenter(newCoordinates);
+            }
+            mousePosition.setValue(CartesianCoordinates.of(e.getX(),e.getY()));
+            e.consume();
+
+        });
+
         //drawing listeners
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
         planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));

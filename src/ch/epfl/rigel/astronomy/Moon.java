@@ -38,4 +38,13 @@ public final class Moon extends CelestialObject {
     public String info() {
         return String.format(Locale.ROOT, "%s (%.1f%%)", name(), (phase*100)); //%% allow to escape String.format and print "%"
     }
+
+    /**
+     * Getter for the moon phase
+     * @return the phase between 0 and 1
+     */
+    public double getPhase(){
+        return phase;
+    }
+
 }
