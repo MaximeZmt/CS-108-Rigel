@@ -11,6 +11,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -119,6 +120,32 @@ public class Main extends Application {
             borderPane.setTop(controlBar(skyCanvas, timeAnimator));
             borderPane.setCenter(skyPane);
             borderPane.setBottom(informationBar(skyCanvas));
+
+            /*
+            ATTEMPT
+             */
+            BorderPane bpside = new BorderPane();
+            BorderPane bpContainer = new BorderPane();
+            CheckBox cb = new CheckBox("Show Asterisms");
+            CheckBox cb2 = new CheckBox("Show Stars");
+            CheckBox cb3 = new CheckBox("Show Moon");
+            CheckBox cb4 = new CheckBox("Show Sun");
+            CheckBox cb5 = new CheckBox("Show Planet");
+
+            bpside.setStyle("-fx-padding: 4; -fx-background-color: white;");
+            bpside.setCenter(bpContainer);
+            bpside.setTop(cb);
+            bpContainer.setTop(cb2);
+            bpContainer.setCenter(cb3);
+            bpContainer.setBottom(cb4);
+            bpside.setBottom(cb5);
+            borderPane.setRight(bpside);
+            /*
+            END OF IT
+             */
+
+
+
 
             sky.widthProperty().bind(skyPane.widthProperty());
             sky.heightProperty().bind(skyPane.heightProperty());
