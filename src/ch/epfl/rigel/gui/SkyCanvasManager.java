@@ -204,9 +204,7 @@ public final class SkyCanvasManager {
                 double newAzDeg = viewingParametersBean.getCenter().azDeg() + centerCoordinateChanger.get(e.getCode())[0];
                 double newAltDeg = viewingParametersBean.getCenter().altDeg() + centerCoordinateChanger.get(e.getCode())[1];
                 if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
-                    if(newAzDeg>=360){
-                        newAzDeg -= 360;
-                    }
+                    newAzDeg = AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg);
                     HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
                     viewingParametersBean.setCenter(newCoordinates);
                 }
