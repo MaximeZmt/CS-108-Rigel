@@ -15,9 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -121,36 +119,13 @@ public class Main extends Application {
             borderPane.setCenter(skyPane);
             borderPane.setBottom(informationBar(skyCanvas));
 
-            /*
-            ATTEMPT
-             */
-            BorderPane bpside = new BorderPane();
-            BorderPane bpContainer = new BorderPane();
-            CheckBox cb = new CheckBox("Show Asterisms");
-            CheckBox cb2 = new CheckBox("Show Stars");
-            CheckBox cb3 = new CheckBox("Show Moon");
-            CheckBox cb4 = new CheckBox("Show Sun");
-            CheckBox cb5 = new CheckBox("Show Planet");
-
-            bpside.setStyle("-fx-padding: 4; -fx-background-color: white;");
-            bpside.setCenter(bpContainer);
-            bpside.setTop(cb);
-            bpContainer.setTop(cb2);
-            bpContainer.setCenter(cb3);
-            bpContainer.setBottom(cb4);
-            bpside.setBottom(cb5);
-            borderPane.setRight(bpside);
-            /*
-            END OF IT
-             */
-
-
-
 
             sky.widthProperty().bind(skyPane.widthProperty());
             sky.heightProperty().bind(skyPane.heightProperty());
 
-            mainStage.setScene(new Scene(borderPane));
+            Scene mainScene = new Scene(borderPane);
+            mainScene.getStylesheets().add("/main.css");
+            mainStage.setScene(mainScene);
 
             mainStage.show();
 
@@ -162,8 +137,49 @@ public class Main extends Application {
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
+
+
+        /*
+            ATTEMPT
+            */
+        Menu cm = new Menu("Options");
+        cm.getStyleClass().add("cmMenu");
+
+
+        CheckMenuItem cb = new CheckMenuItem("Show Asterisms");
+        CheckMenuItem cb2 = new CheckMenuItem("Show Stars");
+        CheckMenuItem cb3 = new CheckMenuItem("Show Moon");
+        CheckMenuItem cb4 = new CheckMenuItem("Show Sun");
+        CheckMenuItem cb5 = new CheckMenuItem("Show Planet");
+
+        cm.getItems().addAll(cb,cb2,cb3,cb4,cb5);
+        Separator sepVert3 = new Separator();
+        sepVert3.setOrientation(Orientation.VERTICAL);
+        MenuBar mb = new MenuBar();
+        mb.getStyleClass().add("mbMenuBar");
+
+
+        cm.setOnShowing(e->{
+            mb.setStyle("-fx-background-color: #0096C9;");
+        });
+        cm.setOnHiding(e->{
+            mb.setStyle("");
+        });
+        mb.getMenus().add(cm);
+
+
+        /*
+         END OF IT
+        */
+
+
+
+
+
+
         Separator sepVert = new Separator();
         Separator sepVert2 = new Separator();
+
         sepVert.setOrientation(Orientation.VERTICAL);
         sepVert2.setOrientation(Orientation.VERTICAL);
 
@@ -171,7 +187,7 @@ public class Main extends Application {
         HBox child2 = observInstant(skyCanvas);
         HBox child3 = timeManager(skyCanvas, timeAnimator);
 
-        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3);
+        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3, sepVert3, mb);
 
         return mainControlBar;
     }
