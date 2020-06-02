@@ -128,7 +128,6 @@ public class Main extends Application {
             borderPane.setCenter(skyPane);
             borderPane.setBottom(informationBar(skyCanvas));
 
-
             sky.widthProperty().bind(skyPane.widthProperty());
             sky.heightProperty().bind(skyPane.heightProperty());
 
@@ -174,7 +173,7 @@ public class Main extends Application {
         HBox child2 = observInstant(skyCanvas);
         HBox child3 = timeManager(skyCanvas, timeAnimator);
 
-        mainControlBar.getChildren().addAll(child1, getVertSeparator(), child2, getVertSeparator(), child3, getVertSeparator(), DropDownMenu(skyCanvas), getVertSeparator(), fullscreen);
+        mainControlBar.getChildren().addAll(child1, getVertSeparator(), child2, getVertSeparator(), child3, getVertSeparator(), dropDownMenu(skyCanvas), getVertSeparator(), fullscreen);
 
         return mainControlBar;
     }
@@ -185,7 +184,7 @@ public class Main extends Application {
         return sepVert;
     }
 
-    private MenuBar DropDownMenu(SkyCanvasManager skyCanvas){
+    private MenuBar dropDownMenu(SkyCanvasManager skyCanvas){
         Label optionLabel = new Label("\uf013");
         optionLabel.setFont(fontAwesome);
         Menu cm = new Menu("Options",optionLabel);
