@@ -4,7 +4,3 @@
 .mbMenuBar:pressed{
     -fx-background-color: #0096C9;
 }
-
-.mbMenuBar{
-    -fx-background-color: #E3E3E3;
-}

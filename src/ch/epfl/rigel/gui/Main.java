@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -137,6 +138,7 @@ public class Main extends Application {
 
             mainStage.show();
 
+            mainStage.getIcons().add(new Image("file:/icon.png"));
 
             sky.requestFocus();
         }
@@ -370,7 +372,7 @@ public class Main extends Application {
 
     private BorderPane informationBar(SkyCanvasManager skyCanvas){
         BorderPane informationPane = new BorderPane();
-        informationPane.setStyle("-fx-padding: 4; -fx-background-color: white;");
+        informationPane.setStyle("-fx-padding: 4; -fx-background-color: #ffffff;");
 
         Text leftText = new Text(String.format("Champ de vue : %.1f°", skyCanvas.getFieldOfViewDeg()));
         Text centerText = new Text();
