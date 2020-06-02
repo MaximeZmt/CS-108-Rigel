@@ -313,10 +313,14 @@ public class Main extends Application {
     }
 
     private HBox timeManager(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
-        Button resetButton = new Button("\uf0e2");
-        resetButton.setFont(fontAwesome);
-        Button playPauseButton = new Button("\uf04b"); // "\uf04c" change play to pause
-        playPauseButton.setFont(fontAwesome);
+
+        Label lReset = new Label("\uf0e2");
+        lReset.setFont(fontAwesome);
+        Button resetButton = new Button("Reset",lReset);
+
+        Label lPlay = new Label("\uf04b");
+        lPlay.setFont(fontAwesome);
+        Button playPauseButton = new Button("Play", lPlay); // "\uf04c" change play to pause
 
         HBox timeManagerbox = new HBox();
         timeManagerbox.setStyle("-fx-spacing: inherit;");
@@ -329,7 +333,8 @@ public class Main extends Application {
         playPauseButton.setOnAction(e -> {
             if(timeAnimator.isRunning()){
                 timeAnimator.stop();
-                playPauseButton.setText("\uf04b");
+                playPauseButton.setText("Play");
+                lPlay.setText("\uf04b");
 
                 //unblock
                 resetButton.setDisable(false);
@@ -339,7 +344,8 @@ public class Main extends Application {
                 zoneSelector.setDisable(false);
             } else {
                 timeAnimator.start();
-                playPauseButton.setText("\uf04c");
+                playPauseButton.setText("Pause");
+                lPlay.setText("\uf04c");
 
                 //block
                 resetButton.setDisable(true);
