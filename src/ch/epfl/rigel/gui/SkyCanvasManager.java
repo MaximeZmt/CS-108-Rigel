@@ -172,7 +172,7 @@ public final class SkyCanvasManager {
                 Point2D canvasToPlane = planeToCanvas.get().inverseTransform(x, y);
                 CartesianCoordinates coordinates = CartesianCoordinates.of(canvasToPlane.getX(), canvasToPlane.getY());
                 double dist = planeToCanvas.get().inverseDeltaTransform(MAX_DISTANCE_FOR_OBJECT_UNDER_MOUSE, 0).getX();
-                return observedSky.get().objectClosestTo(coordinates, dist).orElse(null);
+                return observedSky.get().objectClosestTo(coordinates, dist, this).orElse(null);
             } catch (NonInvertibleTransformException e){
                 return null;
             }

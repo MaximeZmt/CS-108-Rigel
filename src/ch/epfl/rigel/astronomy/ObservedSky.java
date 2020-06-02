@@ -2,6 +2,7 @@ package ch.epfl.rigel.astronomy;
 
 
 import ch.epfl.rigel.coordinates.*;
+import ch.epfl.rigel.gui.SkyCanvasManager;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -177,45 +178,57 @@ public class ObservedSky {
      * @param maxDist the maximum distance
      * @return An Optional of a CelestialObject that may containing one.
      */
-    public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc, double maxDist){
+    public Optional<CelestialObject> objectClosestTo(CartesianCoordinates cc, double maxDist, SkyCanvasManager skyCanvas){
         double closestDist = maxDist;
         double tempoDist;
         Optional<CelestialObject> co = Optional.empty();
 
         //sun
-        tempoDist = dist(sunPosition().x(), cc.x(), sunPosition().y(), cc.y());
-        if (tempoDist < closestDist){
-            co = Optional.of(sunInstance);
-            closestDist = tempoDist;
+        if(skyCanvas.enableSunDrawingProperty().get()){
+            tempoDist = dist(sunPosition().x(), cc.x(), sunPosition().y(), cc.y());
+            if (tempoDist < closestDist){
+                co = Optional.of(sunInstance);
+                closestDist = tempoDist;
+            }
         }
+
 
         //moon
-        tempoDist = dist(moonPosition().x(), cc.x(), moonPosition().y(), cc.y());
-        if(tempoDist < closestDist){
-            co = Optional.of(moonInstance);
-            closestDist = tempoDist;
+        if(skyCanvas.enableMoonDrawingProperty().get()){
+            tempoDist = dist(moonPosition().x(), cc.x(), moonPosition().y(), cc.y());
+            if(tempoDist < closestDist){
+                co = Optional.of(moonInstance);
+                closestDist = tempoDist;
+            }
         }
 
+
         //planet
-        for(Planet p : planetsList){
-            int index = planetsList.indexOf(p);
-            tempoDist = dist(planetPosArray[index * 2], cc.x(), planetPosArray[(index*2) + 1], cc.y());
-            if(tempoDist < closestDist){
-                closestDist = tempoDist;
-                co = Optional.of(p);
+        if(skyCanvas.enablePlanetsDrawingProperty().get()){
+            for(Planet p : planetsList){
+                int index = planetsList.indexOf(p);
+                tempoDist = dist(planetPosArray[index * 2], cc.x(), planetPosArray[(index*2) + 1], cc.y());
+                if(tempoDist < closestDist){
+                    closestDist = tempoDist;
+                    co = Optional.of(p);
+                }
             }
         }
+
         
         //stars
-        int index;
-        for(Star s : starList){
-            index = starList.indexOf(s);
-            tempoDist = dist(starPosArray[index * 2], cc.x(), starPosArray[(index * 2) + 1], cc.y());
-            if(tempoDist < closestDist){
-                closestDist = tempoDist;
-                co = Optional.of(s);
+        if(skyCanvas.enableStarsDrawingProperty().get()){
+            int index;
+            for(Star s : starList){
+                index = starList.indexOf(s);
+                tempoDist = dist(starPosArray[index * 2], cc.x(), starPosArray[(index * 2) + 1], cc.y());
+                if(tempoDist < closestDist){
+                    closestDist = tempoDist;
+                    co = Optional.of(s);
+                }
             }
         }
+
         return co;
     }
 
