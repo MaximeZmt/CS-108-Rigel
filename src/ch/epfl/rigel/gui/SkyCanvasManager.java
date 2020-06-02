@@ -78,6 +78,9 @@ public final class SkyCanvasManager {
     private final BooleanProperty enableStarsDrawing;
     private final BooleanProperty enableAsterismDrawing;
     private final BooleanProperty enableSunDrawing;
+    private final BooleanProperty enableMoonDrawing;
+    private final BooleanProperty enablePlanetsDrawing;
+    private final BooleanProperty enableHorizonDrawing;
 
     private final ObjectBinding<CelestialObject> objectUnderMouse;
 
@@ -236,6 +239,9 @@ public final class SkyCanvasManager {
         enableStarsDrawing = new SimpleBooleanProperty(true);
         enableAsterismDrawing = new SimpleBooleanProperty(true);
         enableSunDrawing = new SimpleBooleanProperty(true);
+        enableMoonDrawing = new SimpleBooleanProperty(true);
+        enablePlanetsDrawing = new SimpleBooleanProperty(true);
+        enableHorizonDrawing = new SimpleBooleanProperty(true);
 
         //drawing listeners
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
@@ -243,7 +249,9 @@ public final class SkyCanvasManager {
         enableStarsDrawing.addListener((o, oV, nV) -> drawSky(painter));
         enableAsterismDrawing.addListener((o,oV,nV) -> drawSky(painter));
         enableSunDrawing.addListener((o,oV,nV) -> drawSky(painter));
-
+        enableMoonDrawing.addListener((o,oV,nV) -> drawSky(painter));
+        enablePlanetsDrawing.addListener((o,oV,nV) -> drawSky(painter));
+        enableHorizonDrawing.addListener((o,oV,nV) -> drawSky(painter));
 
     }
 
@@ -418,23 +426,59 @@ public final class SkyCanvasManager {
         return enableSunDrawing;
     }
 
+    /**
+     * Getter for the enableMoonProperty
+     *
+     * @return BooleanProperty enableMoon
+     */
+    public BooleanProperty enableMoonDrawingProperty() {
+        return enableMoonDrawing;
+    }
+
+    /**
+     * Getter for the enablePlanetsProperty
+     *
+     * @return BooleanProperty enablePlanets
+     */
+    public BooleanProperty enablePlanetsDrawingProperty() {
+        return enablePlanetsDrawing;
+    }
+
+    /**
+     * Getter for the enableHorizonProperty
+     *
+     * @return BooleanProperty enableHorizon
+     */
+    public BooleanProperty enableHorizonDrawingProperty() {
+        return enableHorizonDrawing;
+    }
+
     private void drawSky(SkyCanvasPainter painter){
         painter.clear();
 
        if (enableStarsDrawing.get() && enableAsterismDrawing.get()){
            painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 3);
-       }else if (enableAsterismDrawing.get()){
+       } else if (enableAsterismDrawing.get()){
            painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 1);
-       }else if (enableStarsDrawing.get()){
+       } else if (enableStarsDrawing.get()){
            painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 2);
        }
 
        if(enableSunDrawing.get()){
            painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
        }
-        painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawHorizon(projection.get(), planeToCanvas.get());
+
+       if (enableMoonDrawing.get()) {
+           painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
+       }
+
+       if (enablePlanetsDrawing.get()) {
+           painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
+       }
+
+       if (enableHorizonDrawing.get()) {
+           painter.drawHorizon(projection.get(), planeToCanvas.get());
+       }
     }
 
     /**

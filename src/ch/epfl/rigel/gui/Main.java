@@ -147,33 +147,37 @@ public class Main extends Application {
         cm.getStyleClass().add("cmMenu");
 
 
-        CheckMenuItem cb = new CheckMenuItem("Show Asterisms");
+        CheckMenuItem cb1 = new CheckMenuItem("Show Asterisms");
         CheckMenuItem cb2 = new CheckMenuItem("Show Stars");
         CheckMenuItem cb3 = new CheckMenuItem("Show Sun");
         CheckMenuItem cb4 = new CheckMenuItem("Show Moon");
         CheckMenuItem cb5 = new CheckMenuItem("Show Planet");
+        CheckMenuItem cb6 = new CheckMenuItem("Show Horizon");
 
-        cm.getItems().addAll(cb,cb2,cb3,cb4,cb5);
+        cm.getItems().addAll(cb1, cb2, cb3, cb4, cb5, cb6);
         Separator sepVert3 = new Separator();
         sepVert3.setOrientation(Orientation.VERTICAL);
         MenuBar mb = new MenuBar();
         mb.getStyleClass().add("mbMenuBar");
 
-        BooleanProperty bp1  = cb.selectedProperty();
-        BooleanProperty bp2  = cb2.selectedProperty();
-        BooleanProperty bp3  = cb3.selectedProperty();
+        BooleanProperty bp1 = cb1.selectedProperty();
+        BooleanProperty bp2 = cb2.selectedProperty();
+        BooleanProperty bp3 = cb3.selectedProperty();
+        BooleanProperty bp4 = cb4.selectedProperty();
+        BooleanProperty bp5 = cb5.selectedProperty();
+        BooleanProperty bp6 = cb6.selectedProperty();
 
-
-        Bindings.bindBidirectional(bp1,skyCanvas.enableAsterismDrawingProperty());
-        Bindings.bindBidirectional(bp2,skyCanvas.enableStarsDrawingProperty());
-        Bindings.bindBidirectional(bp3,skyCanvas.enableSunDrawingProperty());
+        Bindings.bindBidirectional(bp1, skyCanvas.enableAsterismDrawingProperty());
+        Bindings.bindBidirectional(bp2, skyCanvas.enableStarsDrawingProperty());
+        Bindings.bindBidirectional(bp3, skyCanvas.enableSunDrawingProperty());
+        Bindings.bindBidirectional(bp4, skyCanvas.enableMoonDrawingProperty());
+        Bindings.bindBidirectional(bp5, skyCanvas.enablePlanetsDrawingProperty());
+        Bindings.bindBidirectional(bp6, skyCanvas.enableHorizonDrawingProperty());
 
         cm.setOnShowing(e->{
             mb.setStyle("-fx-background-color: #0096C9;");
         });
-        cm.setOnHiding(e->{
-            mb.setStyle("");
-        });
+        cm.setOnHiding(e-> mb.setStyle(""));
         mb.getMenus().add(cm);
 
 
