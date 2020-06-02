@@ -15,3 +15,35 @@
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
 }
+
+.reverseButton:hover{
+    -fx-background-color: #0096C9;
+    -fx-text-fill: white;
+}
+
+.reverseLabel{
+    -fx-text-fill: inherit;
+}
+
+.timeSelector{
+    -fx-pref-width: 75;
+    -fx-alignment: baseline-right;
+}
+
+.acceleratorSelector:hover{
+    -fx-background-color: #0096C9;
+    -fx-text-fill: white;
+}
+
+.acceleratorSelector .label{
+    -fx-text-fill: inherit;
+}
+
+.zoneSelector:hover{
+    -fx-background-color: #0096C9;
+    -fx-text-fill: white;
+}
+
+.zoneSelector .list-cell{
+    -fx-text-fill: inherit;
+}

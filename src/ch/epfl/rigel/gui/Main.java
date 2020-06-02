@@ -148,8 +148,10 @@ public class Main extends Application {
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
         Label fullscreenLabel = new Label("\uf065");
+        fullscreenLabel.getStyleClass().add("reverseLabel");
         fullscreenLabel.setFont(fontAwesome);
         Button fullscreen = new Button("Fullscreen",fullscreenLabel);
+        fullscreen.getStyleClass().add("reverseButton");
 
         mainStage.fullScreenProperty().addListener((o, oV, nV) -> {
             if (mainStage.isFullScreen()) {
@@ -270,12 +272,13 @@ public class Main extends Application {
         Bindings.bindBidirectional(datePicker.valueProperty(), skyCanvas.dateProperty());
 
         timeSelector = new TextField();
+        timeSelector.getStyleClass().add("timeSelector");
         timeSelector.setTextFormatter(timeFormatter);
 
         Bindings.bindBidirectional(timeFormatter.valueProperty(), skyCanvas.timeProperty());
 
-        timeSelector.setStyle("-fx-pref-width: 75; -fx-alignment: baseline-right;");
         zoneSelector = new ComboBox<>();
+        zoneSelector.getStyleClass().add("zoneSelector");
 
         List<ZoneId> zoneIdList = new ArrayList<>();
         for(String s : ZoneId.getAvailableZoneIds()){
@@ -296,16 +299,21 @@ public class Main extends Application {
 
         Label lReset = new Label("\uf0e2");
         lReset.setFont(fontAwesome);
+        lReset.getStyleClass().add("reverseLabel");
         Button resetButton = new Button("Reset",lReset);
+        resetButton.getStyleClass().add("reverseButton");
 
         Label lPlay = new Label("\uf04b");
         lPlay.setFont(fontAwesome);
+        lPlay.getStyleClass().add("reverseLabel");
         Button playPauseButton = new Button("Play", lPlay); // "\uf04c" change play to pause
+        playPauseButton.getStyleClass().add("reverseButton");
 
         HBox timeManagerbox = new HBox();
         timeManagerbox.setStyle("-fx-spacing: inherit;");
 
         ChoiceBox<NamedTimeAccelerator> acceleratorSelector = new ChoiceBox<>();
+        acceleratorSelector.getStyleClass().add("acceleratorSelector");
         acceleratorSelector.setItems(FXCollections.observableList(List.of(NamedTimeAccelerator.values())));
         acceleratorSelector.setValue(NamedTimeAccelerator.TIMES_300);
         timeAnimator.acceleratorProperty().bind(Bindings.select(acceleratorSelector.valueProperty(),"Accelerator"));
