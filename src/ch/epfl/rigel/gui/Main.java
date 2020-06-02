@@ -8,6 +8,7 @@ import ch.epfl.rigel.coordinates.HorizontalCoordinates;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
@@ -148,8 +149,8 @@ public class Main extends Application {
 
         CheckMenuItem cb = new CheckMenuItem("Show Asterisms");
         CheckMenuItem cb2 = new CheckMenuItem("Show Stars");
-        CheckMenuItem cb3 = new CheckMenuItem("Show Moon");
-        CheckMenuItem cb4 = new CheckMenuItem("Show Sun");
+        CheckMenuItem cb3 = new CheckMenuItem("Show Sun");
+        CheckMenuItem cb4 = new CheckMenuItem("Show Moon");
         CheckMenuItem cb5 = new CheckMenuItem("Show Planet");
 
         cm.getItems().addAll(cb,cb2,cb3,cb4,cb5);
@@ -158,6 +159,14 @@ public class Main extends Application {
         MenuBar mb = new MenuBar();
         mb.getStyleClass().add("mbMenuBar");
 
+        BooleanProperty bp1  = cb.selectedProperty();
+        BooleanProperty bp2  = cb2.selectedProperty();
+        BooleanProperty bp3  = cb3.selectedProperty();
+
+
+        Bindings.bindBidirectional(bp1,skyCanvas.enableAsterismDrawingProperty());
+        Bindings.bindBidirectional(bp2,skyCanvas.enableStarsDrawingProperty());
+        Bindings.bindBidirectional(bp3,skyCanvas.enableSunDrawingProperty());
 
         cm.setOnShowing(e->{
             mb.setStyle("-fx-background-color: #0096C9;");

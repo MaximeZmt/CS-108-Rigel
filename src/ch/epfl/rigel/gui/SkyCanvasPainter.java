@@ -63,8 +63,9 @@ public final class SkyCanvasPainter {
      * @param sky The sky which the painter will paint
      * @param projection The projection from real world onto a plane
      * @param planeToCanvas Change from projection coordinate system to Canvas
+     * @param type choose if drawing (1: only asterism, 2: only stars, 3:everything)
      */
-    public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas){
+    public void drawStars(ObservedSky sky, StereographicProjection projection, Transform planeToCanvas, int type){
         List<Star> starList = sky.stars();
         double[] starPos = sky.starsPosition();
         planeToCanvas.transform2DPoints(starPos, 0, starPos, 0, starList.size());
@@ -72,44 +73,51 @@ public final class SkyCanvasPainter {
         //asterism
         Set<Asterism> asterismSet = sky.getAsterism();
         ctx.setStroke(Color.BLUE);
-        for (Asterism asterism : asterismSet){
-            List<Integer> indiceList = sky.getAsterismIndices(asterism);
-            double x0 = starPos[2 * indiceList.get(0)];
-            double y0 = starPos[2 * indiceList.get(0) + 1];
-            ctx.beginPath();
-            ctx.moveTo(x0, y0);
 
-            int counter = 0;
-            for (int indice : indiceList.subList(0, indiceList.size() - 1)){
-                int nextIndice = indiceList.get(counter + 1);
-                double x1 = starPos[2 * indice];
-                double y1 = starPos[2 * indice + 1];
-                double x2 = starPos[2 * nextIndice];
-                double y2 = starPos[2 * nextIndice + 1];
+        if(type == 1 || type == 3){
+            for (Asterism asterism : asterismSet){
+                List<Integer> indiceList = sky.getAsterismIndices(asterism);
+                double x0 = starPos[2 * indiceList.get(0)];
+                double y0 = starPos[2 * indiceList.get(0) + 1];
+                ctx.beginPath();
+                ctx.moveTo(x0, y0);
 
-                if (canvas.getBoundsInLocal().contains(x1, y1) || canvas.getBoundsInLocal().contains(x2, y2)){
-                    ctx.lineTo(x2, y2);
-                } else {
-                    ctx.moveTo(x2, y2);
+                int counter = 0;
+                for (int indice : indiceList.subList(0, indiceList.size() - 1)){
+                    int nextIndice = indiceList.get(counter + 1);
+                    double x1 = starPos[2 * indice];
+                    double y1 = starPos[2 * indice + 1];
+                    double x2 = starPos[2 * nextIndice];
+                    double y2 = starPos[2 * nextIndice + 1];
+
+                    if (canvas.getBoundsInLocal().contains(x1, y1) || canvas.getBoundsInLocal().contains(x2, y2)){
+                        ctx.lineTo(x2, y2);
+                    } else {
+                        ctx.moveTo(x2, y2);
+                    }
+                    counter++;
                 }
-                counter++;
+                ctx.stroke();
             }
-            ctx.stroke();
         }
+
 
         //stars
         double multiplyFactor = projection.applyToAngle(Angle.ofDeg(0.5));
 
-        for (Star s : starList) {
-            double starMagn = s.magnitude();
-            double diameter = objectDiameter(starMagn, multiplyFactor);
-            int index = starList.indexOf(s);
-            ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
-            double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
-            double x = starPos[2 * index] - (0.5 * diam2);
-            double y = starPos[(2 * index) + 1] - (0.5 * diam2);
-            ctx.fillOval(x, y, diam2, diam2);
+        if(type == 2 || type == 3){
+            for (Star s : starList) {
+                double starMagn = s.magnitude();
+                double diameter = objectDiameter(starMagn, multiplyFactor);
+                int index = starList.indexOf(s);
+                ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
+                double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
+                double x = starPos[2 * index] - (0.5 * diam2);
+                double y = starPos[(2 * index) + 1] - (0.5 * diam2);
+                ctx.fillOval(x, y, diam2, diam2);
+            }
         }
+
     }
 
     /**

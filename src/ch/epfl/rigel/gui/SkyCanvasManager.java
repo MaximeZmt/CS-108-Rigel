@@ -13,9 +13,7 @@ import ch.epfl.rigel.math.RightOpenInterval;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
@@ -75,6 +73,11 @@ public final class SkyCanvasManager {
     private final ObjectBinding<HorizontalCoordinates> mouseHorizontalPosition;
     private final DoubleBinding mouseAzDeg;
     private final DoubleBinding mouseAltDeg;
+
+    //TODO TEST BONUS
+    private final BooleanProperty enableStarsDrawing;
+    private final BooleanProperty enableAsterismDrawing;
+    private final BooleanProperty enableSunDrawing;
 
     private final ObjectBinding<CelestialObject> objectUnderMouse;
 
@@ -230,9 +233,18 @@ public final class SkyCanvasManager {
 
         });
 
+        enableStarsDrawing = new SimpleBooleanProperty(true);
+        enableAsterismDrawing = new SimpleBooleanProperty(true);
+        enableSunDrawing = new SimpleBooleanProperty(true);
+
         //drawing listeners
         observedSky.addListener((o, oV, nV) -> drawSky(painter));
         planeToCanvas.addListener((o, oV, nV) -> drawSky(painter));
+        enableStarsDrawing.addListener((o, oV, nV) -> drawSky(painter));
+        enableAsterismDrawing.addListener((o,oV,nV) -> drawSky(painter));
+        enableSunDrawing.addListener((o,oV,nV) -> drawSky(painter));
+
+
     }
 
     /**
@@ -379,10 +391,47 @@ public final class SkyCanvasManager {
         this.time.set(time);
     }
 
+    /**
+     * Getter for the enableStarsProperty
+     *
+     * @return BooleanProperty enableStars
+     */
+    public BooleanProperty enableStarsDrawingProperty() {
+        return enableStarsDrawing;
+    }
+
+    /**
+     * Getter for the enableAsterismProperty
+     *
+     * @return BooleanProperty enableAsterism
+     */
+    public BooleanProperty enableAsterismDrawingProperty() {
+        return enableAsterismDrawing;
+    }
+
+    /**
+     * Getter for the enableSunProperty
+     *
+     * @return BooleanProperty enableSun
+     */
+    public BooleanProperty enableSunDrawingProperty() {
+        return enableSunDrawing;
+    }
+
     private void drawSky(SkyCanvasPainter painter){
         painter.clear();
-        painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get());
-        painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
+
+       if (enableStarsDrawing.get() && enableAsterismDrawing.get()){
+           painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 3);
+       }else if (enableAsterismDrawing.get()){
+           painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 1);
+       }else if (enableStarsDrawing.get()){
+           painter.drawStars(observedSky.get(), projection.get(), planeToCanvas.get(), 2);
+       }
+
+       if(enableSunDrawing.get()){
+           painter.drawSun(observedSky.get(), projection.get(), planeToCanvas.get());
+       }
         painter.drawMoon(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawPlanets(observedSky.get(), projection.get(), planeToCanvas.get());
         painter.drawHorizon(projection.get(), planeToCanvas.get());
