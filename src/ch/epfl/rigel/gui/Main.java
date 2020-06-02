@@ -138,7 +138,7 @@ public class Main extends Application {
 
             mainStage.show();
 
-            mainStage.getIcons().add(new Image("file:/icon.png"));
+            mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
 
             sky.requestFocus();
         }
