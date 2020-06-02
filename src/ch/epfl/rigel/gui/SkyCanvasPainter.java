@@ -109,19 +109,16 @@ public final class SkyCanvasPainter {
             for (Star s : starList) {
                 int index = starList.indexOf(s);
                 int realIndex = 2 * index;
-                if (canvas.getBoundsInLocal().contains(starPos[realIndex], starPos[(realIndex) + 1])) {
-                    double starMagn = s.magnitude();
-                    double diameter = objectDiameter(starMagn, multiplyFactor);
-                    ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
-                    double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
-                    double radius = diam2 / 2.;
-                    double x = starPos[realIndex] - (radius);
-                    double y = starPos[(realIndex) + 1] - (radius);
-                    ctx.fillOval(x, y, diam2, diam2);
-                }
+                double starMagn = s.magnitude();
+                double diameter = objectDiameter(starMagn, multiplyFactor);
+                ctx.setFill(BlackBodyColor.colorForTemperature(s.colorTemperature()));
+                double diam2 = planeToCanvas.deltaTransform(diameter, 0).getX();
+                double radius = diam2 / 2.;
+                double x = starPos[realIndex] - (radius);
+                double y = starPos[(realIndex) + 1] - (radius);
+                ctx.fillOval(x, y, diam2, diam2);
             }
         }
-
     }
 
     /**
