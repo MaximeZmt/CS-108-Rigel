@@ -57,6 +57,7 @@ public class Main extends Application {
     private final static String FILE_NAME_ASTERISM = "/asterisms.txt";
     private final static String FILE_NAME_HYGDATA = "/hygdata_v3.csv";
     private final static String FILE_NAME_FONT = "/Font Awesome 5 Free-Solid-900.otf";
+    private static Font fontAwesome;
 
     /**
      * Main method of the project
@@ -76,6 +77,12 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage mainStage) throws Exception {
+
+        InputStream fontStream = getClass()
+                .getResourceAsStream(FILE_NAME_FONT);
+        fontAwesome = Font.loadFont(fontStream, FONT_SIZE);
+        fontStream.close();
+
         //WINDOWS
         mainStage.setTitle("Rigel");
         mainStage.setMinHeight(MAIN_STAGE_MIN_HEIGHT);
@@ -116,7 +123,7 @@ public class Main extends Application {
             Canvas sky = skyCanvas.canvas();
             Pane skyPane = new Pane(sky);
 
-            borderPane.setTop(controlBar(skyCanvas, timeAnimator));
+            borderPane.setTop(controlBar(skyCanvas, timeAnimator, mainStage));
             borderPane.setCenter(skyPane);
             borderPane.setBottom(informationBar(skyCanvas));
 
@@ -130,11 +137,15 @@ public class Main extends Application {
 
             mainStage.show();
 
+
             sky.requestFocus();
         }
     }
 
-    private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
+    private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator, Stage mainStage) throws IOException {
+
+
+
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
@@ -143,7 +154,13 @@ public class Main extends Application {
         /*
             ATTEMPT
             */
-        Menu cm = new Menu("Options");
+
+
+
+        Label l = new Label("\uf013");
+        l.setFont(fontAwesome);
+        Menu cm = new Menu("Options",l);
+
         cm.getStyleClass().add("cmMenu");
 
 
@@ -186,21 +203,44 @@ public class Main extends Application {
         */
 
 
+        Label l2 = new Label("\uf065");
+        l2.setFont(fontAwesome);
+        Button fullscreen = new Button("Fullscreen",l2);
 
+
+        mainStage.fullScreenProperty().addListener((o, oV, nV) -> {
+            if (mainStage.isFullScreen()) {
+                fullscreen.setText("Windowed");
+                l2.setText("\uf066");
+            } else {
+                fullscreen.setText("Fullscreen");
+                l2.setText("\uf065");
+            }
+        });
+
+        fullscreen.setOnAction(e -> {
+            if (mainStage.isFullScreen()) {
+                mainStage.setFullScreen(false);
+            } else {
+                mainStage.setFullScreen(true);
+            }
+        });
 
 
 
         Separator sepVert = new Separator();
         Separator sepVert2 = new Separator();
+        Separator sepVert4 = new Separator();
 
         sepVert.setOrientation(Orientation.VERTICAL);
         sepVert2.setOrientation(Orientation.VERTICAL);
+        sepVert4.setOrientation(Orientation.VERTICAL);
 
         HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
         HBox child2 = observInstant(skyCanvas);
         HBox child3 = timeManager(skyCanvas, timeAnimator);
 
-        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3, sepVert3, mb);
+        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3, sepVert3, mb, sepVert4, fullscreen);
 
         return mainControlBar;
     }
@@ -273,17 +313,10 @@ public class Main extends Application {
     }
 
     private HBox timeManager(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator) throws IOException {
-
-        InputStream fontStream = getClass()
-                .getResourceAsStream(FILE_NAME_FONT);
-        Font fontAwesome = Font.loadFont(fontStream, FONT_SIZE);
-
         Button resetButton = new Button("\uf0e2");
         resetButton.setFont(fontAwesome);
         Button playPauseButton = new Button("\uf04b"); // "\uf04c" change play to pause
         playPauseButton.setFont(fontAwesome);
-
-        fontStream.close();
 
         HBox timeManagerbox = new HBox();
         timeManagerbox.setStyle("-fx-spacing: inherit;");
