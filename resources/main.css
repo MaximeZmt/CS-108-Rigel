@@ -1,6 +1,17 @@
 .mbMenuBar:hover{
-    -fx-background-color: #0096C9;
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
 }
 .mbMenuBar:pressed{
     -fx-background-color: #0096C9;
+}
+
+.mbMenuBar{
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 4, 4, 4, 3;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
 }
