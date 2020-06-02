@@ -145,46 +145,71 @@ public class Main extends Application {
     }
 
     private HBox controlBar(SkyCanvasManager skyCanvas, TimeAnimator timeAnimator, Stage mainStage) throws IOException {
-
-
-
         HBox mainControlBar = new HBox();
         mainControlBar.setStyle("-fx-spacing: 4; -fx-padding: 4;");
 
+        Label fullscreenLabel = new Label("\uf065");
+        fullscreenLabel.setFont(fontAwesome);
+        Button fullscreen = new Button("Fullscreen",fullscreenLabel);
 
+        mainStage.fullScreenProperty().addListener((o, oV, nV) -> {
+            if (mainStage.isFullScreen()) {
+                fullscreen.setText("Windowed");
+                fullscreenLabel.setText("\uf066");
+            } else {
+                fullscreen.setText("Fullscreen");
+                fullscreenLabel.setText("\uf065");
+            }
+        });
 
-        /*
-            ATTEMPT
-            */
+        fullscreen.setOnAction(e -> {
+            if (mainStage.isFullScreen()) {
+                mainStage.setFullScreen(false);
+            } else {
+                mainStage.setFullScreen(true);
+            }
+        });
 
+        HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
+        HBox child2 = observInstant(skyCanvas);
+        HBox child3 = timeManager(skyCanvas, timeAnimator);
 
+        mainControlBar.getChildren().addAll(child1, getVertSeparator(), child2, getVertSeparator(), child3, getVertSeparator(), DropDownMenu(skyCanvas), getVertSeparator(), fullscreen);
 
-        Label l = new Label("\uf013");
-        l.setFont(fontAwesome);
-        Menu cm = new Menu("Options",l);
+        return mainControlBar;
+    }
+
+    private Separator getVertSeparator(){
+        Separator sepVert = new Separator();
+        sepVert.setOrientation(Orientation.VERTICAL);
+        return sepVert;
+    }
+
+    private MenuBar DropDownMenu(SkyCanvasManager skyCanvas){
+        Label optionLabel = new Label("\uf013");
+        optionLabel.setFont(fontAwesome);
+        Menu cm = new Menu("Options",optionLabel);
 
         cm.getStyleClass().add("cmMenu");
 
 
-        CheckMenuItem cb1 = new CheckMenuItem("Show Asterisms");
-        CheckMenuItem cb2 = new CheckMenuItem("Show Stars");
-        CheckMenuItem cb3 = new CheckMenuItem("Show Sun");
-        CheckMenuItem cb4 = new CheckMenuItem("Show Moon");
-        CheckMenuItem cb5 = new CheckMenuItem("Show Planet");
-        CheckMenuItem cb6 = new CheckMenuItem("Show Horizon");
+        CheckMenuItem cMI1 = new CheckMenuItem("Show Asterisms");
+        CheckMenuItem cMI2 = new CheckMenuItem("Show Stars");
+        CheckMenuItem cMI3 = new CheckMenuItem("Show Sun");
+        CheckMenuItem cMI4 = new CheckMenuItem("Show Moon");
+        CheckMenuItem cMI5 = new CheckMenuItem("Show Planet");
+        CheckMenuItem cMI6 = new CheckMenuItem("Show Horizon");
 
-        cm.getItems().addAll(cb1, cb2, cb3, cb4, cb5, cb6);
-        Separator sepVert3 = new Separator();
-        sepVert3.setOrientation(Orientation.VERTICAL);
+        cm.getItems().addAll(cMI1, cMI2, cMI3, cMI4, cMI5, cMI6);
         MenuBar mb = new MenuBar();
         mb.getStyleClass().add("mbMenuBar");
 
-        BooleanProperty bp1 = cb1.selectedProperty();
-        BooleanProperty bp2 = cb2.selectedProperty();
-        BooleanProperty bp3 = cb3.selectedProperty();
-        BooleanProperty bp4 = cb4.selectedProperty();
-        BooleanProperty bp5 = cb5.selectedProperty();
-        BooleanProperty bp6 = cb6.selectedProperty();
+        BooleanProperty bp1 = cMI1.selectedProperty();
+        BooleanProperty bp2 = cMI2.selectedProperty();
+        BooleanProperty bp3 = cMI3.selectedProperty();
+        BooleanProperty bp4 = cMI4.selectedProperty();
+        BooleanProperty bp5 = cMI5.selectedProperty();
+        BooleanProperty bp6 = cMI6.selectedProperty();
 
         Bindings.bindBidirectional(bp1, skyCanvas.enableAsterismDrawingProperty());
         Bindings.bindBidirectional(bp2, skyCanvas.enableStarsDrawingProperty());
@@ -198,53 +223,7 @@ public class Main extends Application {
         });
         cm.setOnHiding(e-> mb.setStyle(""));
         mb.getMenus().add(cm);
-
-
-        /*
-         END OF IT
-        */
-
-
-        Label l2 = new Label("\uf065");
-        l2.setFont(fontAwesome);
-        Button fullscreen = new Button("Fullscreen",l2);
-
-
-        mainStage.fullScreenProperty().addListener((o, oV, nV) -> {
-            if (mainStage.isFullScreen()) {
-                fullscreen.setText("Windowed");
-                l2.setText("\uf066");
-            } else {
-                fullscreen.setText("Fullscreen");
-                l2.setText("\uf065");
-            }
-        });
-
-        fullscreen.setOnAction(e -> {
-            if (mainStage.isFullScreen()) {
-                mainStage.setFullScreen(false);
-            } else {
-                mainStage.setFullScreen(true);
-            }
-        });
-
-
-
-        Separator sepVert = new Separator();
-        Separator sepVert2 = new Separator();
-        Separator sepVert4 = new Separator();
-
-        sepVert.setOrientation(Orientation.VERTICAL);
-        sepVert2.setOrientation(Orientation.VERTICAL);
-        sepVert4.setOrientation(Orientation.VERTICAL);
-
-        HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
-        HBox child2 = observInstant(skyCanvas);
-        HBox child3 = timeManager(skyCanvas, timeAnimator);
-
-        mainControlBar.getChildren().addAll(child1, sepVert, child2, sepVert2, child3, sepVert3, mb, sepVert4, fullscreen);
-
-        return mainControlBar;
+        return mb;
     }
 
     private HBox observerPos(DoubleProperty observerLonDegProperty, DoubleProperty observerLatDegProperty) {
