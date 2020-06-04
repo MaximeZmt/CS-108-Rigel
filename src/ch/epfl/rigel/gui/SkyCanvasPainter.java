@@ -197,8 +197,6 @@ public final class SkyCanvasPainter {
         double y = coordTransformed.getY() - (0.5 * moonDiamTransformed);
         double phase = moon.getPhase();
 
-        //TODO do with rightopeninterval
-
         ctx.setFill(Color.BLACK);
         ctx.fillOval(x, y, moonDiamTransformed, moonDiamTransformed);
         if(phase >= 0.20 && phase < 0.40) {

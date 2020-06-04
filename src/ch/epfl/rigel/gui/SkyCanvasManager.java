@@ -202,11 +202,7 @@ public final class SkyCanvasManager {
             if (centerCoordinateChanger.get(e.getCode()) != null){
                 double newAzDeg = viewingParametersBean.getCenter().azDeg() + centerCoordinateChanger.get(e.getCode())[0];
                 double newAltDeg = viewingParametersBean.getCenter().altDeg() + centerCoordinateChanger.get(e.getCode())[1];
-                if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
-                    newAzDeg = AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg);
-                    HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(newAzDeg, newAltDeg);
-                    viewingParametersBean.setCenter(newCoordinates);
-                }
+                changeViewingCenter(viewingParametersBean, newAzDeg, newAltDeg);
                 e.consume();
             }
         });
@@ -226,10 +222,7 @@ public final class SkyCanvasManager {
             double newAzDeg = viewingParametersBean.getCenter().azDeg() - hc.azDeg()+mouseAzDegProperty().get();
             double newAltDeg = viewingParametersBean.getCenter().altDeg() - hc.altDeg()+mouseAltDegProperty().get();
 
-            if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
-                HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg), newAltDeg);
-                viewingParametersBean.setCenter(newCoordinates);
-            }
+            changeViewingCenter(viewingParametersBean, newAzDeg, newAltDeg);
             mousePosition.setValue(CartesianCoordinates.of(e.getX(), e.getY()));
             e.consume();
 
@@ -252,6 +245,13 @@ public final class SkyCanvasManager {
         enablePlanetsDrawing.addListener((o,oV,nV) -> drawSky(painter));
         enableHorizonDrawing.addListener((o,oV,nV) -> drawSky(painter));
 
+    }
+
+    private void changeViewingCenter(ViewingParametersBean viewingParametersBean, double newAzDeg, double newAltDeg) {
+        if (MIN_ALTITUDE <= newAltDeg && newAltDeg <= MAX_ALTITUDE){
+            HorizontalCoordinates newCoordinates = HorizontalCoordinates.ofDeg(AZIMUTH_INTERVAL_FOR_DRAG.reduce(newAzDeg), newAltDeg);
+            viewingParametersBean.setCenter(newCoordinates);
+        }
     }
 
     /**
