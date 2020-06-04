@@ -163,13 +163,7 @@ public class Main extends Application {
             }
         });
 
-        fullscreen.setOnAction(e -> {
-            if (mainStage.isFullScreen()) {
-                mainStage.setFullScreen(false);
-            } else {
-                mainStage.setFullScreen(true);
-            }
-        });
+        fullscreen.setOnAction(e -> mainStage.setFullScreen(!mainStage.isFullScreen()));
 
         HBox child1 = observerPos(skyCanvas.observerLonDegProperty(), skyCanvas.observerLatDegProperty());
         HBox child2 = observInstant(skyCanvas);

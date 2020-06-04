@@ -74,7 +74,6 @@ public final class SkyCanvasManager {
     private final DoubleBinding mouseAzDeg;
     private final DoubleBinding mouseAltDeg;
 
-    //TODO TEST BONUS
     private final BooleanProperty enableStarsDrawing;
     private final BooleanProperty enableAsterismDrawing;
     private final BooleanProperty enableSunDrawing;
@@ -348,7 +347,7 @@ public final class SkyCanvasManager {
     /**
      * Setter for the zone
      *
-     * @param zone
+     * @param zone zone id
      */
     public void setZone(ZoneId zone) {
         this.zone.set(zone);
