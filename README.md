@@ -6,3 +6,5 @@ This is the project realized for the CS-108 class of 2020. ([Here](https://cs108
 Here are the two grading sheets:
  - [Intermediate Submission](https://github.com/MaximeZmt/CS-108-Rigel/blob/master/IntermediateGradingSheet.pdf)
  - [Final Submission](https://github.com/MaximeZmt/CS-108-Rigel/blob/master/FinalGradingSheet.pdf)
+
+[[FR]: Here](https://github.com/MaximeZmt/CS-108-Rigel/blob/master/CS108_Projet_Rapport.pdf) you will find our project report
